@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, Get } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, Query } from '@nestjs/common';
 import { RegisterUserDto } from '../../dto/register.user.dto';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -16,6 +16,11 @@ export class AuthController {
   @Get('activate/:userId')
   async activate(@Param('userId') userId: number) {
     return this.authService.activateAccount(userId);
+  }
+
+  @Get('check-username-email')
+  async checkUsernameOrEmail(@Query('value') value: string) {
+    return this.authService.checkUsernameOrEmail(value);
   }
 
 }

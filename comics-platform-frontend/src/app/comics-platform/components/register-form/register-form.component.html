@@ -8,6 +8,9 @@
       @if (registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched) {
         <small class="error">Username cannot be less than 3 characters.</small>
       }
+      @if (registerForm.get('username')?.hasError('usernameOrEmailTaken') && registerForm.get('username')?.touched) {
+        <small class="error">Username is already taken.</small>
+      }
     </div>
   
     <div>
@@ -18,6 +21,9 @@
       }
       @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
         <small class="error">Please enter a valid email.</small>
+      }
+      @if (registerForm.get('email')?.hasError('usernameOrEmailTaken') && registerForm.get('email')?.touched) {
+        <small class="error">Email is already taken.</small>
       }
     </div>
   

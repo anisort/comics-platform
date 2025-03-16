@@ -6,7 +6,6 @@ import * as bcrypt from 'bcryptjs';
 import * as nodemailer from 'nodemailer';
 import { ConfigService } from '@nestjs/config';
 import * as cron from 'node-cron';
-import { LessThan } from 'typeorm';
 import { RegisterUserDto } from '../../dto/register.user.dto';
 
 
@@ -63,24 +62,51 @@ export class AuthService {
       username: user.username,
     };
   }
+
+
+  async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
+    const user = await this.usersRepository.findOne({
+      where: [
+        { username: value },
+        { email: value },
+      ],
+    });
+    return { exists: !!user };
+  }
   
 
   private startAccountCleanupJob() {
     cron.schedule('* * * * *', async () => {
-      const currentTime = new Date();
-      const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60 * 1000);
-
       const usersToDelete = await this.usersRepository.find({
         where: {
           isActive: false,
-          createdAt: LessThan(fiveMinutesAgo),
         },
       });
 
-      if (usersToDelete.length > 0) {
-        console.log(`Deleting ${usersToDelete.length} inactive users...`);
-        await this.usersRepository.remove(usersToDelete);
+      const currentTime = new Date();
+      console.log('Current time:', currentTime.toISOString());
+
+      const filteredUsers = usersToDelete.filter(user => {
+        const createdAtTime = new Date(user.createdAt).getTime();
+        console.log(`User created at: ${new Date(user.createdAt).toISOString()}`);
+        
+        const diffInMinutes = (currentTime.getTime() - createdAtTime) / (1000 * 60);
+        console.log(`Diff in minutes for user ${user.id}: ${diffInMinutes.toFixed(2)} min`);
+        
+        return diffInMinutes >= 125;
+      });
+
+      if (filteredUsers.length > 0) {
+        console.log(`Deleting ${filteredUsers.length} inactive users at ${currentTime.toISOString()}...`);
+        await this.usersRepository.remove(filteredUsers);
+      } else {
+        console.log('No users to delete.');
       }
     });
   }
+  
+  
+  
+  
+
 }

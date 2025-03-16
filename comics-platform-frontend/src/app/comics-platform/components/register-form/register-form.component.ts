@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { User } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 import { RegisterFormValidator } from '../../validators/register-form.validator';
+import { Router } from '@angular/router';
+import { RegisterFormAsyncValidator } from '../../validators/register-form-async.validator';
 
 @Component({
   selector: 'app-register-form',
@@ -9,12 +13,16 @@ import { RegisterFormValidator } from '../../validators/register-form.validator'
   styleUrl: './register-form.component.scss'
 })
 export class RegisterFormComponent implements OnInit{
+
+  constructor(private authService: AuthService, private router: Router){
+
+  }
   registerForm!: FormGroup;
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3)], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.authService)),
+      email: new FormControl('', [Validators.required, Validators.email], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.authService)),
       password: new FormControl('', [Validators.required, Validators.minLength(8), RegisterFormValidator.passwordStrengthValidator()]),
       repeatPassword: new FormControl('', [Validators.required])
     },
@@ -25,10 +33,19 @@ export class RegisterFormComponent implements OnInit{
   onSubmit() {
     if (this.registerForm.valid) {
       const { username, email, password } = this.registerForm.value;
-      const user = { username, email, password };
+      const user: User = { username, email, password };
       console.log('User object to send:', user);
+
+      this.authService.register(user).subscribe({
+        next: () => {
+          this.router.navigate(["/comics-platform/login"])
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      })
     } else {
-      console.log('Форма не дійсна');
+      console.log('Form is disabled');
     }
   }
 
