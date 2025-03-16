@@ -39,29 +39,36 @@ export class AuthService {
       },
     });
 
+    const frontendUrl = this.configService.get<string>('FRONTEND_URL');
+    const activationLink = `${frontendUrl}/activate/${userId}`;
+
     const mailOptions = {
       from: this.configService.get<string>('EMAIL_USER'),
       to: email,
       subject: 'Activate your account',
-      text: `Please activate your account by clicking on the following link: 
-      http://localhost:3000/auth/activate/${userId}`,
+      text: `Please activate your account by clicking on the following link: ${activationLink}`,
     };
 
     await transporter.sendMail(mailOptions);
   }
 
-  async activateAccount(userId: number): Promise<{ message: string; username: string } | null> {
-    const user = await this.usersRepository.findOne({ where: { id: userId } });
-    if (!user) {
-      return null;
+  async activateAccount(userId: number): Promise<{ email: string; username: string } | { errorMessage: string } | null> {
+    try {
+      const user = await this.usersRepository.findOne({ where: { id: userId } });
+      if (!user) {
+        return { errorMessage: 'User does not exist' };
+      }
+      user.isActive = true;
+      await this.usersRepository.save(user);
+      return {
+        email: user.email,
+        username: user.username,
+      };
+    } catch (error) {
+      return { errorMessage: 'An error occurred during account activation' };
     }
-    user.isActive = true;
-    await this.usersRepository.save(user);
-    return {
-      message: 'Account successfully activated',
-      username: user.username,
-    };
   }
+  
 
 
   async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
