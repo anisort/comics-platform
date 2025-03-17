@@ -12,7 +12,7 @@ const routes: Routes = [
 
   {path: 'comics-platform/register', component: RegisterFormComponent},
   {path: 'comics-platform/login', component: LoginFormComponent},
-  {path: 'comics-platform/activate/:userId', component: ActivationComponent}
+  {path: 'comics-platform/activate', component: ActivationComponent}
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 
@@ -20,8 +20,9 @@ export class AuthService {
     return this.http.post<User>(`${this.apiUrl}/register`, userData);
   }
 
-  activateAccount(userId: number): Observable<ActivationResponse> {
-    return this.http.get<ActivationResponse>(`${this.apiUrl}/activate/${userId}`);
+  activateAccount(token: string): Observable<ActivationResponse> {
+    const params = new HttpParams().set('token', token);
+    return this.http.get<ActivationResponse>(`${this.apiUrl}/activate`, { params });
   }
 
   checkUsernameOrEmail(value: string): Observable<{ exists: boolean }> {

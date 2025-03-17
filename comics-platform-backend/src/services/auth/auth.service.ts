@@ -7,6 +7,7 @@ import * as nodemailer from 'nodemailer';
 import { ConfigService } from '@nestjs/config';
 import * as cron from 'node-cron';
 import { RegisterUserDto } from '../../dto/register.user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 
 @Injectable()
@@ -14,7 +15,8 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly jwtService: JwtService
   ) {
     this.startAccountCleanupJob();
   }
@@ -23,11 +25,19 @@ export class AuthService {
     newUser.password = await bcrypt.hash(newUser.password, 10);
     const user = this.usersRepository.create(newUser);
     await this.usersRepository.save(user);
-    this.sendActivationEmail(newUser.email, user.id);
+
+    const token = this.jwtService.sign(
+      {userId: user.id},
+      {
+        secret: this.configService.get('JWT_SECRET'),
+        expiresIn: this.configService.get('JWT_EXPIRES_IN')
+      }
+    );
+    this.sendActivationEmail(newUser.email, token);
     return user;
   }
 
-  async sendActivationEmail(email: string, userId: number) {
+  async sendActivationEmail(email: string, token: string) {
     const transporter = nodemailer.createTransport({
       host: this.configService.get<string>('EMAIL_HOST'),
       port: this.configService.get<number>('EMAIL_PORT'),
@@ -40,7 +50,8 @@ export class AuthService {
     });
 
     const frontendUrl = this.configService.get<string>('FRONTEND_URL');
-    const activationLink = `${frontendUrl}/activate/${userId}`;
+    // console.log('Generated token:', token);
+    const activationLink = `${frontendUrl}/activate?token=${token}`;
 
     const mailOptions = {
       from: this.configService.get<string>('EMAIL_USER'),
@@ -52,11 +63,12 @@ export class AuthService {
     await transporter.sendMail(mailOptions);
   }
 
-  async activateAccount(userId: number): Promise<{ email: string; username: string } | { errorMessage: string } | null> {
+  async activateAccount(token: string): Promise<{ email: string; username: string } | { errorMessage: string } | null> {
     try {
-      const user = await this.usersRepository.findOne({ where: { id: userId } });
+      const decoded = this.jwtService.verify(token, {secret: this.configService.get('JWT_SECRET')});
+      const user = await this.usersRepository.findOne({ where: { id: decoded.userId } });
       if (!user) {
-        return { errorMessage: 'User does not exist' };
+        return { errorMessage: 'User not found' };
       }
       user.isActive = true;
       await this.usersRepository.save(user);
@@ -65,11 +77,9 @@ export class AuthService {
         username: user.username,
       };
     } catch (error) {
-      return { errorMessage: 'An error occurred during account activation' };
+      return { errorMessage: 'Invalid or expired token' };
     }
   }
-  
-
 
   async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
     const user = await this.usersRepository.findOne({
@@ -78,10 +88,9 @@ export class AuthService {
         { email: value },
       ],
     });
-    return { exists: !!user };
+    return { exists: user ? true : false };
   }
   
-
   private startAccountCleanupJob() {
     cron.schedule('* * * * *', async () => {
       const usersToDelete = await this.usersRepository.find({
@@ -91,29 +100,26 @@ export class AuthService {
       });
 
       const currentTime = new Date();
-      console.log('Current time:', currentTime.toISOString());
+      //console.log('Current time:', currentTime.toISOString());
 
       const filteredUsers = usersToDelete.filter(user => {
         const createdAtTime = new Date(user.createdAt).getTime();
-        console.log(`User created at: ${new Date(user.createdAt).toISOString()}`);
+        //console.log(`User created at: ${new Date(user.createdAt).toISOString()}`);
         
         const diffInMinutes = (currentTime.getTime() - createdAtTime) / (1000 * 60);
-        console.log(`Diff in minutes for user ${user.id}: ${diffInMinutes.toFixed(2)} min`);
+        //console.log(`Diff in minutes for user ${user.id}: ${diffInMinutes.toFixed(2)} min`);
         
         return diffInMinutes >= 125;
       });
 
       if (filteredUsers.length > 0) {
-        console.log(`Deleting ${filteredUsers.length} inactive users at ${currentTime.toISOString()}...`);
+        //console.log(`Deleting ${filteredUsers.length} inactive users at ${currentTime.toISOString()}...`);
         await this.usersRepository.remove(filteredUsers);
-      } else {
-        console.log('No users to delete.');
-      }
+      } 
+      // else {
+      //   console.log('No users to delete.');
+      // }
     });
   }
   
-  
-  
-  
-
 }

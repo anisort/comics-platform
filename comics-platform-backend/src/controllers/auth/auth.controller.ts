@@ -13,9 +13,9 @@ export class AuthController {
     return this.authService.register(newUser);
   }
 
-  @Get('activate/:userId')
-  async activate(@Param('userId') userId: number) {
-    return this.authService.activateAccount(userId);
+  @Get('activate')
+  async activate(@Query('token') token: string) {
+    return this.authService.activateAccount(token);
   }
 
   @Get('check-username-email')
