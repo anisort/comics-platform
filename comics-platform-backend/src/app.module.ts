@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { IsUniqueConstraint } from './validators/is-unique-constraint.validator';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { IsUniqueConstraint } from './validators/is-unique-constraint.validator'
       synchronize: true,
     }),
     AuthModule,
+    UsersModule,
     ConfigModule.forRoot(), 
   ],
   controllers: [AppController],

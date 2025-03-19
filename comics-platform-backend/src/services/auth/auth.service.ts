@@ -81,15 +81,15 @@ export class AuthService {
     }
   }
 
-  async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
-    const user = await this.usersRepository.findOne({
-      where: [
-        { username: value },
-        { email: value },
-      ],
-    });
-    return { exists: user ? true : false };
-  }
+  // async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
+  //   const user = await this.usersRepository.findOne({
+  //     where: [
+  //       { username: value },
+  //       { email: value },
+  //     ],
+  //   });
+  //   return { exists: user ? true : false };
+  // }
   
   private startAccountCleanupJob() {
     cron.schedule('* * * * *', async () => {

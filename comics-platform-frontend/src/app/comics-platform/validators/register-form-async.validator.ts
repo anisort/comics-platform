@@ -1,33 +1,31 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { debounceTime, switchMap, catchError, map, first } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { debounceTime, switchMap, catchError } from 'rxjs/operators';
+import { UsersService } from '../services/users.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RegisterFormAsyncValidator {
 
-  // constructor(private authService: AuthService) {}
-
-  static checkUniqueUsernameAndEmail(authService: AuthService): AsyncValidatorFn {
+  static checkUniqueUsernameAndEmail(usersService: UsersService): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
-        return of(null); // Пропускаем проверку, если поле пустое
+        return of(null);
       }
 
       const value = control.value.trim();
       
-      return authService.checkUsernameOrEmail(value).pipe(
-        debounceTime(300), // Применяем задержку для оптимизации запросов
+      return usersService.checkUsernameOrEmail(value).pipe(
+        debounceTime(300),
         switchMap((response) => {
           if (response.exists) {
             return of({ usernameOrEmailTaken: true });
           }
-          return of(null); // Всё в порядке
+          return of(null);
         }),
-        catchError(() => of(null)) // В случае ошибки возвращаем null
+        catchError(() => of(null))
       );
     };
   }

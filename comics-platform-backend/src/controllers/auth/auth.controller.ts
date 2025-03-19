@@ -18,9 +18,9 @@ export class AuthController {
     return this.authService.activateAccount(token);
   }
 
-  @Get('check-username-email')
-  async checkUsernameOrEmail(@Query('value') value: string) {
-    return this.authService.checkUsernameOrEmail(value);
-  }
+  // @Get('check-username-email')
+  // async checkUsernameOrEmail(@Query('value') value: string) {
+  //   return this.authService.checkUsernameOrEmail(value);
+  // }
 
 }

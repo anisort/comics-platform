@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { User } from '../../models/user.model';
+import { UsersService } from '../../services/users.service';
 import { AuthService } from '../../services/auth.service';
 import { RegisterFormValidator } from '../../validators/register-form.validator';
 import { Router } from '@angular/router';
@@ -14,15 +15,16 @@ import { RegisterFormAsyncValidator } from '../../validators/register-form-async
 })
 export class RegisterFormComponent implements OnInit{
 
-  constructor(private authService: AuthService, private router: Router){
-
-  }
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+    private router: Router){}
   registerForm!: FormGroup;
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(3)], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.authService)),
-      email: new FormControl('', [Validators.required, Validators.email], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.authService)),
+      username: new FormControl('', [Validators.required, Validators.minLength(3)], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.usersService)),
+      email: new FormControl('', [Validators.required, Validators.email], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.usersService)),
       password: new FormControl('', [Validators.required, Validators.minLength(8), RegisterFormValidator.passwordStrengthValidator()]),
       repeatPassword: new FormControl('', [Validators.required])
     },
