@@ -30,10 +30,4 @@ export class AuthService {
     const params = new HttpParams().set('token', token);
     return this.http.get<ActivationResponse>(`${this.apiUrl}/activate`, { params });
   }
-
-  // checkUsernameOrEmail(value: string): Observable<{ exists: boolean }> {
-  //   return this.http.get<{ exists: boolean }>(`${this.apiUrl}/check-username-email`, {
-  //     params: { value }
-  //   });
-  // }
 }

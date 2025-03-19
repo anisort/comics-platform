@@ -1,57 +1,64 @@
 <form [formGroup]="registerForm">
-    <div>
-      <label for="username">Username:</label>
-      <input id="username" formControlName="username" />
-      @if (registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched) {
-        <small class="error">Username is required.</small>
-      }
-      @if (registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched) {
-        <small class="error">Username cannot be less than 3 characters.</small>
-      }
-      @if (registerForm.get('username')?.hasError('usernameOrEmailTaken') && registerForm.get('username')?.touched) {
-        <small class="error">Username is already taken.</small>
-      }
+  @if (message) {
+    <div class="activation-message">
+      {{ message }}
     </div>
-  
-    <div>
-      <label for="email">Email:</label>
-      <input id="email" formControlName="email" />
-      @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
-        <small class="error">Email is required.</small>
-      }
-      @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
-        <small class="error">Please enter a valid email.</small>
-      }
-      @if (registerForm.get('email')?.hasError('usernameOrEmailTaken') && registerForm.get('email')?.touched) {
-        <small class="error">Email is already taken.</small>
-      }
-    </div>
-  
-    <div>
-      <label for="password">Password:</label>
-      <input id="password" type="password" formControlName="password" />
-      @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
-        <small class="error">Password is required.</small>
-      }
-      @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
-        <small class="error">Password must be at least 8 characters.</small>
-      }
-      @if (registerForm.get('password')?.hasError('weakPassword') && registerForm.get('password')?.touched) {
-        <small class="error">Password must include uppercase, lowercase, numbers, and special characters.</small>
-      }
-    </div>
-  
-    <div>
-      <label for="repeatPassword">Repeat Password:</label>
-      <input id="repeatPassword" type="password" formControlName="repeatPassword" />
-      @if (registerForm.get('repeatPassword')?.hasError('required') && registerForm.get('repeatPassword')?.touched) {
-        <small class="error">Repeat Password is required.</small>
-      }
-      @if (registerForm.hasError('passwordMismatch') && registerForm.touched) {
-        <small class="error">Passwords do not match.</small>
-      }
-    </div>
-  
-    <button type="submit" (click)="onSubmit()" [disabled]="registerForm.invalid">Register</button>
-  </form>
+  }
+  <div>
+    <label for="username">Username:</label>
+    <input id="username" formControlName="username" />
+    @if (registerForm.get('username')?.hasError('required') && registerForm.get('username')?.touched) {
+      <small class="error">Username is required.</small>
+    }
+    @if (registerForm.get('username')?.hasError('minlength') && registerForm.get('username')?.touched) {
+      <small class="error">Username cannot be less than 3 characters.</small>
+    }
+    @if (registerForm.get('username')?.hasError('usernameOrEmailTaken') && registerForm.get('username')?.touched) {
+      <small class="error">Username is already taken.</small>
+    }
+  </div>
+
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email" />
+    @if (registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched) {
+      <small class="error">Email is required.</small>
+    }
+    @if (registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched) {
+      <small class="error">Please enter a valid email.</small>
+    }
+    @if (registerForm.get('email')?.hasError('usernameOrEmailTaken') && registerForm.get('email')?.touched) {
+      <small class="error">Email is already taken.</small>
+    }
+  </div>
+
+  <div>
+    <label for="password">Password:</label>
+    <input id="password" type="password" formControlName="password" />
+    @if (registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched) {
+      <small class="error">Password is required.</small>
+    }
+    @if (registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched) {
+      <small class="error">Password must be at least 8 characters.</small>
+    }
+    @if (registerForm.get('password')?.hasError('weakPassword') && registerForm.get('password')?.touched) {
+      <small class="error">Password must include uppercase, lowercase, numbers, and special characters.</small>
+    }
+  </div>
+
+  <div>
+    <label for="repeatPassword">Repeat Password:</label>
+    <input id="repeatPassword" type="password" formControlName="repeatPassword" />
+    @if (registerForm.get('repeatPassword')?.hasError('required') && registerForm.get('repeatPassword')?.touched) {
+      <small class="error">Repeat Password is required.</small>
+    }
+    @if (registerForm.hasError('passwordMismatch') && registerForm.touched) {
+      <small class="error">Passwords do not match.</small>
+    }
+  </div>
+
+  <button type="submit" (click)="onSubmit()" [disabled]="registerForm.invalid">Register</button>
+
+  <div>Already have an account? <a href="/comics-platform/home">Sign in</a></div>
+</form>
   

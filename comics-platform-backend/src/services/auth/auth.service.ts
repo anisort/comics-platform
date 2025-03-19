@@ -21,7 +21,7 @@ export class AuthService {
     this.startAccountCleanupJob();
   }
 
-  async register(newUser: RegisterUserDto): Promise<User> {
+  async register(newUser: RegisterUserDto): Promise<RegisterUserDto> {
     newUser.password = await bcrypt.hash(newUser.password, 10);
     const user = this.usersRepository.create(newUser);
     await this.usersRepository.save(user);
@@ -80,16 +80,6 @@ export class AuthService {
       return { errorMessage: 'Invalid or expired token' };
     }
   }
-
-  // async checkUsernameOrEmail(value: string): Promise<{ exists: boolean }> {
-  //   const user = await this.usersRepository.findOne({
-  //     where: [
-  //       { username: value },
-  //       { email: value },
-  //     ],
-  //   });
-  //   return { exists: user ? true : false };
-  // }
   
   private startAccountCleanupJob() {
     cron.schedule('* * * * *', async () => {

@@ -21,6 +21,8 @@ export class RegisterFormComponent implements OnInit{
     private router: Router){}
   registerForm!: FormGroup;
 
+  message: string | null = null;
+
   ngOnInit() {
     this.registerForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)], RegisterFormAsyncValidator.checkUniqueUsernameAndEmail(this.usersService)),
@@ -40,7 +42,8 @@ export class RegisterFormComponent implements OnInit{
 
       this.authService.register(user).subscribe({
         next: () => {
-          this.router.navigate(["/comics-platform/login"])
+          this.message = 'An activation link has been sent to your email. It will expire in 5 minutes.';
+          this.registerForm.reset();
         },
         error: (err) => {
           console.log(err)
