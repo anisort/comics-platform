@@ -130,7 +130,7 @@ export class AuthService {
   async validateUser(input: AuthInput): Promise<SignInData | null>{
     const user = await this.usersService.findUserByName(input.username);
 
-    if (user && await bcrypt.compare(input.password, user.password)){
+    if (user && await bcrypt.compare(input.password, user.password) && user.isActive === true){
       return {
         userId: user.id,
         username: user.username,
