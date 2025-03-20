@@ -1,8 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { AppConfig, CONFIG_TOKEN } from '../../../../config';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+
 
 export type ActivationResponse = 
   | { email: string; username: string }
@@ -14,12 +17,19 @@ export type ActivationResponse =
 export class AuthService {
 
   private apiUrl: string;
+  private userSubject = new BehaviorSubject<string | null>(null);
+  public user$ = this.userSubject.asObservable();
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     @Inject(CONFIG_TOKEN) private config: AppConfig
   ) {
     this.apiUrl = `${this.config.apiUrl}/auth`;
+    const savedUser = localStorage.getItem('username');
+    if (savedUser) {
+      this.userSubject.next(savedUser);
+    }
   }
 
   register(userData: User): Observable<User> {
@@ -29,5 +39,31 @@ export class AuthService {
   activateAccount(token: string): Observable<ActivationResponse> {
     const params = new HttpParams().set('token', token);
     return this.http.get<ActivationResponse>(`${this.apiUrl}/activate`, { params });
+  }
+
+
+  login(username: string, password: string): Observable<{ accessToken: string; username: string }> {
+    return this.http.post<{ accessToken: string; username: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.accessToken);
+        localStorage.setItem('username', response.username);
+        this.userSubject.next(response.username);
+      })
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    this.userSubject.next(null);
+    this.router.navigate(['/comics-platform/login']);
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem('username');
   }
 }

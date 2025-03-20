@@ -1,0 +1,23 @@
+<header>
+    <nav>
+
+      @if(authService.isAuthenticated()){
+        <div><a href="/comics-platform/home">Home</a></div>
+        <div><a href="/comics-platform/my-library">My Library</a></div>
+        <span *ngIf="authService.isAuthenticated()">
+            {{ authService.getUsername() }} | <button (click)="logout()">Sign out</button>
+          </span>
+      }
+
+      @if(!authService.isAuthenticated()){
+        <div><a href="/comics-platform/home">Home</a></div>
+        <div><a href="/comics-platform/my-library">My Library</a></div>
+        <div><button routerLink="/comics-platform/register">Sign up</button></div>
+        <div><button routerLink="/comics-platform/login">Sign in</button></div>
+      }
+    </nav>
+
+     
+  </header>
+
+  

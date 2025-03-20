@@ -4,7 +4,6 @@ import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 import { AuthService } from '../../services/auth.service';
 import { RegisterFormValidator } from '../../validators/register-form.validator';
-import { Router } from '@angular/router';
 import { RegisterFormAsyncValidator } from '../../validators/register-form-async.validator';
 
 @Component({
@@ -17,8 +16,8 @@ export class RegisterFormComponent implements OnInit{
 
   constructor(
     private usersService: UsersService,
-    private authService: AuthService,
-    private router: Router){}
+    private authService: AuthService,){}
+    
   registerForm!: FormGroup;
 
   message: string | null = null;

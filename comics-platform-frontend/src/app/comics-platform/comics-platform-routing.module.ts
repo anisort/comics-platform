@@ -4,6 +4,8 @@ import { ActivationComponent } from './components/activation/activation.componen
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { MylibraryPageComponent } from './components/mylibrary-page/mylibrary-page.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'comics-platform/home', component: HomePageComponent},
@@ -12,7 +14,8 @@ const routes: Routes = [
 
   {path: 'comics-platform/register', component: RegisterFormComponent},
   {path: 'comics-platform/login', component: LoginFormComponent},
-  {path: 'comics-platform/activate', component: ActivationComponent}
+  {path: 'comics-platform/activate', component: ActivationComponent},
+  { path: 'comics-platform/my-library', component: MylibraryPageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
