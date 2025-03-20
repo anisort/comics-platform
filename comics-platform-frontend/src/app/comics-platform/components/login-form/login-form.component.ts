@@ -28,6 +28,7 @@ export class LoginFormComponent implements OnInit {
       this.authService.login(username, password).subscribe({
         next: () => this.router.navigate(['/comics-platform/home']),
         error: () => {
+          this.loginForm.reset();
           this.errorMessage = 'Invalid username or password';
         }
       });

@@ -7,6 +7,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { ActivationComponent } from './components/activation/activation.component';
 import { MylibraryPageComponent } from './components/mylibrary-page/mylibrary-page.component';
+import { ComicsItemComponent } from './components/comics-item/comics-item.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { MylibraryPageComponent } from './components/mylibrary-page/mylibrary-pa
     LoginFormComponent,
     ActivationComponent,
     MylibraryPageComponent,
+    ComicsItemComponent,
   ],
   imports: [
     CommonModule,
