@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -8,15 +8,20 @@ import { ConfigService } from '@nestjs/config';
 import * as cron from 'node-cron';
 import { RegisterUserDto } from '../../dto/register.user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
+type AuthInput = { username: string; password: string};
+type SignInData = { userId: number; username: string};
+type AuthResult = { accessToken: string; userId: number; username: string }
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private readonly configService: ConfigService,
-    private readonly jwtService: JwtService
+    private configService: ConfigService,
+    private jwtService: JwtService,
+    private usersService: UsersService
   ) {
     this.startAccountCleanupJob();
   }
@@ -111,5 +116,38 @@ export class AuthService {
       // }
     });
   }
+
+  async authenticate(input: AuthInput): Promise<AuthResult>{
+    const user =  await this.validateUser(input);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return this.signIn(user);
+  }
+
+  async validateUser(input: AuthInput): Promise<SignInData | null>{
+    const user = await this.usersService.findUserByName(input.username);
+
+    if (user && await bcrypt.compare(input.password, user.password)){
+      return {
+        userId: user.id,
+        username: user.username,
+      }
+    }
+
+    return null;
+  }
   
+  async signIn (user: SignInData): Promise<AuthResult> {
+    const tokenPayload = {
+      sub: user.userId,
+      username: user.username,
+    };
+
+    const accessToken = await this.jwtService.signAsync(tokenPayload);
+
+    return { accessToken, username: user.username, userId: user.userId};
+  }
 }

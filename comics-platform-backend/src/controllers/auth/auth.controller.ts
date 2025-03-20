@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, HttpStatus, HttpCode, NotImplementedException, UseGuards, Request } from '@nestjs/common';
 import { RegisterUserDto } from '../../dto/register.user.dto';
 import { AuthService } from '../../services/auth/auth.service';
+import { AuthGuard } from 'src/guards/auth.guards';
 
 @Controller('auth')
 export class AuthController {
@@ -18,9 +19,16 @@ export class AuthController {
     return this.authService.activateAccount(token);
   }
 
-  // @Get('check-username-email')
-  // async checkUsernameOrEmail(@Query('value') value: string) {
-  //   return this.authService.checkUsernameOrEmail(value);
-  // }
+  @HttpCode(HttpStatus.OK)
+  @Post('login')
+  login(@Body() input: {username: string; password: string}){
+    return this.authService.authenticate(input);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me')
+  getUserInfo(@Request() request) {
+    return request.user;
+  }
 
 }

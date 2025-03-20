@@ -20,4 +20,11 @@ export class UsersService {
         });
         return { exists: user ? true : false };
     }
+
+    async findUserByName(username: string): Promise<User | null> {
+      return await this.usersRepository.findOne({
+        where: { username },
+      });
+    }
+    
 }
