@@ -1,0 +1,37 @@
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { User } from './user.entity';
+import { Genre } from './genre.entity';
+
+export type ComicStatus = 'ongoing' | 'completed';
+export type AgeRating = '13+' | '15+' | '17+';
+
+@Entity('comics')
+export class Comic {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ type: 'text' })
+  description: string;
+
+  @Column({ type: 'enum', enum: ['ongoing', 'completed'], default: 'ongoing' })
+  status: ComicStatus;
+
+  @Column({ type: 'enum', enum: ['13+', '15+', '17+'] })
+  ageRating: AgeRating;
+
+  @Column({ nullable: true })
+  coverUrl: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @ManyToOne(() => User, (user) => user.comics)
+  user: User;
+
+  @ManyToMany(() => Genre, (genre) => genre.comics)
+  @JoinTable()
+  genres: Genre[];
+}

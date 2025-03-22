@@ -16,6 +16,7 @@ type AuthResult = { accessToken: string; userId: number; username: string }
 
 @Injectable()
 export class AuthService {
+
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -30,14 +31,7 @@ export class AuthService {
     newUser.password = await bcrypt.hash(newUser.password, 10);
     const user = this.usersRepository.create(newUser);
     await this.usersRepository.save(user);
-
-    const token = this.jwtService.sign(
-      {userId: user.id},
-      {
-        secret: this.configService.get('JWT_SECRET'),
-        expiresIn: this.configService.get('JWT_EXPIRES_IN')
-      }
-    );
+    const token = this.generateToken(user.id);
     this.sendActivationEmail(newUser.email, token);
     return user;
   }
@@ -141,13 +135,17 @@ export class AuthService {
   }
   
   async signIn (user: SignInData): Promise<AuthResult> {
-    const tokenPayload = {
-      sub: user.userId,
-      username: user.username,
-    };
-
-    const accessToken = await this.jwtService.signAsync(tokenPayload);
-
+    const accessToken = this.generateToken(user.userId);
     return { accessToken, username: user.username, userId: user.userId};
+  }
+
+  private generateToken(userId: number): string {
+    return this.jwtService.sign(
+      { userId },
+      {
+        secret: this.configService.get('JWT_SECRET'),
+        expiresIn: this.configService.get('JWT_EXPIRES_IN'),
+      }
+    );
   }
 }

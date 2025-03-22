@@ -11,18 +11,18 @@ export class AuthController {
   async register(
     @Body() newUser: RegisterUserDto,
   ) {
-    return this.authService.register(newUser);
+    return await this.authService.register(newUser);
   }
 
   @Get('activate')
   async activate(@Query('token') token: string) {
-    return this.authService.activateAccount(token);
+    return await this.authService.activateAccount(token);
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  login(@Body() input: {username: string; password: string}){
-    return this.authService.authenticate(input);
+  async login(@Body() input: {username: string; password: string}){
+    return await this.authService.authenticate(input);
   }
 
   @UseGuards(AuthGuard)

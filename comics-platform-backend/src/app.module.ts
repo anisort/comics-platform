@@ -7,6 +7,9 @@ import { ConfigModule } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { IsUniqueConstraint } from './validators/is-unique-constraint.validator';
 import { UsersModule } from './modules/users/users.module';
+import { UploadModule } from './modules/upload/upload.module';
+import { GenresModule } from './modules/genres/genres.module';
+import { ComicsModule } from './modules/comics/comics.module';
 
 @Module({
   imports: [
@@ -23,6 +26,9 @@ import { UsersModule } from './modules/users/users.module';
     }),
     AuthModule,
     UsersModule,
+    UploadModule,
+    GenresModule,
+    ComicsModule,
     ConfigModule.forRoot(), 
   ],
   controllers: [AppController],
