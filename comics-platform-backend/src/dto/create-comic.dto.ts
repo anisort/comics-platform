@@ -1,10 +1,9 @@
 import { IsNotEmpty, IsString, IsEnum, IsArray } from 'class-validator';
-import { IsUnique } from "../validators/is-unique";
 
-export class ComicCreateDto {
+export class CreateComicDto {
   @IsString()
   @IsNotEmpty()
-  @IsUnique({tableName: 'comics', column: 'name'})
+  //@IsUnique({tableName: 'comics', column: 'name'})
   name: string;
 
   @IsString()
@@ -23,5 +22,5 @@ export class ComicCreateDto {
 
   @IsArray()
   @IsString({ each: true })
-  genres: string[]; // Список названий жанров
+  genres: string[];
 }

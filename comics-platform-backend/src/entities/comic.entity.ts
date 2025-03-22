@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Genre } from './genre.entity';
 
@@ -29,7 +29,8 @@ export class Comic {
   createdAt: Date;
 
   @ManyToOne(() => User, (user) => user.comics)
-  user: User;
+  @JoinColumn({name: "userId"})
+  user: User | {id: number, username: string};
 
   @ManyToMany(() => Genre, (genre) => genre.comics)
   @JoinTable()

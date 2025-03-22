@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UploadService } from 'src/services/upload/upload.service';
 
 @Module({
-  imports: [ConfigModule], // Добавляем импорт ConfigModule
+  imports: [ConfigModule],
   providers: [UploadService],
   exports: [UploadService],
 })

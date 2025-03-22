@@ -1,9 +1,7 @@
-import { IsString, IsEnum, IsArray } from 'class-validator';
+import { IsString, IsEnum, IsArray, isNumber } from 'class-validator';
+import { ComicItemDto } from './comic.item.dto';
 
-export class ComicItemSingleDto {
-  @IsString()
-  name: string;
-
+export class ComicItemSingleDto extends ComicItemDto{
   @IsString()
   description: string;
 
@@ -14,14 +12,11 @@ export class ComicItemSingleDto {
   ageRating: '13+' | '15+' | '17+';
 
   @IsString()
-  coverUrl: string;
-
-  @IsString()
   createdAt: string;
 
   @IsString()
-  user: string; // Автор комикса
+  user: string;
 
   @IsArray()
-  genres: string[]; // Список названий жанров
+  genres: string[];
 }

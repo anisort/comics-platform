@@ -10,6 +10,7 @@ import { UsersModule } from './modules/users/users.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { GenresModule } from './modules/genres/genres.module';
 import { ComicsModule } from './modules/comics/comics.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { ComicsModule } from './modules/comics/comics.module';
     UploadModule,
     GenresModule,
     ComicsModule,
-    ConfigModule.forRoot(), 
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],

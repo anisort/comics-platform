@@ -8,9 +8,7 @@ import { ComicsService } from 'src/services/comics/comics.service';
 import { GenresModule } from '../genres/genres.module';
 import { UsersModule } from '../users/users.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { UploadService } from 'src/services/upload/upload.service';
-import { GenresService } from 'src/services/genres/genres.service';
-import { UsersService } from 'src/services/users/users.service';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +19,8 @@ import { UsersService } from 'src/services/users/users.service';
     UploadModule,
     ConfigModule, 
     GenresModule,
-    UsersModule
+    UsersModule,
+    AuthModule
   ],
   controllers: [ComicsController],
   providers: [ComicsService],

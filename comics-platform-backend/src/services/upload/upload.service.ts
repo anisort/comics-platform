@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {v2} from 'cloudinary'; // Імпортуємо cloudinary
-import { UploadApiResponse } from 'cloudinary'; // Імпортуємо тип UploadApiResponse
+import {v2} from 'cloudinary';
+import { UploadApiResponse } from 'cloudinary';
 
 @Injectable()
 export class UploadService {
@@ -14,14 +14,18 @@ export class UploadService {
     });
   }
   
-  async uploadCover(file: Express.Multer.File, comicName: string): Promise<UploadApiResponse> {
-    const formattedComicName = comicName.toLowerCase().replace(/\s+/g, '-');
-    const folder = `comics-platform/comics/${formattedComicName}/cover`;
-    const result = await v2.uploader.upload(file.path, {folder});
-    return result;
+  async upload(file: Express.Multer.File, folder: string): Promise<UploadApiResponse> { 
+    return await v2.uploader.upload(file.path, {folder});
   }
 
-  // // Пример загрузки страницы
+  async deleteCoverFromCloudinary(valueToDelete: string): Promise<void> {
+    await v2.uploader.destroy(valueToDelete);
+  }
+
+}
+
+
+
   // async uploadPage(file: Express.Multer.File, comicsId: string, episodeId: string): Promise<UploadApiResponse> {
   //   const folder = `comics-platform/${comicsId}/episodes/${episodeId}`;
   //   const result = await this.cloudinary.uploader.upload(file.path, {
@@ -29,4 +33,3 @@ export class UploadService {
   //   });
   //   return result;
   // }
-}
