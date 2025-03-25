@@ -1,3 +1,10 @@
-<div class="comics-list">
-    <app-comic-item *ngFor="let comic of comics" [comicItem]="comic"></app-comic-item>
+<h3>My Library</h3>
+<div class="container">
+    <div class="comics-list">
+        @for(comicItem of comics; track comicItem.id; let index = $index){
+            <app-comic-item-mylibrary [comicItem]="comicItem"></app-comic-item-mylibrary>
+        }
+        <button class="add-button" (click)="onClick()">+</button>
+    </div>
+
 </div>

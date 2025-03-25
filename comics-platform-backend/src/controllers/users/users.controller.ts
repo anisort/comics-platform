@@ -9,6 +9,6 @@ export class UsersController {
 
       @Get('check-username-email')
       async checkUsernameOrEmail(@Query('value') value: string) {
-        return this.usersService.checkUsernameOrEmail(value);
+        return await this.usersService.checkUsernameOrEmail(value);
     }
 }

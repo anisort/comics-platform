@@ -1,7 +1,53 @@
-/* my-library-page.component.scss */
+/* Родительский контейнер для центрирования */
+
+h3 {
+  margin: 10px;
+}
+.container {
+  display: flex;
+  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
+  align-items: center;
+  padding: 20px; /* Отступы вокруг контейнера */
+}
+
+/* Контейнер с элементами */
 .comics-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
+  display: flex; /* Используем flexbox для выстраивания элементов */
+  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+  justify-content: flex-start; /* Размещаем элементы в начале строки по горизонтали */
+  align-items: center; /* Размещаем элементы в начале строки по вертикали */
+  gap: 20px; /* Расстояние между элементами */
+  //margin-top: 5px;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+}
+
+
+.add-button {
+  width: 100px; /* Увеличиваем размер кнопки в два раза */
+  height: 100px; /* Увеличиваем размер кнопки в два раза */
+  border: 2px solid #4caf50; /* Зеленая граница */
+  border-radius: 5px; /* Закругленные углы */
+  background-color: #fff;
+  color: #4caf50; /* Зеленый цвет текста */
+  font-size: 48px; /* Увеличиваем размер шрифта для плюса */
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Эффект при наведении */
+.add-button:hover {
+  background-color: #4caf50; /* Изменение фона на зеленый */
+  color: #fff; /* Белый цвет текста при наведении */
+  transform: scale(1.1); /* Легкое увеличение кнопки */
+}
+
+/* Эффект при нажатии */
+.add-button:active {
+  transform: scale(1); /* Возвращаем в нормальный размер при нажатии */
+}

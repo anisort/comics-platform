@@ -1,0 +1,92 @@
+<div class="create-comic-container">
+  <h2>Add a New Comic</h2>
+
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <!-- Comic Name -->
+    <div class="form-group">
+      <label for="name">Comic Name:</label>
+      <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter comic name">
+      <div *ngIf="createForm.get('name')?.invalid && createForm.get('name')?.touched" class="error">
+        Comic name is required.
+      </div>
+    </div>
+
+    <!-- Comic Description -->
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description" class="form-control" placeholder="Enter comic description"></textarea>
+      <div *ngIf="createForm.get('description')?.invalid && createForm.get('description')?.touched" class="error">
+        Description is required.
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <label for="status">Status:</label>
+      <select id="status" formControlName="status" class="form-control">
+        <option value="">Select status</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="completed">Completed</option>
+      </select>
+      <div *ngIf="createForm.get('status')?.invalid && createForm.get('status')?.touched" class="error">
+        Status is required.
+      </div>
+    </div>
+
+    <!-- Age Rating -->
+    <div class="form-group">
+      <label for="ageRating">Age Rating:</label>
+      <select id="ageRating" formControlName="ageRating" class="form-control">
+        <option value="">Select age rating</option>
+        <option value="13+">13+</option>
+        <option value="15+">15+</option>
+        <option value="17+">17+</option>
+      </select>
+      <div *ngIf="createForm.get('ageRating')?.invalid && createForm.get('ageRating')?.touched" class="error">
+        Age rating is required.
+      </div>
+    </div>
+
+    <!-- Genres -->
+    <div class="form-group">
+      <label for="genres">Genres:</label>
+      <select id="genres" formControlName="genres" class="form-control" multiple>
+        <option value="action">Action</option>
+        <option value="comedy">Comedy</option>
+        <option value="drama">Drama</option>
+        <option value="horror">Horror</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="romance">Romance</option>
+      </select>
+      <div *ngIf="createForm.get('genres')?.invalid && createForm.get('genres')?.touched" class="error">
+        Genres are required.
+      </div>
+    </div>
+
+    <!-- Upload Cover Image -->
+    <div class="form-group">
+      <label for="coverImage">Upload Cover Image:</label>
+      <input id="coverImage" type="file" (change)="onFileChange($event)" accept="image/*" class="form-control">
+      <div *ngIf="!coverImage" class="error">
+        Cover image is required.
+      </div>
+      <!-- Display selected image -->
+      <div *ngIf="coverImage">
+        <h4>Cover Image Preview:</h4>
+        <img [src]="coverImagePreview" alt="Cover Image Preview" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+      </div>
+    </div>
+
+    <!-- Додайте цей блок перед кнопкою -->
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Uploading...</p>
+</div>
+
+<!-- Змінюємо кнопку, щоб вона відключалася під час завантаження -->
+<button type="submit" class="btn btn-primary" [disabled]="createForm.invalid || !coverImage || isLoading">
+  {{ isLoading ? 'Uploading...' : 'Add Comic' }}
+</button>
+
+  </form>
+</div>

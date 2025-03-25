@@ -1,0 +1,75 @@
+/* Родительский контейнер для центрирования */
+h2 {
+  margin: 20px; 
+}
+
+.main-container {
+  display: flex;
+  justify-content: flex-start; /* Центрируем дочерний элемент по горизонтали */
+  align-items: center; /* Центрируем по вертикали, но с учетом блока пагинации */
+  flex-direction: column; /* Размещение элементов по вертикали */
+  height: 100vh; /* Высота контейнера по всей высоте экрана */
+  //padding: 20px;
+}
+
+.container {
+  width: 1200px;
+  display: flex;
+  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
+  align-items: flex-start; /* Центрируем по вертикали */
+  padding: 20px;
+  border: 2px solid #5c6bc0; /* Устанавливаем границу с цветом и толщиной */
+  border-radius: 10px; /* Скругляем углы */
+}
+
+.comics-list {
+  display: flex; /* Используем flexbox для выстраивания элементов */
+  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
+  justify-content: flex-start; /* Размещаем элементы в начале строки по горизонтали */
+  align-items: flex-start; /* Размещаем элементы в начале строки по вертикали */
+  gap: 20px; /* Расстояние между элементами */
+  margin-right: 50px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+}
+
+/* Стили для блока пагинации */
+.pagination {
+  display: flex;
+  justify-content: center; /* Центрируем по горизонтали */
+  align-items: center; /* Центрируем по вертикали */
+  margin-top: 20px; /* Отступ сверху */
+  gap: 15px; /* Расстояние между элементами */
+}
+
+.pagination button {
+  background-color: #5c6bc0; /* Синий цвет кнопок */
+  color: white; /* Белый цвет текста */
+  border: none; /* Убираем границу */
+  padding: 10px 20px; /* Отступы внутри кнопки */
+  border-radius: 5px; /* Скругление углов */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s ease; /* Плавный переход при наведении */
+}
+
+.pagination button:hover {
+  background-color: #0056b3; /* Темно-синий при наведении */
+}
+
+.pagination span {
+  font-size: 16px; /* Размер шрифта для номера страницы */
+  font-weight: bold; /* Жирный текст */
+  color: #333; /* Темный цвет текста */
+}
+
+input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 5px;
+
+  &:focus {
+    border-color: #0056b3;
+  }
+}

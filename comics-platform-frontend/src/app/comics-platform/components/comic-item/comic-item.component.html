@@ -1,4 +1,16 @@
-<div class="comics-item">
-    <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
-    <h3>{{ comicItem.name }}</h3>
-  </div>
+<!-- <div class="comics-item">
+    <button (click)="openComic()">
+        <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
+        <h3>{{ comicItem.name }}</h3>
+    </button>
+</div> -->
+
+<div class="comics-item" *ngIf="comicItem">
+    <button (click)="openComic()">
+        <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
+        <div class="overlay">
+            <h3>{{ comicItem.name }}</h3>
+        </div>
+    </button>
+</div>
+

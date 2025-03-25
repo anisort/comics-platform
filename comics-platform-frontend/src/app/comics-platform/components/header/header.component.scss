@@ -1,0 +1,75 @@
+/* Основные стили для шапки */
+header {
+    background-color: #333; /* Темный фон */
+    padding: 20px 50px; /* Отступы вокруг шапки */
+    color: white; /* Белый цвет текста */
+  }
+  
+  /* Используем flexbox для выравнивания элементов */
+  nav {
+    display: flex;
+    justify-content: space-between; /* Размещение элементов между краями */
+    align-items: center; /* Выравнивание по вертикали */
+  }
+  
+  /* Логотип */
+  .logo a {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  /* Ссылки по центру */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Стили для ссылок */
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px; /* Отступы вокруг текста */
+    border-radius: 5px; /* Закругленные углы */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Наведение на ссылки */
+  .nav-links a:hover {
+    background-color: #444;
+    color: #f0f0f0;
+  }
+  
+  /* Стили для кнопок */
+  button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 2px;
+  }
+  
+  /* Кнопка при наведении */
+  button:hover {
+    background-color: #3f51b5;
+    transform: scale(1.05);
+  }
+  
+  /* Для блока авторизации */
+  .auth-links {
+    display: flex;
+    align-items: center; /* Выравниваем элементы по вертикали */
+    gap: 10px;
+  }
+  
+  .auth-links span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  

@@ -7,6 +7,8 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { MyLibraryPageComponent } from './components/mylibrary-page/mylibrary-page.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/noauth.guard';
+import { ComicSingleItemComponent } from './components/comic-single-item/comic-single-item.component';
+import { CreateComicComponent } from './components/create-comic/create-comic.component';
 
 const routes: Routes = [
   { path: 'comics-platform/home', component: HomePageComponent},
@@ -17,10 +19,13 @@ const routes: Routes = [
   {path: 'comics-platform/login', component: LoginFormComponent, canActivate: [NoAuthGuard]},
   {path: 'comics-platform/activate', component: ActivationComponent, canActivate: [NoAuthGuard]},
   { path: 'comics-platform/my-library', component: MyLibraryPageComponent, canActivate: [AuthGuard] },
+
+  {path: 'comics-platform/comic-detail-info/:id', component: ComicSingleItemComponent},
+  {path: 'comics-platform/add-comic', component: CreateComicComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class ComicsPlatformRoutingModule { }

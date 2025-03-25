@@ -18,9 +18,11 @@ export class UploadService {
     return await v2.uploader.upload(file.path, {folder});
   }
 
-  async deleteCoverFromCloudinary(valueToDelete: string): Promise<void> {
+  async delete(valueToDelete: string): Promise<void> {
     await v2.uploader.destroy(valueToDelete);
   }
+
+
 
 }
 

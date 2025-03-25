@@ -1,0 +1,130 @@
+/* Основний контейнер форми */
+.create-comic-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок */
+.create-comic-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Стиль для групи полів */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Лейбли */
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+}
+
+/* Поля вводу */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Селектори з кількома варіантами */
+.form-control[multiple] {
+    height: 150px;
+}
+
+/* Помилки валідації */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Стиль для кнопки */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff; /* Колір для активної кнопки */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Ховер ефект для кнопки */
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Стиль для кнопки, коли вона неактивна (disabled) */
+.btn:disabled {
+    background-color: #cccccc; /* Сірий фон для неактивної кнопки */
+    color: #666666; /* Сірий колір тексту для неактивної кнопки */
+    cursor: not-allowed; /* Вказівник миші змінюється на заборонений */
+}
+
+/* Стиль для попереднього перегляду обкладинки */
+img {
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* Стиль для полів вводу при фокусі */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+/* Стиль для виведення попереднього перегляду зображення */
+.create-comic-container img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+    margin-top: 10px;
+}
+
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 1000;
+  }
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #fff;
+    border-top: 6px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

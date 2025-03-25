@@ -20,7 +20,7 @@ export class CreateComicDto {
   @IsNotEmpty()
   username: string;
 
-  @IsArray()
+  //@IsArray()
   @IsString({ each: true })
-  genres: string[];
+  genres: string[] | string;
 }

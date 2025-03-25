@@ -10,9 +10,15 @@ export class GenresService {
     private genreRepository: Repository<Genre>,
   ) {}
 
-  async findByNames(names: string[]): Promise<Genre[]> {
+  async findByNames(names: string[] | string): Promise<Genre[]> {
+    const namesArray = Array.isArray(names) ? names : [names];
     return this.genreRepository.find({
-      where: names.map(name => ({ name })),
+      where: namesArray.map(name => ({ name })),
     });
   }
+
+  async getAllGenres(): Promise<Genre[]>{
+    return this.genreRepository.find();
+  }
+  
 }

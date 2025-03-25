@@ -19,7 +19,7 @@ export class AuthService {
 
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private usersRepository: Repository<User>, // add to sequence
     private configService: ConfigService,
     private jwtService: JwtService,
     private usersService: UsersService
@@ -62,7 +62,7 @@ export class AuthService {
     await transporter.sendMail(mailOptions);
   }
 
-  async activateAccount(token: string): Promise<{ email: string; username: string } | { errorMessage: string } | null> {
+  async activateAccount(token: string): Promise<{ email: string; username: string } | { errorMessage: string }> {
     try {
       const decoded = this.jwtService.verify(token, {secret: this.configService.get('JWT_SECRET')});
       const user = await this.usersRepository.findOne({ where: { id: decoded.userId } });

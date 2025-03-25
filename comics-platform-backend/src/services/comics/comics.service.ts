@@ -45,55 +45,51 @@ export class ComicsService {
     newComic.coverUrl = coverResult.secure_url;
 
     return this.comicRepository.save(newComic);
-}
+  }
 
-  // async findAllComics(): Promise<ComicItemDto[] | {message}> {
-  //   const comics = await this.comicRepository.find({ relations: ['user'] });
+  async findAllComics(filters: { [key: string]: string }, page?: number, limit?: number): Promise<{ comics: ComicItemDto[], total: number, totalPages?: number }> {
+    let where: any = {};
 
-  //   if(comics.length == 0) return { message: "There are no comics in the system"};
-
-  //   return comics.map(comic => ({
-  //     name: comic.name,
-  //     coverUrl: comic.coverUrl,
-  //   }));
-  // }
-
-  async findAllComics(filters: { [key: string]: string }): Promise<ComicItemDto[] | { message: string }> {
-    let where: any = {}; 
-
-    if (filters.username) {
-      const currentUser = await this.usersService.findUserByName(filters.username);
-      if (!currentUser) {
-        return { message: 'Author not found' };
-      }
-      console.log(currentUser)
-      where.user = { id: currentUser.id };
-    }
-  
     if (filters.genre) {
       where.genre = filters.genre;
     }
-  
     if (filters.year) {
       where.year = filters.year;
     }
-  
-    const comics = await this.comicRepository.find({
-      relations: ['user'],
-      where,
-    });
-  
-    if (comics.length === 0) {
-      return { message: "There are no comics in the system" };
+
+    if (page && limit) {
+      const [comics, total] = await this.comicRepository.findAndCount({
+        relations: ['user'],
+        where,
+        take: limit,
+        skip: (page - 1) * limit,
+      });
+
+      return {
+        comics: comics.map(comic => ({
+          id: comic.id,
+          name: comic.name,
+          coverUrl: comic.coverUrl,
+        })),
+        total,
+        totalPages: Math.ceil(total / limit),
+      };
+    } else {
+      const comics = await this.comicRepository.find({
+        relations: ['user'],
+        where,
+      });
+
+      return {
+        comics: comics.map(comic => ({
+          id: comic.id,
+          name: comic.name,
+          coverUrl: comic.coverUrl,
+        })),
+        total: comics.length,
+      };
     }
-  
-    return comics.map(comic => ({
-      id: comic.id,
-      name: comic.name,
-      coverUrl: comic.coverUrl,
-    }));
   }
-  
 
   async findComicById(id: number): Promise<ComicItemSingleDto | {errorMessage}> {
     const comic = await this.comicRepository.findOne({
@@ -152,7 +148,7 @@ export class ComicsService {
     if (newCoverImage) {
       const publicId = (comic.coverUrl).split('/').pop()?.split('.')[0];
       const valueToDelete = `comics-platform/comics/${comic.id}/cover/${publicId}`
-      await this.uploadService.deleteCoverFromCloudinary(valueToDelete);
+      await this.uploadService.delete(valueToDelete);
 
       const folder = `comics-platform/comics/${comic.id}/cover`;
       const coverResult = await this.uploadService.upload(newCoverImage, folder);
@@ -175,37 +171,112 @@ export class ComicsService {
     if (!comic) {
       return { errorMessage: 'Comic not found' };
     }
-
+    
     await this.comicRepository.remove(comic);
-    const valueToDelete = `comics-platform/comics/${comic.id}`
-    await this.uploadService.deleteCoverFromCloudinary(valueToDelete);
+
+    // const publicId = (comic.coverUrl).split('/').pop()?.split('.')[0];
+    // console.log(publicId, " ", id)
+    // const valueToDelete = `comics-platform/comics/${id}/cover/${publicId}`
+    // await this.uploadService.delete(valueToDelete);
 
   }
 
-  // async getComicsByAuthor(currentUsername: string): Promise<ComicItemDto[] | { errorMessage }> {
-  //   console.log('Username:', currentUsername);
+  async getComicsByAuthor(currentUsername: string): Promise<ComicItemDto[] | { errorMessage }> {
     
-  //   const currentUser = await this.usersService.findUserByName(currentUsername);
-  //   if (!currentUser) {
-  //     console.log('User not found');
-  //     return { errorMessage: 'User not found' };
-  //   }
+    const currentUser = await this.usersService.findUserByName(currentUsername);
+    if (!currentUser) {
+      return { errorMessage: 'User not found' };
+    }
     
-  //   console.log('User found:', currentUser);
+    const comics = await this.comicRepository.find({
+      relations: ['user'],
+      where: { user: { id: currentUser.id } },
+    });
     
-  //   const comics = await this.comicRepository.find({
-  //     relations: ['user'],
-  //     where: { user: { id: currentUser.id } },
-  //   });
+    return comics.map(comic => ({
+      id: comic.id,
+      name: comic.name,
+      coverUrl: comic.coverUrl,
+    }));
+  }
   
-  //   console.log('Comics found:', comics);
-    
+}
+
+
+
+
+
+
+  // async findAllComics(): Promise<ComicItemDto[] | {message}> {
+  //   const comics = await this.comicRepository.find({ relations: ['user'] });
+
+  //   if(comics.length == 0) return { message: "There are no comics in the system"};
+
   //   return comics.map(comic => ({
   //     name: comic.name,
   //     coverUrl: comic.coverUrl,
   //   }));
   // }
+
+
+  // async findAllComics(filters: { [key: string]: string }, page: number, limit: number): Promise<{ comics: ComicItemDto[], total: number, totalPages: number }> {
+//   let where: any = {};
+
+//   if (filters.genre) {
+//     where.genre = filters.genre;
+//   }
+//   if (filters.year) {
+//     where.year = filters.year;
+//   }
+
+//   const [comics, total] = await this.comicRepository.findAndCount({
+//     relations: ['user'],
+//     where,
+//     take: limit,
+//     skip: (page - 1) * limit,
+//   });
+
+//   const totalPages = Math.ceil(total / limit);
+
+//   return {
+//     comics: comics.map(comic => ({
+//       id: comic.id,
+//       name: comic.name,
+//       coverUrl: comic.coverUrl,
+//     })),
+//     total,
+//     totalPages
+//   };
+// }
+
+
+
+  // async findAllComics(filters: { [key: string]: string }): Promise<ComicItemDto[] | { message: string }> {
+  //   let where: any = {}; 
+    
+  //   if (filters.genre) {
+  //     where.genre = filters.genre;
+  //   }
   
+  //   if (filters.year) {
+  //     where.year = filters.year;
+  //   }
   
+  //   const comics = await this.comicRepository.find({
+  //     relations: ['user'],
+  //     where,
+  //   });
   
-}
+  //   if (comics.length === 0) {
+  //     return { message: "There are no comics in the system" };
+  //   }
+  
+  //   return comics.map(comic => ({
+  //     id: comic.id,
+  //     name: comic.name,
+  //     coverUrl: comic.coverUrl,
+  //   }));
+  // }
+
+
+  

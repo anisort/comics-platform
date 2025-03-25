@@ -33,7 +33,7 @@ export class RegisterFormComponent implements OnInit{
     );
   }
 
-  onSubmit() {
+  register() {
     if (this.registerForm.valid) {
       const { username, email, password } = this.registerForm.value;
       const user: User = { username, email, password };

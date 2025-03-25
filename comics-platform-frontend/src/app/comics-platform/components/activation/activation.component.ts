@@ -29,21 +29,21 @@ export class ActivationComponent {
         return;
       }
   
-      this.authService.activateAccount(token).subscribe(
-          (response: ActivationResponse) => {
-              if ('email' in response && 'username' in response) {
-                  this.email = response.email;
-                  this.username = response.username;
-                  this.message = `Account successfully activated for ${this.username} (${this.email})`;
-              } else if ('errorMessage' in response) {
-                  this.errorMessage = response.errorMessage;
-              }
-          },
-          (error) => {
-              this.errorMessage = 'An error occurred while activating your account. Please try again later.';
-              // console.error('Error occurred during activation:', error);
+      this.authService.activateAccount(token).subscribe({
+        next: (response: ActivationResponse) => {
+          if ('email' in response && 'username' in response) {
+            this.email = response.email;
+            this.username = response.username;
+            this.message = `Account successfully activated for ${this.username} (${this.email})`;
+          } else if ('errorMessage' in response) {
+            this.errorMessage = response.errorMessage;
           }
-      );
+        },
+        error: () => {
+          this.errorMessage = 'An error occurred while activating your account. Please try again later.';
+        }
+      });
+      
   });
   }
   
