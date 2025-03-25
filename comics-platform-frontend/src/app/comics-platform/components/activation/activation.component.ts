@@ -9,7 +9,7 @@ import { AuthService, ActivationResponse } from '../../services/auth.service';
   styleUrl: './activation.component.scss'
 })
 export class ActivationComponent {
-  message: string = '';
+  successMessage: string = '';
   errorMessage: string = '';
   username: string = '';
   email: string = '';
@@ -34,7 +34,7 @@ export class ActivationComponent {
           if ('email' in response && 'username' in response) {
             this.email = response.email;
             this.username = response.username;
-            this.message = `Account successfully activated for ${this.username} (${this.email})`;
+            this.successMessage = `Account successfully activated for ${this.username} (${this.email})`;
           } else if ('errorMessage' in response) {
             this.errorMessage = response.errorMessage;
           }

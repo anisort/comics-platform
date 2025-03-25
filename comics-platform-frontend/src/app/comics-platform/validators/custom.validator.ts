@@ -7,7 +7,7 @@ import { UsersService } from '../services/users.service';
 @Injectable({
     providedIn: 'root',
   })
-export class RegisterFormValidator {
+export class CustomValidator {
     static passwordStrengthValidator(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             const value: string = control.value || '';

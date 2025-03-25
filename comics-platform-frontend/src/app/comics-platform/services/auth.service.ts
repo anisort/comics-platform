@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { AppConfig, CONFIG_TOKEN } from '../../../../config';
-import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 
 
@@ -22,7 +21,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     @Inject(CONFIG_TOKEN) private config: AppConfig
   ) {
     this.apiUrl = `${this.config.apiUrl}/auth`;
@@ -56,7 +54,6 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     this.userSubject.next(null);
-    this.router.navigate(['/comics-platform/login']);
   }
 
   isAuthenticated(): boolean {
