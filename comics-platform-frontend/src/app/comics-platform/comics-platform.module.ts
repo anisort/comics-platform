@@ -11,8 +11,8 @@ import { ComicItemComponent } from './components/comic-item/comic-item.component
 import { ComicItemMylibraryComponent } from './components/comic-item-mylibrary/comic-item-mylibrary.component';
 import { ComicSingleItemComponent } from './components/comic-single-item/comic-single-item.component';
 import { CreateComicComponent } from './components/create-comic/create-comic.component';
-import { SearchPipe } from './pipes/search.pipe';
 import { SearchComponent } from './components/search/search.component';
+import { AllComicsPageComponent } from './components/all-comics-page/all-comics-page.component';
 
 
 @NgModule({
@@ -26,8 +26,8 @@ import { SearchComponent } from './components/search/search.component';
     ComicItemMylibraryComponent,
     ComicSingleItemComponent,
     CreateComicComponent,
-    SearchPipe,
     SearchComponent,
+    AllComicsPageComponent,
   ],
   imports: [
     CommonModule,

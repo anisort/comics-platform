@@ -12,10 +12,10 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Comic]), 
     MulterModule.register({
       dest: '../../../uploads'
     }),
-    TypeOrmModule.forFeature([Comic]), 
     UploadModule,
     ConfigModule, 
     GenresModule,

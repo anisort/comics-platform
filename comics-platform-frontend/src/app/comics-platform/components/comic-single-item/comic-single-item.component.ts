@@ -11,21 +11,26 @@ import { ComicsService } from '../../services/comics.service';
 })
 export class ComicSingleItemComponent implements OnInit{
   comicSingleItem!: ComicSingleItem;
+  errorMessage: string | null = null;
   constructor(
     private comicsService: ComicsService,
     private route: ActivatedRoute,
     private router: Router
   ){}
   ngOnInit(): void {
-    // Підписка на зміни параметрів маршруту
     this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id')); // Отримуємо параметр id
+      const id = Number(params.get('id'));
       if (id) {
         this.comicsService.getComicById(id).subscribe(data => {
-          this.comicSingleItem = data; // Завантажуємо комікс за id
+          if(data){
+            this.comicSingleItem = data;
+          }
+          else{
+            this.errorMessage = 'Comic not found'
+          }
         });
       } else {
-        this.router.navigate(['/']); // Якщо id не знайдено, переходимо на головну
+        this.router.navigate(['/']);
       }
     });
   }

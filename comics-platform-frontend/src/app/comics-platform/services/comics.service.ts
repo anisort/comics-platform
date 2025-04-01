@@ -20,21 +20,27 @@ export class ComicsService {
     this.apiUrl = `${this.config.apiUrl}/comics`;
   }
 
-  getComicsByUsername(username: string): Observable<ComicItem[]> {
-      return this.http.get<ComicItem[]>(`${this.apiUrl}/my-library/${username}`)
-  }
-
-  getAllComics(page?: number, limit?: number): Observable<{ comics: ComicItem[], total: number, totalPages?: number }> {
+  getAllComics(page: number, limit: number): Observable<{ comics: ComicItem[], total: number, totalPages: number }> {
     let params = new HttpParams();
-    if (page !== undefined && limit !== undefined) {
-      params = params.set('page', page.toString()).set('limit', limit.toString());
-    }
-    return this.http.get<{ comics: ComicItem[], total: number, totalPages?: number }>(this.apiUrl, { params });
+    params = params.set('page', page.toString()).set('limit', limit.toString());
+    return this.http.get<{ comics: ComicItem[], total: number, totalPages: number }>(this.apiUrl, { params });
+}
+
+
+  getComicById(id: number): Observable<ComicSingleItem | null>{
+    return this.http.get<ComicSingleItem | null>(`${this.apiUrl}/${id}`)
   }
 
-  getComicById(id: number): Observable<ComicSingleItem>{
-    return this.http.get<ComicSingleItem>(`${this.apiUrl}/${id}`)
+  searchComics(query: string): Observable<ComicItem[]> {
+    let params = new HttpParams();
+    params = params.set('query', query.toString());
+    return this.http.get<ComicItem[]>(`${this.apiUrl}/search`, {params});
   }
+  
+
+  getComicsByCurrentUser(): Observable<ComicItem[]> {
+    return this.http.get<ComicItem[]>(`${this.apiUrl}/my-library`)
+}
 
   createComic(formData: FormData): Observable<CreateComic> {
     return this.http.post<CreateComic>(this.apiUrl, formData);

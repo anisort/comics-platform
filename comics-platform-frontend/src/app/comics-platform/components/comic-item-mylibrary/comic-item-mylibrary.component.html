@@ -3,6 +3,11 @@
         <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
         <div class="overlay">
             <h3>{{ comicItem.name }}</h3>
+            <div class="action-buttons">
+                <button class="action-btn get-btn" (click)="openComic()">Get</button>
+                <button class="action-btn edit-btn" (click)="editComic()">Edit</button>
+                <button class="action-btn delete-btn" (click)="deleteComic()">Delete</button>
+            </div>
         </div>
     </button>
 </div>

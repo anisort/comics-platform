@@ -25,10 +25,4 @@ export class AuthController {
     return await this.authService.authenticate(input);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('me')
-  getUserInfo(@Request() request) {
-    return request.user;
-  }
-
 }

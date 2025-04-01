@@ -4,7 +4,7 @@
         @for(comicItem of comics; track comicItem.id; let index = $index){
             <app-comic-item-mylibrary [comicItem]="comicItem"></app-comic-item-mylibrary>
         }
-        <button class="add-button" (click)="onClick()">+</button>
+        <button class="add-button" (click)="onAddNewComic()">+</button>
     </div>
 
 </div>

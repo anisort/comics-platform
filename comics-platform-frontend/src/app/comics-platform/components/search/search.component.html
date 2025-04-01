@@ -8,17 +8,28 @@
     (focus)="onSearchFocus()"
     (blur)="onSearchBlur()"
   />
-  <div *ngIf="filteredComics.length > 0 && isSearchFocused" class="search-results">
-    <div
-      *ngFor="let comic of filteredComics"
-      class="search-result-item"
-      (click)="selectComic(comic)"
-    >
-      <div class="comic-item">
-        <img [src]="comic.coverUrl" alt="Comic cover" class="comic-cover" />
-        <h3>{{ comic.name }}</h3>
+  <div *ngIf="isSearchFocused && searchQuery.length > 0" class="search-results">
+    <!-- Если есть комиксы в фильтре, показываем их -->
+    <div *ngIf="filteredComics.length > 0; else noResults">
+      <div
+        *ngFor="let comic of filteredComics"
+        class="search-result-item"
+        (click)="selectComic(comic)"
+      >
+        <div class="comic-item">
+          <img [src]="comic.coverUrl" alt="Comic cover" class="comic-cover" />
+          <h3>{{ comic.name }}</h3>
+        </div>
       </div>
     </div>
+    <ng-template #noResults>
+      <div class="no-results">
+        No search results found
+      </div>
+    </ng-template>
   </div>
+  
+  
+  
   
 </div>

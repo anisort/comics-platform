@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Param, Get, UploadedFile, UseInterceptors, UseGuards, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Body, Param, Get, UploadedFile, UseInterceptors, UseGuards, Put, Delete, Query, Req, Request } from '@nestjs/common';
 import { ComicsService } from '../../services/comics/comics.service';
 import { CreateComicDto } from '../../dto/create-comic.dto';
 import { ComicItemDto } from '../../dto/comic.item.dto';
@@ -14,14 +14,26 @@ export class ComicsController {
   @Get()
   async findAll(
     @Query() filters: { [key: string]: string },
-    @Query('page') page?: number, 
-    @Query('limit') limit?: number,
+    @Query('page') page: number, 
+    @Query('limit') limit: number,
   ): Promise<{ comics: ComicItemDto[], total: number, totalPages?: number }> {
     return await this.comicsService.findAllComics(filters, page, limit);
   }
+
+  @Get('/search')
+  async searchComics(@Query('query') query: string): Promise<ComicItemDto[]> {
+    return await this.comicsService.searchComics(query);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get("/my-library")
+  async getUserComics(@Request() req){
+    console.log(req.user.username)
+    return await this.comicsService.getComicsByUsername(req.user.username);
+  }
   
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<ComicItemSingleDto | {errorMessage}> {
+  async findOne(@Param('id') id: number): Promise<ComicItemSingleDto | null> {
     return await this.comicsService.findComicById(id);
   }
 
@@ -43,12 +55,6 @@ export class ComicsController {
   @Delete(':id')
   async delete(@Param('id') id: number){
     await this.comicsService.deleteComic(id);
-  }
-
-  @UseGuards(AuthGuard)
-  @Get("/my-library/:username")
-  async getUserComics(@Param('username') currentUsername: string){
-    return await this.comicsService.getComicsByAuthor(currentUsername);
   }
 
 }

@@ -11,6 +11,8 @@ import { UploadModule } from './modules/upload/upload.module';
 import { GenresModule } from './modules/genres/genres.module';
 import { ComicsModule } from './modules/comics/comics.module';
 import { JwtModule } from '@nestjs/jwt';
+import { Comic } from './entities/comic.entity';
+import { Genre } from './entities/genre.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { JwtModule } from '@nestjs/jwt';
       username: 'postgres',
       password: '1234',
       database: 'comics-platform',
-      entities: [User],
+      entities: [User, Comic, Genre],
       autoLoadEntities: true,
       synchronize: true,
     }),

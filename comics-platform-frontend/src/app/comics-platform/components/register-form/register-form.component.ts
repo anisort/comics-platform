@@ -4,7 +4,6 @@ import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 import { AuthService } from '../../services/auth.service';
 import { CustomValidator } from '../../validators/custom.validator';
-import { RegisterFormAsyncValidator } from '../../validators/register-form-async.validator';
 
 @Component({
   selector: 'app-register-form',

@@ -31,7 +31,7 @@ export class AuthService {
     newUser.password = await bcrypt.hash(newUser.password, 10);
     const user = this.usersRepository.create(newUser);
     await this.usersRepository.save(user);
-    const token = this.generateToken(user.id);
+    const token = this.generateToken(user.id, user.username);
     this.sendActivationEmail(newUser.email, token);
     return user;
   }
@@ -111,14 +111,15 @@ export class AuthService {
     });
   }
 
-  async authenticate(input: AuthInput): Promise<AuthResult>{
-    const user =  await this.validateUser(input);
-
+  async authenticate(authInput: AuthInput): Promise<AuthResult>{
+    const user =  await this.validateUser(authInput);
     if (!user) {
       throw new UnauthorizedException();
     }
-
-    return this.signIn(user);
+    const accessToken = this.generateToken(user.userId, user.username);
+    // const tokenPayload = await this.jwtService.verifyAsync(accessToken);
+    //         console.log("Full Token Payload auth:", tokenPayload);
+    return { accessToken, username: user.username, userId: user.userId};
   }
 
   async validateUser(input: AuthInput): Promise<SignInData | null>{
@@ -133,19 +134,15 @@ export class AuthService {
 
     return null;
   }
-  
-  async signIn (user: SignInData): Promise<AuthResult> {
-    const accessToken = this.generateToken(user.userId);
-    return { accessToken, username: user.username, userId: user.userId};
-  }
 
-  private generateToken(userId: number): string {
+  private generateToken(userId: number, username: string): string {
     return this.jwtService.sign(
-      { userId },
-      {
-        secret: this.configService.get('JWT_SECRET'),
-        expiresIn: this.configService.get('JWT_EXPIRES_IN'),
-      }
+        { userId, username },
+        {
+            secret: this.configService.get('JWT_SECRET'),
+            expiresIn: this.configService.get('JWT_EXPIRES_IN'),
+        }
     );
-  }
+}
+
 }

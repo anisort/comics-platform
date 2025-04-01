@@ -1,9 +1,14 @@
-<h2>Home page</h2>
+<h2>All comics</h2>
 <div class="main-container">
   <div class="container">
     <div class="comics-list">
-      @for(comicItem of comics; track comicItem.id; let index = $index){
-        <app-comic-item [comicItem]="comicItem"></app-comic-item>
+      @if(comics.length > 0){
+        @for(comicItem of comics; track comicItem.id; let index = $index){
+          <app-comic-item [comicItem]="comicItem"></app-comic-item>
+        }
+      }
+      @if(comics.length < 0){
+        <p class="no-comics-message">No comics available in the system.</p>
       }
     </div>
   </div>

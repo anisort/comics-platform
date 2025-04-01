@@ -1,6 +1,6 @@
-import { Injectable, Request, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, Request, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Comic } from '../../entities/comic.entity';
 import { CreateComicDto } from '../../dto/create-comic.dto';
 import { GenresService } from '../genres/genres.service';
@@ -21,7 +21,74 @@ export class ComicsService {
     private usersService: UsersService
   ) {}
 
-  async createComic(createComicDto: CreateComicDto,coverImage: Express.Multer.File): Promise<Comic | {errorMessage}> {
+  async findAllComics(filters: { [key: string]: string }, page: number, limit: number): Promise<{ comics: ComicItemDto[], total: number, totalPages: number }> {
+    let where: any = {};
+
+    if (filters.genre) {
+      where.genre = filters.genre;
+    }
+    if (filters.year) {
+      where.year = filters.year;
+    }
+    const [comics, total] = await this.comicRepository.findAndCount({
+      relations: ['user'],
+      where,
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+
+    return {
+      comics: comics.map(comic => ({
+        id: comic.id,
+        name: comic.name,
+        coverUrl: comic.coverUrl,
+      })),
+      total,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async findComicById(id: number): Promise<ComicItemSingleDto | null> {
+    const comic = await this.comicRepository.findOne({
+      where: { id },
+      relations: ['user', 'genres'],
+    });
+  
+    if (!comic) {
+      return null;
+    }
+  
+    return {
+      id: comic.id,
+      name: comic.name,
+      description: comic.description,
+      status: comic.status,
+      ageRating: comic.ageRating,
+      coverUrl: comic.coverUrl,
+      createdAt: comic.createdAt.getFullYear().toString(),
+      user: comic.user.username,
+      genres: comic.genres.map(genre => genre.name),
+    };
+  }
+
+  async searchComics(searchQuery: string): Promise<ComicItemDto[]> {
+    if (!searchQuery) return [];
+  
+    const comics = await this.comicRepository.find({
+      where: { name: ILike(`%${searchQuery}%`) },
+      relations: ['user'],
+      take: 5,
+    });
+  
+    return comics.map(comic => ({
+      id: comic.id,
+      name: comic.name,
+      coverUrl: comic.coverUrl,
+    }));
+  }
+  
+
+  async createComic(createComicDto: CreateComicDto,coverImage: Express.Multer.File): Promise<Comic | {errorMessage : string}> {
     const genres: Genre[] = await this.genresService.findByNames(createComicDto.genres);
     const user = await this.usersService.findUserByName(createComicDto.username);
 
@@ -47,74 +114,7 @@ export class ComicsService {
     return this.comicRepository.save(newComic);
   }
 
-  async findAllComics(filters: { [key: string]: string }, page?: number, limit?: number): Promise<{ comics: ComicItemDto[], total: number, totalPages?: number }> {
-    let where: any = {};
-
-    if (filters.genre) {
-      where.genre = filters.genre;
-    }
-    if (filters.year) {
-      where.year = filters.year;
-    }
-
-    if (page && limit) {
-      const [comics, total] = await this.comicRepository.findAndCount({
-        relations: ['user'],
-        where,
-        take: limit,
-        skip: (page - 1) * limit,
-      });
-
-      return {
-        comics: comics.map(comic => ({
-          id: comic.id,
-          name: comic.name,
-          coverUrl: comic.coverUrl,
-        })),
-        total,
-        totalPages: Math.ceil(total / limit),
-      };
-    } else {
-      const comics = await this.comicRepository.find({
-        relations: ['user'],
-        where,
-      });
-
-      return {
-        comics: comics.map(comic => ({
-          id: comic.id,
-          name: comic.name,
-          coverUrl: comic.coverUrl,
-        })),
-        total: comics.length,
-      };
-    }
-  }
-
-  async findComicById(id: number): Promise<ComicItemSingleDto | {errorMessage}> {
-    const comic = await this.comicRepository.findOne({
-      where: { id },
-      relations: ['user', 'genres'],
-    });
-  
-    if (!comic) {
-      return { errorMessage: 'Comic not found' };
-    }
-  
-    return {
-      id: comic.id,
-      name: comic.name,
-      description: comic.description,
-      status: comic.status,
-      ageRating: comic.ageRating,
-      coverUrl: comic.coverUrl,
-      createdAt: comic.createdAt.getFullYear().toString(),
-      user: comic.user.username,
-      genres: comic.genres.map(genre => genre.name),
-    };
-  }
-
-  async updateComic(id: number, updateComicDto: UpdateComicDto, newCoverImage?: Express.Multer.File) : Promise<Comic| {errorMessage}>{
+  async updateComic(id: number, updateComicDto: UpdateComicDto, newCoverImage?: Express.Multer.File) : Promise<Comic| {errorMessage : string}>{
     const comic = await this.comicRepository.findOne({
       where: { id },
       relations: ['user', 'genres'],
@@ -181,11 +181,11 @@ export class ComicsService {
 
   }
 
-  async getComicsByAuthor(currentUsername: string): Promise<ComicItemDto[] | { errorMessage }> {
+  async getComicsByUsername(currentUsername: string): Promise<ComicItemDto[]> {
     
     const currentUser = await this.usersService.findUserByName(currentUsername);
     if (!currentUser) {
-      return { errorMessage: 'User not found' };
+      throw NotFoundException;
     }
     
     const comics = await this.comicRepository.find({
@@ -206,20 +206,7 @@ export class ComicsService {
 
 
 
-
-  // async findAllComics(): Promise<ComicItemDto[] | {message}> {
-  //   const comics = await this.comicRepository.find({ relations: ['user'] });
-
-  //   if(comics.length == 0) return { message: "There are no comics in the system"};
-
-  //   return comics.map(comic => ({
-  //     name: comic.name,
-  //     coverUrl: comic.coverUrl,
-  //   }));
-  // }
-
-
-  // async findAllComics(filters: { [key: string]: string }, page: number, limit: number): Promise<{ comics: ComicItemDto[], total: number, totalPages: number }> {
+// async findAllComics(filters: { [key: string]: string }, page?: number, limit?: number): Promise<{ comics: ComicItemDto[], total: number, totalPages?: number }> {
 //   let where: any = {};
 
 //   if (filters.genre) {
@@ -229,54 +216,39 @@ export class ComicsService {
 //     where.year = filters.year;
 //   }
 
-//   const [comics, total] = await this.comicRepository.findAndCount({
-//     relations: ['user'],
-//     where,
-//     take: limit,
-//     skip: (page - 1) * limit,
-//   });
 
-//   const totalPages = Math.ceil(total / limit);
+//   if (page && limit) {
+//     const [comics, total] = await this.comicRepository.findAndCount({
+//       relations: ['user'],
+//       where,
+//       take: limit,
+//       skip: (page - 1) * limit,
+//     });
 
-//   return {
-//     comics: comics.map(comic => ({
-//       id: comic.id,
-//       name: comic.name,
-//       coverUrl: comic.coverUrl,
-//     })),
-//     total,
-//     totalPages
-//   };
+//     return {
+//       comics: comics.map(comic => ({
+//         id: comic.id,
+//         name: comic.name,
+//         coverUrl: comic.coverUrl,
+//       })),
+//       total,
+//       totalPages: Math.ceil(total / limit),
+//     };
+//   } else {
+//     const comics = await this.comicRepository.find({
+//       relations: ['user'],
+//       where,
+//     });
+
+//     return {
+//       comics: comics.map(comic => ({
+//         id: comic.id,
+//         name: comic.name,
+//         coverUrl: comic.coverUrl,
+//       })),
+//       total: comics.length,
+//     };
+//   }
 // }
-
-
-
-  // async findAllComics(filters: { [key: string]: string }): Promise<ComicItemDto[] | { message: string }> {
-  //   let where: any = {}; 
-    
-  //   if (filters.genre) {
-  //     where.genre = filters.genre;
-  //   }
-  
-  //   if (filters.year) {
-  //     where.year = filters.year;
-  //   }
-  
-  //   const comics = await this.comicRepository.find({
-  //     relations: ['user'],
-  //     where,
-  //   });
-  
-  //   if (comics.length === 0) {
-  //     return { message: "There are no comics in the system" };
-  //   }
-  
-  //   return comics.map(comic => ({
-  //     id: comic.id,
-  //     name: comic.name,
-  //     coverUrl: comic.coverUrl,
-  //   }));
-  // }
-
 
   

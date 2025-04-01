@@ -11,12 +11,10 @@ export class CustomValidator {
     static passwordStrengthValidator(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             const value: string = control.value || '';
-
-            // Проверка на наличие:
-            const hasUpperCase = /[A-Z]/.test(value); // Заглавные буквы
-            const hasLowerCase = /[a-z]/.test(value); // Строчные буквы
-            const hasNumber = /\d/.test(value); // Цифры
-            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value); // Специальные символы
+            const hasUpperCase = /[A-Z]/.test(value);
+            const hasLowerCase = /[a-z]/.test(value);
+            const hasNumber = /\d/.test(value);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
 
             const isValid = hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
             return !isValid ? { weakPassword: true } : null;

@@ -19,20 +19,14 @@ export class SearchComponent {
   onSearchChange(): void {
     if (this.searchQuery.trim() === '') {
       this.filteredComics = [];
-    }
-    else {
-      this.comicsService.getAllComics().subscribe((response) => {
-        if (response && response.comics) {
-          this.filteredComics = response.comics
-            .filter((comic: ComicItem) =>
-              comic.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-            )
-            //.slice(0, 5);
-        }
+    } else {
+      this.comicsService.searchComics(this.searchQuery).subscribe((response) => {
+        this.filteredComics = response || [];
       });
     }
-    
   }
+  
+
 
   selectComic(comic: ComicItem) {
     this.comicSelected.emit(comic);
@@ -44,15 +38,12 @@ export class SearchComponent {
 
   isSearchFocused: boolean = true;
 
-  // Обработчик потери фокуса
   onSearchBlur() {
-    // Если текст пустой, скрываем результаты
     if (this.searchQuery.trim() === '') {
       this.isSearchFocused = false;
     }
   }
 
-  // Обработчик фокуса на поле ввода
   onSearchFocus() {
     this.isSearchFocused = true;
   }
