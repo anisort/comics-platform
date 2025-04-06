@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {v2} from 'cloudinary';
 import { UploadApiResponse } from 'cloudinary';
+import { Page } from 'src/entities/page.entity';
 
 @Injectable()
 export class UploadService {
@@ -22,16 +23,22 @@ export class UploadService {
     await v2.uploader.destroy(valueToDelete);
   }
 
+  async deletePageFromCloudService(imageUrl: string){
+    const publicId = (imageUrl).split('/').pop()?.split('.')[0];
+    const valueToDelete = `comics-platform/comics/pages/${publicId}`;
+    await this.delete(valueToDelete);
+  }
 
+  async deletePagesForEpisode(pageUrls: string[]): Promise<void> {
+    await Promise.all(pageUrls.map(p => this.deletePageFromCloudService(p)));
+  }
+
+  async deleteComicFromCloudService(coverUrl: string, pageUrls: string[]){
+    const publicId = (coverUrl).split('/').pop()?.split('.')[0];
+    const valueToDelete = `comics-platform/comics/covers/${publicId}`;
+    await this.delete(valueToDelete);
+    await Promise.all(pageUrls.map(p => this.deletePageFromCloudService(p)));
+  }
+  
 
 }
-
-
-
-  // async uploadPage(file: Express.Multer.File, comicsId: string, episodeId: string): Promise<UploadApiResponse> {
-  //   const folder = `comics-platform/${comicsId}/episodes/${episodeId}`;
-  //   const result = await this.cloudinary.uploader.upload(file.path, {
-  //     folder,
-  //   });
-  //   return result;
-  // }

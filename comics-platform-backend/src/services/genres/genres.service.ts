@@ -17,6 +17,7 @@ export class GenresService {
     });
   }
 
+  // make controller
   async getAllGenres(): Promise<Genre[]>{
     return this.genreRepository.find();
   }

@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { CreateComic } from '../../models/create-comic';
 import { Router } from '@angular/router';
+import { CustomValidator } from '../../validators/custom.validator';
 
 @Component({
   selector: 'app-create-comic',
@@ -21,11 +22,10 @@ export class CreateComicComponent implements OnInit{
 
   ngOnInit(): void {
     this.createForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.uniqueComicNameValidator(this.comicsService)),
+      description: new FormControl('', [Validators.required, Validators.minLength(10)]),
       status: new FormControl('', Validators.required),
       ageRating: new FormControl('', Validators.required),
-      username: new FormControl(this.authService.getUsername()),
       genres: new FormControl([], Validators.required)
     })
   }
@@ -55,7 +55,6 @@ export class CreateComicComponent implements OnInit{
       formData.append('description', this.createForm.get('description')?.value);
       formData.append('status', this.createForm.get('status')?.value);
       formData.append('ageRating', this.createForm.get('ageRating')?.value);
-      formData.append('username', this.createForm.get('username')?.value);
       this.createForm.value.genres.forEach((genre: string) => formData.append('genres', genre));
       formData.append('coverImage', this.coverImage);
 

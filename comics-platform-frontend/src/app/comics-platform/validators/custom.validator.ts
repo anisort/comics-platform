@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 import { UsersService } from '../services/users.service';
+import { ComicsService } from '../services/comics.service';
 
 @Injectable({
     providedIn: 'root',
@@ -50,6 +51,25 @@ export class CustomValidator {
           );
         };
     }
+
+    static uniqueComicNameValidator(comicsService: ComicsService, currentName: string = ''): AsyncValidatorFn {
+      return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        const value = control.value?.trim();
+        
+        if (!value || value === currentName) {
+          return of(null);
+        }
+    
+        return comicsService.checkName(value).pipe(
+          debounceTime(300),
+          switchMap(response => {
+            return response.exists ? of({ comicNameTaken: true }) : of(null);
+          }),
+          catchError(() => of(null))
+        );
+      };
+    }
+    
 
 
 }

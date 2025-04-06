@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsArray, isNumber } from 'class-validator';
+import { IsString, IsEnum, IsArray } from 'class-validator';
 import { ComicItemDto } from './comic.item.dto';
 
 export class ComicItemSingleDto extends ComicItemDto{

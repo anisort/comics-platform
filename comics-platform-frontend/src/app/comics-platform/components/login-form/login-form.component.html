@@ -1,6 +1,6 @@
 <div class="container">
     <form [formGroup]="loginForm">
-        <h3>Sign in</h3>
+        <h3 id="loginPage">Sign in</h3>
         @if(errorMessage){
             <div class="error-message">
                 {{ errorMessage }}
@@ -14,7 +14,7 @@
             <label for="password">Password:</label>
             <input id="password" type="password" formControlName="password">
         </div>
-        <button type="submit" (click)="login()" [disabled]="loginForm.invalid">Sign in</button>
+        <button id="loginButton" type="submit" (click)="login()" [disabled]="loginForm.invalid">Sign in</button>
         <div>Don't have an account? <a href="/comics-platform/register">Sign up</a></div>
     </form>
 </div>

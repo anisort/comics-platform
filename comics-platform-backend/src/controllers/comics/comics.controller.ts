@@ -31,52 +31,46 @@ export class ComicsController {
     console.log(req.user.username)
     return await this.comicsService.getComicsByUsername(req.user.username);
   }
+
+  @Get('check-name')
+  async checkComicName(@Query('name') name: string) {
+    const exists = await this.comicsService.isNameTaken(name);
+    return { exists };
+  }
   
-  @Get(':id')
-  async findOne(@Param('id') id: number): Promise<ComicItemSingleDto | null> {
-    return await this.comicsService.findComicById(id);
+  @UseGuards(AuthGuard)
+  @Get('check-authority/:id')
+  async findOne(@Param('id') id: number, @Request() req) {
+    const username = req.user.username;
+    return await this.comicsService.isAuthor(id, username);
   }
 
+  @Get(':id')
+  async isAuthor(@Param('id') id: number): Promise<ComicItemSingleDto | null> {
+    return await this.comicsService.findComicById(id);
+  }
+  
   @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('coverImage'))
-  async create(@Body() createComicDto: CreateComicDto, @UploadedFile() coverImage: Express.Multer.File) {
-    return await this.comicsService.createComic(createComicDto, coverImage);
+  async create(@Body() createComicDto: CreateComicDto, @UploadedFile() coverImage: Express.Multer.File, @Request() req) {
+    const username = req.user.username;
+    return await this.comicsService.createComic(createComicDto, coverImage, username);
   }
   
   @UseGuards(AuthGuard)
   @Put(':id')
   @UseInterceptors(FileInterceptor('newCoverImage'))
-  async update(@Param('id') id: number, @Body() updateComicDto: UpdateComicDto, @UploadedFile() newCoverImage?: Express.Multer.File,){
-    return await this.comicsService.updateComic(id, updateComicDto, newCoverImage);
+  async update(@Param('id') id: number, @Body() updateComicDto: UpdateComicDto,  @Request() req, @UploadedFile() newCoverImage?: Express.Multer.File,){
+    const username = req.user.username;
+    return await this.comicsService.updateComic(id, updateComicDto, username, newCoverImage);
   }
 
   @UseGuards(AuthGuard)
   @Delete(':id')
-  async delete(@Param('id') id: number){
-    await this.comicsService.deleteComic(id);
+  async delete(@Param('id') id: number, @Request() req){
+    const username = req.user.username;
+    await this.comicsService.deleteComic(id, username);
   }
 
 }
-
-
-
-  // @Get()
-  // async findAll(): Promise<ComicItemDto[] | {message}> {
-  //   return this.comicsService.findAllComics();
-  // }
-
-  // @Get()
-  // async findAll(@Query() filters: { [key: string]: string }): Promise<ComicItemDto[] | { message: string }> {
-  //   return await this.comicsService.findAllComics(filters);
-  // }
-
-
-  // @Get()
-  // async findAll(
-  //   @Query('page') page: number = 1, 
-  //   @Query('limit') limit: number = 10,
-  //   @Query() filters: { [key: string]: string }
-  // ): Promise<{ comics: ComicItemDto[], total: number }> {
-  //   return await this.comicsService.findAllComics(filters, page, limit);
-  // }

@@ -24,5 +24,6 @@ import { AuthModule } from '../auth/auth.module';
   ],
   controllers: [ComicsController],
   providers: [ComicsService],
+  exports: [ComicsService]
 })
 export class ComicsModule {}

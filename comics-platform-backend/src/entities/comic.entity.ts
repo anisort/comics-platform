@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from './user.entity';
 import { Genre } from './genre.entity';
+import { Episode } from './episode.entity';
 
 export type ComicStatus = 'ongoing' | 'completed';
 export type AgeRating = '13+' | '15+' | '17+';
@@ -28,11 +29,14 @@ export class Comic {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.comics)
+  @ManyToOne(() => User, (user) => user.comics, { onDelete: 'CASCADE' })
   @JoinColumn({name: "userId"})
   user: User | {id: number, username: string};
 
   @ManyToMany(() => Genre, (genre) => genre.comics)
   @JoinTable()
   genres: Genre[];
+
+  @OneToMany(() => Episode, (episode) => episode.comic)
+  episodes: Episode[];
 }

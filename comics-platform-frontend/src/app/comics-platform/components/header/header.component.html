@@ -41,7 +41,7 @@
         </div>
         <span *ngIf="authService.isAuthenticated()">
           {{ authService.getUsername() }} | 
-          <button (click)="logout()">Sign out</button>
+          <button id="logoutButton" (click)="logout()">Sign out</button>
         </span>
         <div class="buttons" *ngIf="!authService.isAuthenticated()">
           <button routerLink="/comics-platform/register">Sign up</button>

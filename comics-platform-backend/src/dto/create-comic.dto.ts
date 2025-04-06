@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
 
 export class CreateComicDto {
   @IsString()
@@ -15,12 +15,7 @@ export class CreateComicDto {
 
   @IsEnum(['13+', '15+', '17+'])
   ageRating: '13+' | '15+' | '17+';
-
-  @IsString()
-  @IsNotEmpty()
-  username: string;
-
-  //@IsArray()
+  
   @IsString({ each: true })
   genres: string[] | string;
 }

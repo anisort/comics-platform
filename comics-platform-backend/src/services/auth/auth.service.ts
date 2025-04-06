@@ -19,7 +19,7 @@ export class AuthService {
 
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>, // add to sequence
+    private usersRepository: Repository<User>,
     private configService: ConfigService,
     private jwtService: JwtService,
     private usersService: UsersService
@@ -49,7 +49,6 @@ export class AuthService {
     });
 
     const frontendUrl = this.configService.get<string>('FRONTEND_URL');
-    // console.log('Generated token:', token);
     const activationLink = `${frontendUrl}/activate?token=${token}`;
 
     const mailOptions = {
@@ -117,8 +116,6 @@ export class AuthService {
       throw new UnauthorizedException();
     }
     const accessToken = this.generateToken(user.userId, user.username);
-    // const tokenPayload = await this.jwtService.verifyAsync(accessToken);
-    //         console.log("Full Token Payload auth:", tokenPayload);
     return { accessToken, username: user.username, userId: user.userId};
   }
 

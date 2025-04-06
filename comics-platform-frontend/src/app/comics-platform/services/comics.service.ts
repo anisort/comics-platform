@@ -45,6 +45,13 @@ export class ComicsService {
   createComic(formData: FormData): Observable<CreateComic> {
     return this.http.post<CreateComic>(this.apiUrl, formData);
   }
+
+  checkName(name: string): Observable<{ exists: boolean }> {
+    let params = new HttpParams();
+    params = params.set('name', name.toString());
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/check-name`, {params});
+  }
+  
 }
 
 
