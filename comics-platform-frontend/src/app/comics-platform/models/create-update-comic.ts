@@ -1,4 +1,4 @@
-export interface CreateComic {
+export interface CreateUpdateComic {
     name: string;
     description: string;
     status: 'ongoing' | 'completed';

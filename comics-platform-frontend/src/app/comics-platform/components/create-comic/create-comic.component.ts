@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComicsService } from '../../services/comics.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { CreateComic } from '../../models/create-comic';
+import { CreateUpdateComic } from '../../models/create-update-comic';
 import { Router } from '@angular/router';
 import { CustomValidator } from '../../validators/custom.validator';
 
@@ -14,7 +13,7 @@ import { CustomValidator } from '../../validators/custom.validator';
 })
 export class CreateComicComponent implements OnInit{
 
-  constructor(private comicsService: ComicsService, private authService: AuthService, private router: Router){}
+  constructor(private comicsService: ComicsService, private router: Router){}
   isLoading = false;
   createForm!: FormGroup;
   coverImage!: File;
@@ -46,7 +45,7 @@ export class CreateComicComponent implements OnInit{
   onSubmit(): void {
     if (this.createForm.valid && this.coverImage) {
       this.isLoading = true;
-      const comic: CreateComic = this.createForm.value;
+      const comic: CreateUpdateComic = this.createForm.value;
       console.log(comic)
       const formData = new FormData();
 

@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ComicItem } from '../../models/comic-item';
 import { Router } from '@angular/router';
+import { ComicsService } from '../../services/comics.service';
 
 @Component({
   selector: 'app-comic-item-mylibrary',
@@ -10,18 +11,24 @@ import { Router } from '@angular/router';
 })
 export class ComicItemMylibraryComponent {
   @Input() comicItem!: ComicItem;
+  @Output() comicDeleted = new EventEmitter<number>();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private comicsService: ComicsService,
+  ) {}
 
   openComic() {
     this.router.navigate(['comics-platform/comic-detail-info', this.comicItem.id]);
   }
 
   editComic(){
-    console.log('Edit')
+    this.router.navigate(['comics-platform/edit-comic', this.comicItem.id])
   }
 
-  deleteComic(){
-    console.log('Delete')
+  deleteComic() {
+    if (confirm('Are you sure you want to delete this comic?')) {
+      this.comicDeleted.emit(this.comicItem.id);
+    }
   }
 }

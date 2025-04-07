@@ -13,6 +13,7 @@ import { ComicSingleItemComponent } from './components/comic-single-item/comic-s
 import { CreateComicComponent } from './components/create-comic/create-comic.component';
 import { SearchComponent } from './components/search/search.component';
 import { AllComicsPageComponent } from './components/all-comics-page/all-comics-page.component';
+import { EditComicPageComponent } from './components/edit-comic-page/edit-comic-page.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { AllComicsPageComponent } from './components/all-comics-page/all-comics-
     CreateComicComponent,
     SearchComponent,
     AllComicsPageComponent,
+    EditComicPageComponent,
   ],
   imports: [
     CommonModule,

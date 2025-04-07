@@ -110,7 +110,7 @@ export class EpisodesService {
             throw new NotFoundException('Episode not found');
         }
 
-        console.log(`username: ${username}`)
+        //console.log(`username: ${username}`)
 
         const comic = episode.comic;
         if(!comic || comic.user.username !== username){

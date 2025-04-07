@@ -10,6 +10,7 @@ import { NoAuthGuard } from './guards/noauth.guard';
 import { ComicSingleItemComponent } from './components/comic-single-item/comic-single-item.component';
 import { CreateComicComponent } from './components/create-comic/create-comic.component';
 import { AllComicsPageComponent } from './components/all-comics-page/all-comics-page.component';
+import { EditComicPageComponent } from './components/edit-comic-page/edit-comic-page.component';
 
 const routes: Routes = [
   { path: 'comics-platform/home', component: HomePageComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'comics-platform/my-library', component: MyLibraryPageComponent, canActivate: [AuthGuard] },
 
   {path: 'comics-platform/comic-detail-info/:id', component: ComicSingleItemComponent},
-  {path: 'comics-platform/add-comic', component: CreateComicComponent, canActivate: [AuthGuard]}
+  {path: 'comics-platform/add-comic', component: CreateComicComponent, canActivate: [AuthGuard]},
+  { path: 'comics-platform/edit-comic/:id', component: EditComicPageComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

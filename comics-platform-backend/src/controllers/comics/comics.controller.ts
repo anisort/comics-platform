@@ -28,7 +28,7 @@ export class ComicsController {
   @UseGuards(AuthGuard)
   @Get("/my-library")
   async getUserComics(@Request() req){
-    console.log(req.user.username)
+    //console.log(req.user.username)
     return await this.comicsService.getComicsByUsername(req.user.username);
   }
 
@@ -40,13 +40,13 @@ export class ComicsController {
   
   @UseGuards(AuthGuard)
   @Get('check-authority/:id')
-  async findOne(@Param('id') id: number, @Request() req) {
+  async isAuthor(@Param('id') id: number, @Request() req) {
     const username = req.user.username;
     return await this.comicsService.isAuthor(id, username);
   }
 
   @Get(':id')
-  async isAuthor(@Param('id') id: number): Promise<ComicItemSingleDto | null> {
+  async findOne(@Param('id') id: number): Promise<ComicItemSingleDto | null> {
     return await this.comicsService.findComicById(id);
   }
   
