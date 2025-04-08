@@ -18,22 +18,37 @@ export class EpisodesService {
         private uploadService: UploadService,
     ){}
 
-    async findByComic(comicId: number): Promise<EpisodeItemDto[]> {
+    async findByComic(comicId: number, username?: string): Promise<EpisodeItemDto[]> {
+        const comic = await this.comicsService.findComicById(comicId);
+
+        if(!comic){
+            throw new NotFoundException('Comic not found');
+        }
+    
+        const where: any = { comic: { id: comicId } };
+    
+        const isAuthor = username && comic?.user === username;
+        if (!isAuthor) {
+            where.isAvailable = true;
+        }
+    
         const episodes = await this.episodeRepository.find({
-          where: { comic: { id: comicId } },
-          order: { order: 'ASC' },
-          relations: ['pages'],
+            where,
+            order: { order: 'ASC' },
+            relations: ['pages'],
         });
-      
+    
         return episodes.map((e) => ({
-          id: e.id,
-          name: e.name,
-          order: e.order,
-          created_at: e.created_at,
+            id: e.id,
+            name: e.name,
+            order: e.order,
+            isAvailable: e.isAvailable,
+            created_at: e.created_at,
         }));
     }
+        
       
-    async createEpisode(createEpisodDto: CreateEpisodeDto, username: string): Promise<Episode> {
+    async createEpisode(createEpisodDto: CreateEpisodeDto, username: string): Promise<EpisodeItemDto> {
 
         const comic = await this.comicsService.findComicById(createEpisodDto.comicId);
 
@@ -53,8 +68,15 @@ export class EpisodesService {
           order,
           comic: { id: createEpisodDto.comicId },
         });
-    
-        return await this.episodeRepository.save(episode);
+
+        await this.episodeRepository.save(episode);
+        return {
+            id: episode.id,
+            name: episode.name,
+            order: episode.order,
+            isAvailable: episode.isAvailable,
+            created_at: episode.created_at,
+        };
     }
 
     async updateName(episodeId: number, name: string, username: string ): Promise<Episode | null> {
@@ -68,6 +90,20 @@ export class EpisodesService {
         await this.episodeRepository.update(episodeId, { name });
         return await this.episodeRepository.findOne({where: {id: episodeId}});
     }
+
+    async toggleAvailability(episodeId: number, username: string): Promise<Episode | null> {
+        const episode = await this.findById(episodeId);
+
+        const comic = episode.comic;
+        if(!comic || comic.user.username !== username){
+            throw new NotFoundException('Episode not found');
+        }
+    
+        episode.isAvailable = !episode.isAvailable;
+        await this.episodeRepository.save(episode);
+        return await this.episodeRepository.findOne({where: {id: episodeId}});
+    }
+    
 
     async reorder(dto: ReorderDto, username: string, comicId: number): Promise<EpisodeItemDto[]> {
         const comic = await this.comicsService.findComicById(comicId);
@@ -109,8 +145,6 @@ export class EpisodesService {
         if (!episode){
             throw new NotFoundException('Episode not found');
         }
-
-        //console.log(`username: ${username}`)
 
         const comic = episode.comic;
         if(!comic || comic.user.username !== username){

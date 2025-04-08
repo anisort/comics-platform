@@ -35,7 +35,7 @@ export class MyLibraryPageComponent implements OnInit {
     this.isLoading = true;
     this.comicsService.deleteComic(id).subscribe({
       next: () => {
-        this.comics = this.comics.filter(comic => comic.id !== id);
+        this.loadComics();
         this.isLoading = false;
       },
       error: () => {

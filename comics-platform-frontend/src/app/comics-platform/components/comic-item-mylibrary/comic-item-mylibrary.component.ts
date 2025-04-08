@@ -15,7 +15,6 @@ export class ComicItemMylibraryComponent {
 
   constructor(
     private router: Router,
-    private comicsService: ComicsService,
   ) {}
 
   openComic() {

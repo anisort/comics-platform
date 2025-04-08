@@ -37,7 +37,7 @@ export class ComicsController {
     const exists = await this.comicsService.isNameTaken(name);
     return { exists };
   }
-  
+
   @UseGuards(AuthGuard)
   @Get('check-authority/:id')
   async isAuthor(@Param('id') id: number, @Request() req) {

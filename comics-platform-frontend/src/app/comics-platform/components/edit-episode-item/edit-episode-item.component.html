@@ -1,0 +1,30 @@
+<div class="episode-item">
+  <input type="checkbox" [checked]="episode.isAvailable" (change)="toggleAvailable()" />
+
+  <div class="episode-info">
+    <ng-container *ngIf="!isEditingName; else editTemplate">
+      <strong>{{ episode.name }}</strong>
+      <p>{{ episode.created_at | date:'mediumDate' }}</p>
+    </ng-container>
+
+    <ng-template #editTemplate>
+      <input [formControl]="nameControl" />
+    </ng-template>
+  </div>
+
+  <div class="episode-actions">
+    <ng-container *ngIf="!isEditingName; else editButtons">
+      <button (click)="startEditName()">Edit</button>
+      <button (click)="confirmDelete()">Delete</button>
+    </ng-container>
+
+    <ng-template #editButtons>
+      <button (click)="saveName()" [disabled]="nameControl.invalid">Save</button>
+      <button (click)="cancelEdit()">Cancel</button>
+    </ng-template>
+  </div>
+
+  <div class="episode-order">
+    #{{ index + 1 }}
+  </div>
+</div>

@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
+  <app-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-episode-list>
   @if(errorMessage){
     <p>{{errorMessage}}</p>
   }
-  

@@ -111,5 +111,6 @@
     </div>
   </form>
 
-  <p>episodes</p>
+  <app-edit-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-edit-episode-list>
+
   

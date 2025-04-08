@@ -13,6 +13,9 @@ export class Episode {
     @Column()
     order: number;
 
+    @Column({ default: false })
+    isAvailable: boolean;
+
     @CreateDateColumn()
     created_at: Date;
 

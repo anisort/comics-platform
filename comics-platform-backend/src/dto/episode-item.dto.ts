@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator";
 
 export class EpisodeItemDto {
 
@@ -10,6 +10,9 @@ export class EpisodeItemDto {
 
     @IsNumber()
     order: number;
+
+    @IsBoolean()
+    isAvailable: boolean;
 
     @IsDate()
     created_at: Date;

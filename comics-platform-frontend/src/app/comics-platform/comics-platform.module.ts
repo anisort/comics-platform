@@ -14,6 +14,11 @@ import { CreateComicComponent } from './components/create-comic/create-comic.com
 import { SearchComponent } from './components/search/search.component';
 import { AllComicsPageComponent } from './components/all-comics-page/all-comics-page.component';
 import { EditComicPageComponent } from './components/edit-comic-page/edit-comic-page.component';
+import { EditEpisodeItemComponent } from './components/edit-episode-item/edit-episode-item.component';
+import { EditEpisodeListComponent } from './components/edit-episode-list/edit-episode-list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { EpisodeItemComponent } from './components/episode-item/episode-item.component';
+import { EpisodeListComponent } from './components/episode-list/episode-list.component';
 
 
 @NgModule({
@@ -30,12 +35,18 @@ import { EditComicPageComponent } from './components/edit-comic-page/edit-comic-
     SearchComponent,
     AllComicsPageComponent,
     EditComicPageComponent,
+    EditEpisodeItemComponent,
+    EditEpisodeListComponent,
+    EpisodeItemComponent,
+    EpisodeListComponent,
   ],
   imports: [
     CommonModule,
     ComicsPlatformRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    
+    DragDropModule,
   ],
   exports: [SearchComponent]
 })

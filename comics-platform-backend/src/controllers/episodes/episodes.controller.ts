@@ -14,6 +14,15 @@ export class EpisodesController {
         return await this.episodesService.findByComic(comicId);
     }
 
+    //
+    @UseGuards(AuthGuard)
+    @Get('/comic/edit/:comicId')
+    async getEpisodesByComicEdit(@Param('comicId') comicId: number, @Request() req) {
+        const username = req.user.username;
+        return await this.episodesService.findByComic(comicId, username);
+    }
+
+    //
     @UseGuards(AuthGuard)
     @Post()
     async create(@Body() createEpisodeDto: CreateEpisodeDto, @Request() req) {
@@ -21,6 +30,15 @@ export class EpisodesController {
         return await this.episodesService.createEpisode(createEpisodeDto, username);
     }
 
+    //
+    @UseGuards(AuthGuard)
+    @Patch('toggle-availability/:id')
+    async toggleAvailability(@Param('id') id: number, @Request() req) {
+        const username = req.user.username;
+        return this.episodesService.toggleAvailability(id, username);
+    }
+    
+    //
     @UseGuards(AuthGuard)
     @Patch(':id')
     async updateName(@Param('id') id: number, @Body('name') name: string, @Request() req) {
@@ -35,6 +53,7 @@ export class EpisodesController {
         return await this.episodesService.reorder(dto, username, comicId);
     }
 
+    //
     @UseGuards(AuthGuard)
     @Delete(':id')
     async delete(@Param('id') id: number, @Request() req) {

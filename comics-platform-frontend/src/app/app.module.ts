@@ -7,6 +7,7 @@ import { ComicsPlatformModule } from './comics-platform/comics-platform.module';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HeaderComponent } from './comics-platform/components/header/header.component';
 import { AuthInterceptor } from './comics-platform/interceptors/auth.interceptor';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({

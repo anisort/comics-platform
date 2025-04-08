@@ -81,7 +81,7 @@ export class EditComicPageComponent implements OnInit {
 
   cancelEdit(): void {
     this.isEditing = false;
-    this.initForm(); // відновлює початкові значення
+    this.initForm();
   }
 
   onSubmit(): void {
