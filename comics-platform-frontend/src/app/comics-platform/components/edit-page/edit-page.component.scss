@@ -1,0 +1,49 @@
+/* Стиль для кожної сторінки */
+.page-row {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Простір між картинкою, номером і кнопкою */
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 20px;
+  
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .page-image {
+    width: 120px; /* Встановити фіксовану ширину для зображення */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: cover; /* Зберегти співвідношення сторін */
+  }
+  
+  /* Стиль для інформації про сторінку */
+  .page-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    gap: 12px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #c0392b;
+    }
+  }

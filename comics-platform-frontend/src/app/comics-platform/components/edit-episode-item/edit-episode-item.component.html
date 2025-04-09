@@ -15,6 +15,7 @@
   <div class="episode-actions">
     <ng-container *ngIf="!isEditingName; else editButtons">
       <button (click)="startEditName()">Edit</button>
+      <button (click)="openPagesEditor()">Edit pages</button>
       <button (click)="confirmDelete()">Delete</button>
     </ng-container>
 

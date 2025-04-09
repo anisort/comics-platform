@@ -1,0 +1,9 @@
+<div class="page-row">
+  <img [src]="page.imageUrl" alt="Page image" class="page-image" />
+  <div class="page-info">
+    <p><strong>Order:</strong> {{ index + 1 }}</p>
+    <button mat-icon-button (click)="confirmDelete()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

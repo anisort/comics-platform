@@ -19,6 +19,12 @@ import { EditEpisodeListComponent } from './components/edit-episode-list/edit-ep
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EpisodeItemComponent } from './components/episode-item/episode-item.component';
 import { EpisodeListComponent } from './components/episode-list/episode-list.component';
+import { EditPageComponent } from './components/edit-page/edit-page.component';
+import { EditPageListComponent } from './components/edit-page-list/edit-page-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { EpisodePageViewerComponent } from './components/episode-page-viewer/episode-page-viewer.component';
 
 
 @NgModule({
@@ -39,6 +45,9 @@ import { EpisodeListComponent } from './components/episode-list/episode-list.com
     EditEpisodeListComponent,
     EpisodeItemComponent,
     EpisodeListComponent,
+    EditPageComponent,
+    EditPageListComponent,
+    EpisodePageViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +56,9 @@ import { EpisodeListComponent } from './components/episode-list/episode-list.com
     FormsModule,
     
     DragDropModule,
+
+    MatDialogModule,
+    MatIconModule
   ],
   exports: [SearchComponent]
 })

@@ -1,0 +1,45 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="!isLoading" class="main-container">
+  <!-- Заголовок для вікна -->
+  <div class="dialog-header">
+    <h3>{{ data.episodeName }}</h3> <!-- Замініть на ім'я епізоду -->
+  </div>
+
+  <div class="pages-container">
+    <div cdkDropList (cdkDropListDropped)="drop($event)" class="cdk-drop-list">
+      <div *ngFor="let page of pages; let i = index" cdkDrag class="page-item">
+        <app-edit-page
+          [page]="page"
+          [index]="i"
+          (deletePage)="onDeletePage($event)"
+        ></app-edit-page>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-page">
+    <input
+      type="file"
+      (change)="onFilesSelected($event)"
+      multiple
+      accept="image/jpeg, image/png, image/jpg"
+    />
+    <button
+      (click)="addPages()"
+      [disabled]="!selectedFiles.length || fileError"
+    >
+      Add Pages
+    </button>
+    <div *ngIf="fileError" class="error">
+      {{ fileError }}
+    </div>
+  </div>
+
+  <div *ngIf="isReorderChanged">
+    <button class="save-order-btn" (click)="saveOrder()">Save order</button>
+  </div>
+</div>

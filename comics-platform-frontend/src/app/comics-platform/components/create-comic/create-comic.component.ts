@@ -18,6 +18,8 @@ export class CreateComicComponent implements OnInit{
   createForm!: FormGroup;
   coverImage!: File;
   coverImagePreview: string | ArrayBuffer | null = null;
+  coverImageError: string | null = null;
+
 
   ngOnInit(): void {
     this.createForm = new FormGroup({
@@ -30,10 +32,20 @@ export class CreateComicComponent implements OnInit{
   }
 
   onFileChange(event: any): void {
-    const file = event.target.files[0];
+    const file: File = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+  
     if (file) {
+      if (!allowedTypes.includes(file.type)) {
+        this.coverImageError = 'Only JPG, JPEG, or PNG files are allowed.';
+        this.coverImage = undefined!;
+        this.coverImagePreview = null;
+        return;
+      }
+  
+      this.coverImageError = null; // Очистити попередню помилку
       this.coverImage = file;
-
+  
       const reader = new FileReader();
       reader.onload = () => {
         this.coverImagePreview = reader.result;
@@ -41,6 +53,7 @@ export class CreateComicComponent implements OnInit{
       reader.readAsDataURL(file);
     }
   }
+  
 
   onSubmit(): void {
     if (this.createForm.valid && this.coverImage) {

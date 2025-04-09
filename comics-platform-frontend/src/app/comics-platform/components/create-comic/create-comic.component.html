@@ -76,6 +76,9 @@
     <div class="form-group">
       <label for="coverImage">Upload Cover Image:</label>
       <input id="coverImage" type="file" (change)="onFileChange($event)" accept="image/*" class="form-control">
+      <div *ngIf="coverImageError" class="error">
+        {{ coverImageError }}
+      </div>
       <div *ngIf="!coverImage" class="error">
         Cover image is required.
       </div>

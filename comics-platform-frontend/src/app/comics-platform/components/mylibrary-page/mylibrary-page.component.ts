@@ -21,9 +21,19 @@ export class MyLibraryPageComponent implements OnInit {
 
   loadComics() {
     this.isLoading = true;
-    this.comicsService.getComicsByCurrentUser().subscribe((data) => {
-      this.comics = data;
-      this.isLoading = false;
+    this.comicsService.getComicsByCurrentUser().subscribe( {
+      next: data => {
+        this.comics = data;
+        this.isLoading = false;
+      },
+      error: err => {
+        this.isLoading = false;
+        if (err.status === 401) {
+          this.router.navigate(['/comics-platform/login']);
+        } else {
+          console.error('Error comics deleting:', err);
+        }
+      }
     });
   }
 
@@ -38,8 +48,13 @@ export class MyLibraryPageComponent implements OnInit {
         this.loadComics();
         this.isLoading = false;
       },
-      error: () => {
+      error: err => {
         this.isLoading = false;
+        if (err.status === 401) {
+          this.router.navigate(['/comics-platform/login']);
+        } else {
+          console.error('Error comics deleting:', err);
+        }
       }
     });
   }

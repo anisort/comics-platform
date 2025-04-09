@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EpisodeItem } from '../../models/episode-item';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPageListComponent } from '../edit-page-list/edit-page-list.component';
 
 @Component({
   selector: 'app-edit-episode-item',
@@ -19,6 +21,8 @@ export class EditEpisodeItemComponent implements OnInit {
 
   isEditingName = false;
   nameControl = new FormControl('', [Validators.required]);
+
+  constructor(private dialog: MatDialog){}
 
   ngOnInit(): void {
     this.nameControl.setValue(this.episode.name);
@@ -39,6 +43,21 @@ export class EditEpisodeItemComponent implements OnInit {
       this.isEditingName = false;
     }
   }
+
+  openPagesEditor(): void {
+    this.dialog.open(EditPageListComponent, {
+      data: { 
+        episodeId: this.episode.id, 
+        episodeName: this.episode.name
+      },
+      width: '80%', // Ширина вікна як 80% від ширини екрану
+      height: '80%', // Висота вікна як 80% від висоти екрану
+      maxWidth: '100vw', // Максимальна ширина 100% екрану
+      maxHeight: '100vh', // Максимальна висота 100% екрану
+      autoFocus: false // Для відключення автоматичного фокусу на першому елементі
+    });
+  }
+  
 
   confirmDelete(): void {
     if (confirm('Are you sure you want to delete this episode?')) {

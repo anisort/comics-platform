@@ -9,13 +9,17 @@ import { Router } from '@angular/router';
   styleUrl: './episode-item.component.scss'
 })
 export class EpisodeItemComponent {
+  @Input() comicId!: number;
   @Input() episode!: EpisodeItem;
   @Input() index!: number;
   
   constructor(private router: Router) {}
 
   openEpisode() {
-    console.log(`open episode ${this.episode.id}`);
+    this.router.navigate(
+      ['/comics-platform/read', this.comicId, this.episode.id],
+      { queryParams: { page: 1 } }
+    );
   }
 
 }

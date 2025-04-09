@@ -6,6 +6,7 @@ import { ComicItemSingleDto } from '../../dto/comic.single-item.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { UpdateComicDto } from 'src/dto/update-comic.dto';
+import { fileFilter } from '../../utils/image-file.filter'
 
 @Controller('comics')
 export class ComicsController {
@@ -52,7 +53,7 @@ export class ComicsController {
   
   @UseGuards(AuthGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('coverImage'))
+  @UseInterceptors(FileInterceptor('coverImage', { fileFilter }))
   async create(@Body() createComicDto: CreateComicDto, @UploadedFile() coverImage: Express.Multer.File, @Request() req) {
     const username = req.user.username;
     return await this.comicsService.createComic(createComicDto, coverImage, username);

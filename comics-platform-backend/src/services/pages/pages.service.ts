@@ -17,40 +17,79 @@ export class PagesService {
       private episodesService: EpisodesService,
   ){}
 
-  // prop i need to refactor it
-  async paginatePages(episodeId: number, page = 1, limit = 1): Promise<Page[]> {
-      return this.pageRepository.find({
-        where: { episode: { id: episodeId } },
-        order: { order: 'ASC' },
-        skip: (page - 1) * limit,
-        take: limit
-      });
+  async getPagesByEpisode(
+    episodeId: number,
+    username?: string,
+    page = 1,
+    limit = 1
+  ): Promise<{ page: Page, totalPages: number, currentPage: number } | Page[]> {
+    const episode = await this.episodesService.findById(episodeId);
+  
+    if (!episode) {
+      throw new NotFoundException('Episode not found');
+    }
+  
+    const isAuthor = username && episode.comic.user.username === username;
+  
+    if (!isAuthor && !episode.isAvailable) {
+      throw new NotFoundException('Episode not found');
+    }
+  
+    const sortedPages = episode.pages.sort((a, b) => a.order - b.order);
+  
+    if (isAuthor) {
+      return sortedPages;
+    }
+  
+    const totalPages = Math.ceil(sortedPages.length / limit);
+    const safePage = Math.min(Math.max(page, 1), totalPages); 
+  
+    const start = (safePage - 1) * limit;
+    const current = sortedPages[start] ?? null;
+  
+    return {
+      page: current,
+      totalPages,
+      currentPage: safePage
+    };
   }
+  
 
-  async createPageWithUpload(episodeId: number, image: Express.Multer.File, username: string) {
+  async createPagesWithUpload(
+    episodeId: number,
+    images: Express.Multer.File[],
+    username: string
+  ) {
     const episode = await this.episodesService.findById(episodeId);
     const comic = episode.comic;
-    if(!comic || comic.user.username !== username){
-        throw new NotFoundException('Episode not found');
+  
+    if (!comic || comic.user.username !== username) {
+      throw new NotFoundException('Episode not found');
     }
-
+  
     const lastPage = await this.pageRepository.findOne({
       where: { episode: { id: episodeId } },
-      order: { order: 'DESC' }
+      order: { order: 'DESC' },
     });
-    const nextOrder = lastPage ? lastPage.order + 1 : 1;
   
+    let nextOrder = lastPage ? lastPage.order + 1 : 1;
     const folder = `comics-platform/comics/pages`;
-    const uploadResult = await this.uploadService.upload(image, folder);
   
-    const page = this.pageRepository.create({
-      order: nextOrder,
-      imageUrl: uploadResult.secure_url,
-      episode: { id: episodeId }
-    });
+    const pages: Page[] = [];
+
+    for (const image of images) {
+      const uploadResult = await this.uploadService.upload(image, folder);
+      const page = this.pageRepository.create({
+        order: nextOrder++,
+        imageUrl: uploadResult.secure_url,
+        episode: { id: episodeId },
+      });
+      pages.push(page);
+    }
   
-    return await this.pageRepository.save(page);
+    return await this.pageRepository.save(pages);
   }
+  
 
   async reorder(dto: ReorderDto, username: string, episodeId: number): Promise<Page[]>{
     const episode = await this.episodesService.findById(episodeId);
