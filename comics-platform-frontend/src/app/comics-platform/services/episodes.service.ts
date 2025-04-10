@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AppConfig, CONFIG_TOKEN } from '../../../../config';
 import { EpisodeItem } from '../models/episode-item';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class EpisodesService {
     @Inject(CONFIG_TOKEN) private config: AppConfig
   ) {
     this.apiUrl = `${this.config.apiUrl}/episodes`;
+  }
+
+  getEpisodeMeta(id: number): Observable<{comicId: number, episodeName: string}>{
+    return this.http.get<{comicId: number, episodeName: string}>(`${this.apiUrl}/${id}`);
   }
 
   getEpisodesByComic(comicId: number) {

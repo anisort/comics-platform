@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../services/pages.service';
 import { EpisodesService } from '../../services/episodes.service';
@@ -19,6 +19,8 @@ export class EpisodePageViewerComponent implements OnInit {
   episodes: EpisodeItem[] = [];
   episodeName: string = '';
   isLoading = false;
+  errorMessage: string = '';
+  noAvailablePages: string  = '';
 
 
   constructor(
@@ -30,7 +32,6 @@ export class EpisodePageViewerComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.comicId = Number(params.get('comicId'));
       this.episodeId = Number(params.get('episodeId'));
   
       this.route.queryParamMap.subscribe(queryParams => {
@@ -38,11 +39,30 @@ export class EpisodePageViewerComponent implements OnInit {
         this.loadPage();
       });
   
-      this.loadEpisodes();
+      this.loadEpisodeMeta();
     });
   }
   
-
+  loadEpisodeMeta() {
+    this.isLoading = true;
+    this.episodesService.getEpisodeMeta(this.episodeId).subscribe({
+      next: (meta) => {
+        this.comicId = meta.comicId;
+        this.episodeName = meta.episodeName;
+        this.loadEpisodes();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        if (err.status === 404) {
+          this.errorMessage = 'Episode not found';
+        } else {
+          this.errorMessage = 'An error occurred while loading the episode';
+        }
+        console.error('Error loading episode meta:', err);
+      }
+    });
+  }
+  
   loadEpisodes() {
     this.isLoading = true;
     this.episodesService.getEpisodesByComic(this.comicId).subscribe({
@@ -55,27 +75,61 @@ export class EpisodePageViewerComponent implements OnInit {
       },
       error: err => {
         this.isLoading = false;
+        this.errorMessage = 'Error loading episodes. Please try again later.';
         console.error('Error loading episodes:', err);
       }
     });
   }
   
+  // loadPage() {
+  //   this.isLoading = true;
+  //   this.pagesService.getPagesPublic(this.episodeId, this.currentPage).subscribe({
+  //     next: (res) => {
+  //       this.pageImageUrl = res.page.imageUrl;
+  //       this.totalPages = res.totalPages;
+  //       this.currentPage = res.currentPage;
+  //       this.isLoading = false;
+  //     },
+  //     error: err => {
+  //       this.isLoading = false;
+  //       if (err.status === 404) {
+  //         this.errorMessage = 'Page not found';
+  //       } else {
+  //         this.errorMessage = 'An error occurred while loading the page';
+  //       }
+  //       console.error('Error loading page:', err);
+  //     }
+  //   });
+  // }
 
   loadPage() {
     this.isLoading = true;
     this.pagesService.getPagesPublic(this.episodeId, this.currentPage).subscribe({
       next: (res) => {
-        this.pageImageUrl = res.page.imageUrl;
-        this.totalPages = res.totalPages;
-        this.currentPage = res.currentPage;
+        if (res.page && res.page.imageUrl) {
+          this.pageImageUrl = res.page.imageUrl;
+          this.totalPages = res.totalPages;
+          this.currentPage = res.currentPage;
+          this.errorMessage = '';  // Якщо сторінка є, очищаємо помилку
+        } else {
+          this.pageImageUrl = '';  // Якщо сторінки немає
+          this.totalPages = 1;
+          this.noAvailablePages = 'No pages available for this episode';
+        }
         this.isLoading = false;
       },
       error: err => {
         this.isLoading = false;
-        console.error('Error loading pages:', err);
+        if (err.status === 404) {
+          this.errorMessage = 'Page not found';
+        } else {
+          this.errorMessage = 'An error occurred while loading the page';
+        }
+        console.error('Error loading page:', err);
       }
     });
   }
+  
 
   goToPage(page: number) {
     if (page < 1) page = 1;
@@ -104,7 +158,7 @@ export class EpisodePageViewerComponent implements OnInit {
     const currentIndex = this.episodes.findIndex(e => e.id === this.episodeId);
     const nextEpisode = this.episodes[currentIndex + 1];
     if (nextEpisode) {
-      this.router.navigate(['/comics-platform/read', this.comicId, nextEpisode.id], {
+      this.router.navigate(['/comics-platform/read', nextEpisode.id], {
         queryParams: { page: 1 }
       });
     } else {
@@ -116,7 +170,7 @@ export class EpisodePageViewerComponent implements OnInit {
     const currentIndex = this.episodes.findIndex(e => e.id === this.episodeId);
     const prevEpisode = this.episodes[currentIndex - 1];
     if (prevEpisode) {
-      this.router.navigate(['/comics-platform/read', this.comicId, prevEpisode.id], {
+      this.router.navigate(['/comics-platform/read', prevEpisode.id], {
         queryParams: { page: 1 }
       });
     }else {

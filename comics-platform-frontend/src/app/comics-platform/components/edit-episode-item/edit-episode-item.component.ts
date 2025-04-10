@@ -50,11 +50,11 @@ export class EditEpisodeItemComponent implements OnInit {
         episodeId: this.episode.id, 
         episodeName: this.episode.name
       },
-      width: '80%', // Ширина вікна як 80% від ширини екрану
-      height: '80%', // Висота вікна як 80% від висоти екрану
-      maxWidth: '100vw', // Максимальна ширина 100% екрану
-      maxHeight: '100vh', // Максимальна висота 100% екрану
-      autoFocus: false // Для відключення автоматичного фокусу на першому елементі
+      width: '80%',
+      height: '80%',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      autoFocus: false,
     });
   }
   

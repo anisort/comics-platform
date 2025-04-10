@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: 'comics-platform/add-comic', component: CreateComicComponent, canActivate: [AuthGuard]},
   { path: 'comics-platform/edit-comic/:id', component: EditComicPageComponent, canActivate: [AuthGuard]},
 
-  {path: 'comics-platform/read/:comicId/:episodeId', component: EpisodePageViewerComponent }
+  {path: 'comics-platform/read/:episodeId', component: EpisodePageViewerComponent }
 ];
 
 @NgModule({

@@ -27,14 +27,30 @@ export class AuthService {
     this.startAccountCleanupJob();
   }
 
+  // async register(newUser: RegisterUserDto): Promise<RegisterUserDto> {
+  //   newUser.password = await bcrypt.hash(newUser.password, 10);
+  //   const user = this.usersRepository.create(newUser);
+  //   await this.usersRepository.save(user);
+  //   const token = this.generateToken(user.id, user.username);
+  //   this.sendActivationEmail(newUser.email, token);
+  //   return user;
+  // }
+
   async register(newUser: RegisterUserDto): Promise<RegisterUserDto> {
     newUser.password = await bcrypt.hash(newUser.password, 10);
     const user = this.usersRepository.create(newUser);
-    await this.usersRepository.save(user);
+    console.log('Creating user:', user); // Логування перед збереженням
+    try {
+      await this.usersRepository.save(user);
+      console.log('User saved successfully:', user); // Логування після збереження
+    } catch (error) {
+      console.error('Error saving user:', error); // Логування помилки
+    }
     const token = this.generateToken(user.id, user.username);
     this.sendActivationEmail(newUser.email, token);
     return user;
   }
+  
 
   async sendActivationEmail(email: string, token: string) {
     const transporter = nodemailer.createTransport({

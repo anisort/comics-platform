@@ -10,6 +10,7 @@ export class AuthController {
   async register(
     @Body() newUser: RegisterUserDto,
   ) {
+    console.log('recieve')
     return await this.authService.register(newUser);
   }
 

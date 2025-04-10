@@ -177,5 +177,10 @@ export class EpisodesService {
         }
         return episode;
     }
+
+    async getComicIdByEpisode(episodeId: number): Promise<{comicId: number, episodeName: string}> {
+        const episode = await this.findById(episodeId);
+        return {comicId: episode.comic.id, episodeName: episode.name};
+    }      
       
 }

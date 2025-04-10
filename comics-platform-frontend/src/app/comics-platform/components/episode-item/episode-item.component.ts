@@ -17,7 +17,7 @@ export class EpisodeItemComponent {
 
   openEpisode() {
     this.router.navigate(
-      ['/comics-platform/read', this.comicId, this.episode.id],
+      ['/comics-platform/read', this.episode.id],
       { queryParams: { page: 1 } }
     );
   }

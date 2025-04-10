@@ -29,7 +29,7 @@ export class Comic {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.comics, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.comics)
   @JoinColumn({name: "userId"})
   user: User | {id: number, username: string};
 

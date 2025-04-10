@@ -21,6 +21,12 @@ export class EpisodesController {
         return await this.episodesService.findByComic(comicId, username);
     }
 
+    @Get(':id')
+    async getEpisode(@Param('id') id: number){
+        return await this.episodesService.getComicIdByEpisode(id);
+    }
+
+
     @UseGuards(AuthGuard)
     @Post()
     async create(@Body() createEpisodeDto: CreateEpisodeDto, @Request() req) {
