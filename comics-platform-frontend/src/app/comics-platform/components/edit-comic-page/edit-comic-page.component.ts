@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComicsService } from '../../services/comics.service';
 import { ComicSingleItem } from '../../models/comic-single-item';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../../validators/custom.validator';
+import { map, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-edit-comic-page',
@@ -11,7 +12,7 @@ import { CustomValidator } from '../../validators/custom.validator';
   templateUrl: './edit-comic-page.component.html',
   styleUrl: './edit-comic-page.component.scss'
 })
-export class EditComicPageComponent implements OnInit {
+export class EditComicPageComponent implements OnInit, OnDestroy {
 
   comicSingleItem!: ComicSingleItem;
   updateForm!: FormGroup;
@@ -20,6 +21,7 @@ export class EditComicPageComponent implements OnInit {
   errorMessage: string | null = null;
   coverImage!: File;
   coverImagePreview: string | ArrayBuffer | null = null;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private comicsService: ComicsService,
@@ -27,19 +29,49 @@ export class EditComicPageComponent implements OnInit {
     private router: Router
   ){}
 
+  // ngOnInit(): void {
+  //   this.route.paramMap.subscribe(params => {
+  //     const id = Number(params.get('id'));
+  //     if (id) {
+  //       this.comicsService.checkAuthority(id).subscribe(data => {
+  //         if (data.isAuthor) {
+  //           this.getComicById(id);
+  //         } else {
+  //           this.router.navigate(['/comics-platform/my-library']);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      if (id) {
-        this.comicsService.checkAuthority(id).subscribe(data => {
-          if (data.isAuthor) {
-            this.getComicById(id);
-          } else {
-            this.router.navigate(['/comics-platform/my-library']);
-          }
-        });
+    this.route.paramMap.pipe(
+      takeUntil(this.destroy$),
+      map(params => Number(params.get('id'))),
+      switchMap(id => {
+        if (id) {
+          return this.comicsService.checkAuthority(id).pipe(
+            map(data => ({ id, isAuthor: data.isAuthor }))
+          );
+        } else {
+          this.router.navigate(['/']);
+          return of(null);
+        }
+      })
+    ).subscribe(result => {
+      if (!result) return;
+
+      if (result.isAuthor) {
+        this.getComicById(result.id);
+      } else {
+        this.router.navigate(['/comics-platform/my-library']);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getComicById(id: number): void {

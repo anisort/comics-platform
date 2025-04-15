@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PagesService } from '../../services/pages.service';
 import { EpisodesService } from '../../services/episodes.service';
 import { EpisodeItem } from '../../models/episode-item';
+import { combineLatest, map, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-episode-page-viewer',
@@ -10,7 +11,7 @@ import { EpisodeItem } from '../../models/episode-item';
   templateUrl: './episode-page-viewer.component.html',
   styleUrl: './episode-page-viewer.component.scss'
 })
-export class EpisodePageViewerComponent implements OnInit {
+export class EpisodePageViewerComponent implements OnInit, OnDestroy {
   comicId!: number;
   episodeId!: number;
   currentPage: number = 1;
@@ -21,6 +22,7 @@ export class EpisodePageViewerComponent implements OnInit {
   isLoading = false;
   errorMessage: string = '';
   noAvailablePages: string  = '';
+  private destroy$ = new Subject<void>();
 
 
   constructor(
@@ -30,17 +32,37 @@ export class EpisodePageViewerComponent implements OnInit {
     private episodesService: EpisodesService
   ) {}
 
+  // ngOnInit(): void {
+  //   this.route.paramMap.subscribe(params => {
+  //     this.episodeId = Number(params.get('episodeId'));
+  
+  //     this.route.queryParamMap.subscribe(queryParams => {
+  //       this.currentPage = Number(queryParams.get('page')) || 1;
+  //       this.loadPage();
+  //     });
+  
+  //     this.loadEpisodeMeta();
+  //   });
+  // }
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.episodeId = Number(params.get('episodeId'));
-  
-      this.route.queryParamMap.subscribe(queryParams => {
-        this.currentPage = Number(queryParams.get('page')) || 1;
-        this.loadPage();
-      });
-  
-      this.loadEpisodeMeta();
+    combineLatest([
+      this.route.paramMap.pipe(map(params => Number(params.get('episodeId')))),
+      this.route.queryParamMap.pipe(map(query => Number(query.get('page')) || 1))
+    ])
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(([episodeId, page]) => {
+      this.episodeId = episodeId;
+      this.currentPage = page;
+
+      this.loadEpisodeMeta(); // або один раз, або обгорни логікою, щоб не викликалась зайвий раз
+      this.loadPage();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   
   loadEpisodeMeta() {
@@ -80,27 +102,6 @@ export class EpisodePageViewerComponent implements OnInit {
       }
     });
   }
-  
-  // loadPage() {
-  //   this.isLoading = true;
-  //   this.pagesService.getPagesPublic(this.episodeId, this.currentPage).subscribe({
-  //     next: (res) => {
-  //       this.pageImageUrl = res.page.imageUrl;
-  //       this.totalPages = res.totalPages;
-  //       this.currentPage = res.currentPage;
-  //       this.isLoading = false;
-  //     },
-  //     error: err => {
-  //       this.isLoading = false;
-  //       if (err.status === 404) {
-  //         this.errorMessage = 'Page not found';
-  //       } else {
-  //         this.errorMessage = 'An error occurred while loading the page';
-  //       }
-  //       console.error('Error loading page:', err);
-  //     }
-  //   });
-  // }
 
   loadPage() {
     this.isLoading = true;
