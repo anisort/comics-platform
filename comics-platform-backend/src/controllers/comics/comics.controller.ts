@@ -21,6 +21,12 @@ export class ComicsController {
     return await this.comicsService.findAllComics(filters, page, limit);
   }
 
+  @Get('home')
+  async getTopByLatest(): Promise<ComicItemDto[]> {
+    return this.comicsService.findTopComicsByLatestEpisode();
+  }
+
+
   @Get('/search')
   async searchComics(@Query('query') query: string): Promise<ComicItemDto[]> {
     return await this.comicsService.searchComics(query);

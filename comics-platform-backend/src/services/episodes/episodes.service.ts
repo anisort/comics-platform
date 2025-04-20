@@ -99,7 +99,11 @@ export class EpisodesService {
             throw new NotFoundException('Episode not found');
         }
     
-        episode.isAvailable = !episode.isAvailable;
+        const newAvailability = !episode.isAvailable;
+        episode.isAvailable = newAvailability;
+        if (newAvailability) {
+            episode.created_at = new Date();
+        }
         await this.episodeRepository.save(episode);
         return await this.episodeRepository.findOne({where: {id: episodeId}});
     }
@@ -181,6 +185,16 @@ export class EpisodesService {
     async getComicIdByEpisode(episodeId: number): Promise<{comicId: number, episodeName: string}> {
         const episode = await this.findById(episodeId);
         return {comicId: episode.comic.id, episodeName: episode.name};
-    }      
+    }
+    
+    async isNameTaken(name: string, comicId: number): Promise<boolean> {
+        return this.episodeRepository.exists({
+            where: {
+                name,
+                comic: { id: comicId },
+            },
+        });
+    }
+    
       
 }

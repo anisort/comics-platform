@@ -26,6 +26,9 @@ export class ComicsService {
     return this.http.get<{ comics: ComicItem[], total: number, totalPages: number }>(this.apiUrl, { params });
   }
 
+  getTopByLatest(): Observable<ComicItem[]>{
+    return this.http.get<ComicItem[]>(`${this.apiUrl}/home`)
+  }
 
   getComicById(id: number): Observable<ComicSingleItem | null>{
     return this.http.get<ComicSingleItem | null>(`${this.apiUrl}/${id}`)

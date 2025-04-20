@@ -7,13 +7,4 @@
       }
     </div>
   </div>
-  <div class="pagination">
-    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-    
-    <span>Page</span>
-    <input type="number" [(ngModel)]="pageInput" (keyup.enter)="goToPage()" min="1" [max]="totalPages">
-    <span>by {{ totalPages }}</span>
-    
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-  </div>
 </div>

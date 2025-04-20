@@ -10,11 +10,6 @@ import { ComicItem } from '../../models/comic-item';
 })
 export class HomePageComponent implements OnInit {
   comics: ComicItem[] = [];
-  totalComics: number = 0;
-  totalPages: number = 0;
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  pageInput: number = 1;
 
   constructor(private comicsService: ComicsService) {}
 
@@ -23,37 +18,8 @@ export class HomePageComponent implements OnInit {
   }
 
   loadComics(): void {
-    this.comicsService.getAllComics(this.currentPage, this.itemsPerPage).subscribe((data) => {
-      this.comics = data.comics;
-      this.totalComics = data.total;
-      this.totalPages = data.totalPages ?? 0;
+    this.comicsService.getTopByLatest().subscribe((data) => {
+      this.comics = data;
     });
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.pageInput = this.currentPage;
-      this.loadComics();
-    }
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.pageInput = this.currentPage;
-      this.loadComics();
-    }
-  }
-
-  goToPage(): void {
-    if (this.pageInput < 1) {
-      this.currentPage = 1;
-    } else if (this.pageInput > this.totalPages) {
-      this.currentPage = this.totalPages;
-    } else {
-      this.currentPage = this.pageInput;
-    }
-    this.loadComics();
   }
 }

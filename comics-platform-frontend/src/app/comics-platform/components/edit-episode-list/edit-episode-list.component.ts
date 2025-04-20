@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {  Router } from '@angular/router';
 import { EpisodesService } from '../../services/episodes.service';
 import { FormControl, Validators } from '@angular/forms';
+import { CustomValidator } from '../../validators/custom.validator';
 
 
 @Component({
@@ -18,13 +19,19 @@ export class EditEpisodeListComponent implements OnInit {
   episodes: EpisodeItem[] = [];
   isReorderChanged = false;
   isLoading = false;
-
-  newEpisodeControl = new FormControl('', [Validators.required]);
+  newEpisodeControl = new FormControl();
 
 
   constructor(private episodesService: EpisodesService, private router: Router) {}
 
+
   ngOnInit(): void {
+    
+    this.newEpisodeControl = new FormControl(
+      '',
+      [Validators.required, Validators.minLength(3)],
+      [CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId)]
+    );
     this.loadEpisodes();
   }
 

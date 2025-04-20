@@ -48,6 +48,40 @@ export class ComicsService {
     };
   }
 
+  async findTopComicsByLatestEpisode(): Promise<ComicItemDto[]> {
+    const rawComics = await this.comicRepository
+      .createQueryBuilder('comic')
+      .leftJoin('comic.episodes', 'episode')
+      .where('episode.isAvailable = true')
+      .select([
+        'comic.id AS comic_id',
+        'MAX(episode.created_at) AS latestEpisodeDate',
+      ])
+      .groupBy('comic.id')
+      .orderBy('latestEpisodeDate', 'DESC')
+      .limit(10)
+      .getRawMany();
+  
+    const comicIds = rawComics.map((row) => row.comic_id);
+  
+    if (!comicIds.length) return [];
+  
+    const comics = await this.comicRepository.findByIds(comicIds);
+  
+    const comicMap = new Map(comics.map(c => [c.id, c]));
+    const sortedComics = comicIds
+      .map(id => comicMap.get(id))
+      .filter((comic): comic is Comic => comic !== undefined);
+  
+    return sortedComics.map(comic => ({
+      id: comic.id,
+      name: comic.name,
+      coverUrl: comic.coverUrl,
+    }));
+  }
+  
+  
+
   async findComicById(id: number): Promise<ComicItemSingleDto | null> {
     const comic = await this.comicRepository.findOne({
       where: { id },

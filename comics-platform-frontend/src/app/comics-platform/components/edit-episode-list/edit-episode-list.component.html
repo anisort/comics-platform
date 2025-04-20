@@ -15,8 +15,16 @@
       <input
         [formControl]="newEpisodeControl"
         placeholder="New episode name"
-        [class.invalid]="newEpisodeControl.invalid && newEpisodeControl.touched"
       />
+      @if (newEpisodeControl.hasError('required') && newEpisodeControl.touched) {
+        <small class="error">Name is required.</small>
+      }
+      @if (newEpisodeControl.hasError('minlength') && newEpisodeControl.touched) {
+        <small class="error">Name must be at least 3 characters long.</small>
+      }
+      @if (newEpisodeControl.hasError('episodeNameTaken') && newEpisodeControl.touched) {
+        <small class="error">Name is already taken.</small>
+      }
       <button (click)="addEpisode()" [disabled]="newEpisodeControl.invalid">
         Add new episode
       </button>

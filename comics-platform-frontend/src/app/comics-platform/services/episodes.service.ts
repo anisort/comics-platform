@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { AppConfig, CONFIG_TOKEN } from '../../../../config';
 import { EpisodeItem } from '../models/episode-item';
@@ -47,6 +47,12 @@ export class EpisodesService {
   
   reorderEpisodes(comicId: number, ids: number[]) {
     return this.http.post<EpisodeItem[]>(`${this.apiUrl}/reorder/${comicId}`, { idsInOrder: ids });
+  }
+
+  checkName(name: string, comicId: number): Observable<{ exists: boolean }> {
+    let params = new HttpParams();
+    params = params.set('name', name.toString());
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/check-name/${comicId}`, {params});
   }
   
 }

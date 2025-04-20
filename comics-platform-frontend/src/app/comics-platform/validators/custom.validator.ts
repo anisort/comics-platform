@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, switchMap, catchError } from 'rxjs/operators';
 import { UsersService } from '../services/users.service';
 import { ComicsService } from '../services/comics.service';
+import { EpisodesService } from '../services/episodes.service';
 
 @Injectable({
     providedIn: 'root',
@@ -69,7 +70,28 @@ export class CustomValidator {
         );
       };
     }
+  
+
+    static uniqueEpisodeNameValidator(
+      episodesService: EpisodesService,
+      comicId: number,
+      currentName: string = ''
+    ): AsyncValidatorFn {
+      return (control: AbstractControl): Observable<ValidationErrors | null> => {
+        const value = control.value?.trim();
     
-
-
+        if (!value || value === currentName) {
+          return of(null);
+        }
+    
+        return episodesService.checkName(value, comicId).pipe(
+          debounceTime(300),
+          switchMap(response => {
+            return response.exists ? of({ episodeNameTaken: true }) : of(null);
+          }),
+          catchError(() => of(null))
+        );
+      };
+    }
+    
 }

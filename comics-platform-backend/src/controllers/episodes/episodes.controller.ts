@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Patch, Delete, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Patch, Delete, UseGuards, Request, Query } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { CreateEpisodeDto } from 'src/dto/create-episode.dto';
 import { ReorderDto } from 'src/dto/reorder.dto';
@@ -8,6 +8,12 @@ import { EpisodesService } from 'src/services/episodes/episodes.service';
 export class EpisodesController {
 
     constructor(private readonly episodesService: EpisodesService){}
+
+    @Get('check-name/:comicId')
+      async checkEpName(@Query('name') name: string, @Param('comicId') comicId: number) {
+        const exists = await this.episodesService.isNameTaken(name, comicId);
+        return { exists };
+      }
 
     @Get('/comic/:comicId')
     async getEpisodesByComic(@Param('comicId') comicId: number) {
