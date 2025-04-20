@@ -1,9 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 body{
     background-color: rgb(106, 106, 106);
 }
 * {
-    font-family: 'Arial', sans-serif; /* Здесь замените на шрифт, который хотите использовать */
+    // font-family: 'Arial', sans-serif;
+    // font-family: 'Comic Neue', sans-serif;
+    // font-family: 'Patrick Hand', cursive;
+    // font-family: 'Bangers', cursive;
+     font-family: 'Montserrat', sans-serif;
+    //font-family: 'Oswald', sans-serif;
     margin: 0;
     padding: 0;
   }
