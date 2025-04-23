@@ -3,6 +3,8 @@ import { EpisodeItem } from '../../models/episode-item';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditPageListComponent } from '../edit-page-list/edit-page-list.component';
+import { CustomValidator } from '../../validators/custom.validator';
+import { EpisodesService } from '../../services/episodes.service';
 
 @Component({
   selector: 'app-edit-episode-item',
@@ -14,17 +16,19 @@ export class EditEpisodeItemComponent implements OnInit {
 
   @Input() episode!: EpisodeItem;
   @Input() index!: number;
+  @Input() comicId!: number;
 
   @Output() updateName = new EventEmitter<{ id: number, name: string}>();
   @Output() deleteEpisode = new EventEmitter<number>();
   @Output() toggleAvailability = new EventEmitter<number>();
 
   isEditingName = false;
-  nameControl = new FormControl('', [Validators.required]);
+  nameControl = new FormControl();
 
-  constructor(private dialog: MatDialog){}
+  constructor(private dialog: MatDialog, private episodesService: EpisodesService){}
 
   ngOnInit(): void {
+    this.nameControl = new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId));
     this.nameControl.setValue(this.episode.name);
   }
 

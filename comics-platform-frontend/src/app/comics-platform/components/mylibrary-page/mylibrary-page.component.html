@@ -1,14 +1,16 @@
-<h3>My Library</h3>
 <div *ngIf="isLoading" class="loading-overlay">
     <div class="spinner"></div>
     <p>Loading...</p>
   </div>
-<div class="container">
-    <div class="comics-list">
-        @for(comicItem of comics; track comicItem.id; let index = $index){
-            <app-comic-item-mylibrary [comicItem]="comicItem" (comicDeleted)="onComicDeleted($event)"></app-comic-item-mylibrary>
-        }
-        <button class="add-button" (click)="onAddNewComic()">+</button>
+<div class="main-container">
+    <h2>My Library</h2>
+    <div class="container">
+        <div class="comics-list">
+            <button class="add-button" (click)="onAddNewComic()">+</button>
+            @for(comicItem of comics; track comicItem.id; let index = $index){
+                <app-comic-item-mylibrary [comicItem]="comicItem" (comicDeleted)="onComicDeleted($event)"></app-comic-item-mylibrary>
+            }
+        </div>
     </div>
-
 </div>
+

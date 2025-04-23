@@ -1,4 +1,6 @@
-<div class="comic-container" *ngIf="comicSingleItem">
+<div class="main-container">
+
+  <div class="comic-container" *ngIf="comicSingleItem">
     <img [src]="comicSingleItem.coverUrl" [alt]="comicSingleItem.name" class="comic-cover" />
   
     <div class="comic-info">
@@ -24,3 +26,5 @@
   @if(errorMessage){
     <p>{{errorMessage}}</p>
   }
+
+</div>

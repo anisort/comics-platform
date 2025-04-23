@@ -18,9 +18,11 @@ export class HeaderComponent {
   }
 
   onComicSelected(comicItem: ComicItem) {
-    console.log(comicItem);
-    this.router.navigate(['comics-platform/comic-detail-info', comicItem.id]);
+    this.router.navigate(['comics-platform/comic-detail-info', comicItem.id]).then(() => {
+      window.location.reload();
+    });
   }
+  
   
   
   

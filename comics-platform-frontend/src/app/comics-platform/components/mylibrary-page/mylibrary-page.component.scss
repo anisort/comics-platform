@@ -1,15 +1,28 @@
 /* Родительский контейнер для центрирования */
 
-h3 {
-  margin: 10px;
+h2 {
+  margin: 20px;
+  color: aliceblue;
 }
-.container {
+.main-container {
   display: flex;
   justify-content: center; /* Центрируем дочерний элемент по горизонтали */
-  align-items: center;
-  padding: 20px; /* Отступы вокруг контейнера */
+  align-items: center; /* Центрируем по вертикали, но с учетом блока пагинации */
+  flex-direction: column; /* Размещение элементов по вертикали */
+  height: 100vh;
+  padding-top: 100px; /* Щоб контент не залазив під header */
+  padding-bottom: 80px; /* Щоб не залазив під footer */
 }
 
+.container {
+  width: 1200px;
+  display: flex;
+  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
+  align-items: flex-start; /* Центрируем по вертикали */
+  padding: 20px;
+  border-radius: 10px; /* Скругляем углы */
+  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
+}
 /* Контейнер с элементами */
 .comics-list {
   display: flex; /* Используем flexbox для выстраивания элементов */
@@ -38,6 +51,7 @@ h3 {
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 50px;
 }
 
 /* Эффект при наведении */

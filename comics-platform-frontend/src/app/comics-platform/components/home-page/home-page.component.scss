@@ -10,6 +10,9 @@ h2 {
   flex-direction: column; /* Размещение элементов по вертикали */
   height: 100vh; /* Высота контейнера по всей высоте экрана */
   //padding: 20px;
+  margin-top: -10px;
+  position: relative;
+  z-index: 0;
 }
 
 .container {
@@ -18,8 +21,9 @@ h2 {
   justify-content: center; /* Центрируем дочерний элемент по горизонтали */
   align-items: flex-start; /* Центрируем по вертикали */
   padding: 20px;
-  border: 2px solid #5c6bc0; /* Устанавливаем границу с цветом и толщиной */
+  // border: 2px solid #5c6bc0;
   border-radius: 10px; /* Скругляем углы */
+  margin: 20px;
 }
 
 .comics-list {
@@ -33,43 +37,127 @@ h2 {
   margin-left: 50px;
 }
 
-/* Стили для блока пагинации */
-.pagination {
-  display: flex;
-  justify-content: center; /* Центрируем по горизонтали */
-  align-items: center; /* Центрируем по вертикали */
-  margin-top: 20px; /* Отступ сверху */
-  gap: 15px; /* Расстояние между элементами */
+.home-banner {
+  position: relative;
+  width: 100%;
+  height: 60%;
+  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  margin-top: -80px;
 }
 
-.pagination button {
-  background-color: #5c6bc0; /* Синий цвет кнопок */
-  color: white; /* Белый цвет текста */
-  border: none; /* Убираем границу */
-  padding: 10px 20px; /* Отступы внутри кнопки */
-  border-radius: 5px; /* Скругление углов */
-  cursor: pointer; /* Курсор в виде указателя */
-  transition: background-color 0.3s ease; /* Плавный переход при наведении */
+/* Текст на банері */
+.banner-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 48px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  z-index: 2;
 }
 
-.pagination button:hover {
-  background-color: #0056b3; /* Темно-синий при наведении */
-}
-
-.pagination span {
-  font-size: 16px; /* Размер шрифта для номера страницы */
-  font-weight: bold; /* Жирный текст */
-  color: #333; /* Темный цвет текста */
-}
-
-input {
-  width: 50px;
-  height: 30px;
+.welcome-text {
   text-align: center;
-  font-size: 16px;
-  border-radius: 5px;
+  margin: 30px auto;
+  max-width: 800px;
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 1.6;
+  padding: 0 20px;
+}
 
-  &:focus {
-    border-color: #0056b3;
-  }
+
+.navigation-blocks {
+  display: flex; /* Розташовує блоки горизонтально */
+  gap: 20px; /* Відступ між блоками */
+  justify-content: center; /* Центрування по горизонталі */
+  margin: 30px 0; /* Відступи зверху і знизу */
+}
+
+.block {
+  width: 450px;
+  height: 250px;
+  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; /* Прибрати підкреслення */
+  display: flex; /* Додаємо флекс */
+  justify-content: center; /* Горизонтальне центровання */
+  align-items: center; /* Вертикальне центровання */
+  color: inherit; /* Спадкування кольору (не синій як у посилань) */
+}
+
+.block:hover {
+  transform: scale(1.05);
+  background-color: #3f51b5;
+}
+
+.block h3 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+  text-decoration: none;
+}
+
+.updates {
+  //background-color: #ca99cb;
+  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
+  width: 90%;
+  max-width: 1200px; /* Щоб не розтягувалося надто сильно */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px auto 50px auto;
+
+}
+
+h2 {
+  text-align: center; /* Вирівнювання заголовка по центру */
+  margin-bottom: 20px; /* Відступ знизу */
+  color: white;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+}
+
+.carousel-items {
+  display: flex;
+  justify-content: center; /* Центрування айтемів по горизонталі */
+  gap: 20px; /* Відстань між елементами (можна змінити за потреби) */
+  overflow: hidden;
+  width: 80%; /* Ширина контейнера каруселі */
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.prev {
+  left: 10px;
+  border-radius: 5px;
+}
+
+.next {
+  right: 10px;
+  border-radius: 5px;
 }

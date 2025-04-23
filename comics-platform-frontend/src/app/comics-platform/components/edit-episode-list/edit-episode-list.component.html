@@ -4,6 +4,7 @@
         <app-edit-episode-item
           [episode]="episode"
           [index]="i"
+          [comicId]="comicId"
           (updateName)="onNameUpdate($event)"
           (deleteEpisode)="onDelete($event)"
           (toggleAvailability)="onToggleAvailability($event)"
@@ -16,18 +17,18 @@
         [formControl]="newEpisodeControl"
         placeholder="New episode name"
       />
-      @if (newEpisodeControl.hasError('required') && newEpisodeControl.touched) {
-        <small class="error">Name is required.</small>
-      }
-      @if (newEpisodeControl.hasError('minlength') && newEpisodeControl.touched) {
-        <small class="error">Name must be at least 3 characters long.</small>
-      }
-      @if (newEpisodeControl.hasError('episodeNameTaken') && newEpisodeControl.touched) {
-        <small class="error">Name is already taken.</small>
-      }
       <button (click)="addEpisode()" [disabled]="newEpisodeControl.invalid">
         Add new episode
       </button>
+      @if (newEpisodeControl.hasError('required') && newEpisodeControl.touched) {
+        <small class="error-message">Name is required.</small>
+      }
+      @if (newEpisodeControl.hasError('minlength') && newEpisodeControl.touched) {
+        <small class="error-message">Name must be at least 3 characters long.</small>
+      }
+      @if (newEpisodeControl.hasError('episodeNameTaken') && newEpisodeControl.touched) {
+        <small class="error-message">Name is already taken.</small>
+      }
     </div>
     
 

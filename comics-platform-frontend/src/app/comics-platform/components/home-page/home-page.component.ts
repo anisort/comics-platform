@@ -10,6 +10,8 @@ import { ComicItem } from '../../models/comic-item';
 })
 export class HomePageComponent implements OnInit {
   comics: ComicItem[] = [];
+  startIndex: number = 0;
+  visibleItems: number = 4;
 
   constructor(private comicsService: ComicsService) {}
 
@@ -21,5 +23,17 @@ export class HomePageComponent implements OnInit {
     this.comicsService.getTopByLatest().subscribe((data) => {
       this.comics = data;
     });
+  }
+
+  prevComic(): void {
+    if (this.startIndex > 0) {
+      this.startIndex -= this.visibleItems;
+    }
+  }
+
+  nextComic(): void {
+    if (this.startIndex + this.visibleItems < this.comics.length) {
+      this.startIndex += this.visibleItems;
+    }
   }
 }

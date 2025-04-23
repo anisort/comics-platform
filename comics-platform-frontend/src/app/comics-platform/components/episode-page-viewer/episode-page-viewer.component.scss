@@ -5,6 +5,9 @@
     padding: 24px;
     max-width: 100%;
     gap: 16px;
+    padding-top: 100px; /* Щоб контент не залазив під header */
+    padding-bottom: 350px; /* Щоб не залазив під footer */
+    height: 100vh;
   }
   
   .page-image {
@@ -92,4 +95,7 @@
     }
   }
   
+  h2{
+    color:aliceblue;
+  }
   

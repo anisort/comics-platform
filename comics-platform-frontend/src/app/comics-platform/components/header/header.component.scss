@@ -1,8 +1,10 @@
 /* Основные стили для шапки */
 header {
-    background-color: #333; /* Темный фон */
+  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
     padding: 20px 50px; /* Отступы вокруг шапки */
     color: white; /* Белый цвет текста */
+    margin-bottom: -60px;
+
   }
   
   /* Используем flexbox для выравнивания элементов */
@@ -10,6 +12,8 @@ header {
     display: flex;
     justify-content: space-between; /* Размещение элементов между краями */
     align-items: center; /* Выравнивание по вертикали */
+    position: relative;
+    z-index: 3; /* Поверх банера */
   }
   
   /* Логотип */
@@ -37,7 +41,7 @@ header {
   
   /* Наведение на ссылки */
   .nav-links a:hover {
-    background-color: #444;
+    background-color: #59527a;
     color: #f0f0f0;
   }
   

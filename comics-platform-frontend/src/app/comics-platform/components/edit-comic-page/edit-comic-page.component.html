@@ -1,116 +1,129 @@
-<!-- Режим перегляду -->
+<div class="main-container">
+  <!-- Режим перегляду -->
 <div *ngIf="!isEditing && comicSingleItem" class="comic-view">
-    <div class="center">
-        <img [src]="comicSingleItem.coverUrl" alt="Cover Image" class="comic-cover" />
-        <h2>{{ comicSingleItem.name }}</h2>
-    </div>
-    <p><strong>Description</strong></p>
-    <p>{{ comicSingleItem.description }}</p>
-    <p><strong>Status:</strong> {{ comicSingleItem.status }}</p>
-    <p><strong>Age Rating:</strong> {{ comicSingleItem.ageRating }}</p>
-    <p><strong>Genres:</strong>
-      <span *ngFor="let genre of comicSingleItem.genres" class="genre">{{ genre }}</span>
-    </p>
-    <button (click)="enableEdit()" class="btn btn-warning">Edit</button>
-  </div>
+    <img [src]="comicSingleItem.coverUrl" [alt]="comicSingleItem.name" class="comic-cover" />
   
-  <!-- Режим редагування -->
-  <form *ngIf="isEditing && updateForm" [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="comic-form">
-    <!-- Обкладинка -->
-    <div class="form-group">
-        <div class="center">
-            <div *ngIf="coverImagePreview">
-              <img [src]="coverImagePreview" alt="Preview" class="comic-cover-preview" />
-            </div>
-            <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
-        </div>
-     
-    </div>
+    <div class="comic-info">
+      <h1 class="comic-title">{{ comicSingleItem.name }}</h1>
+      <p class="comic-description">{{ comicSingleItem.description }}</p>
   
-    <!-- Назва -->
-    <div class="form-group">
-      <label>Name:</label>
-      <input type="text" formControlName="name" class="form-control" />
-      @if (updateForm.get('name')?.hasError('required') && updateForm.get('name')?.touched) {
-        <small class="error">Name is required.</small>
-      }
-      @if (updateForm.get('name')?.hasError('minlength') && updateForm.get('name')?.touched) {
-        <small class="error">Name cannot be less than 3 characters.</small>
-      }
-      @if (updateForm.get('name')?.hasError('comicNameTaken') && updateForm.get('name')?.touched) {
-        <small class="error">Name is already taken.</small>
-      }
-    </div>
-  
-    <!-- Опис -->
-    <div class="form-group">
-      <label>Description:</label>
-      <textarea formControlName="description" class="form-control"></textarea>
-      @if (updateForm.get('description')?.hasError('required') && updateForm.get('description')?.touched) {
-        <small class="error">Description is required.</small>
-      }
-      @if (updateForm.get('description')?.hasError('minlength') && updateForm.get('description')?.touched) {
-        <small class="error">Description cannot be less than 10 characters.</small>
-      }
-    </div>
-  
-    <!-- Статус -->
-    <div class="form-group">
-      <label>Status:</label>
-      <select formControlName="status" class="form-control">
-        <option value="ongoing">Ongoing</option>
-        <option value="completed">Completed</option>
-      </select>
-      @if (updateForm.get('status')?.hasError('required') && updateForm.get('status')?.touched) {
-        <small class="error">Status is required.</small>
-      }
-    </div>
-  
-    <!-- Рейтинг -->
-    <div class="form-group">
-      <label>Age Rating:</label>
-      <select formControlName="ageRating" class="form-control">
-        <option value="13+">13+</option>
-        <option value="15+">15+</option>
-        <option value="17+">17+</option>
-      </select>
-      @if (updateForm.get('ageRating')?.hasError('required') && updateForm.get('ageRating')?.touched) {
-        <small class="error">Age rating is required.</small>
-      }
-    </div>
-  
-    <!-- Жанри -->
-    <div class="form-group">
-      <label>Genres:</label>
-      <select formControlName="genres" class="form-control" multiple>
-        <option value="action">Action</option>
-        <option value="comedy">Comedy</option>
-        <option value="drama">Drama</option>
-        <option value="horror">Horror</option>
-        <option value="fantasy">Fantasy</option>
-        <option value="romance">Romance</option>
-      </select>
-      @if (updateForm.get('genres')?.hasError('required') && updateForm.get('genres')?.touched) {
-        <small class="error">Genres are required.</small>
-      }
-    </div>
-  
-    <div *ngIf="isLoading" class="loading-overlay">
-        <div class="spinner"></div>
-        <p>Saving...</p>
+      <div class="comic-details">
+        <p><strong>Status:</strong> {{ comicSingleItem.status === 'ongoing' ? 'Ongoing' : 'Completed' }}</p>
+        <p><strong>Age rating:</strong> {{ comicSingleItem.ageRating }}</p>
+        <p><strong>Year of creation:</strong> {{ comicSingleItem.createdAt }}</p>
+        <p><strong>Author:</strong> {{ comicSingleItem.user }}</p>
       </div>
-
-    <!-- Кнопки -->
-    <div class="form-buttons">
-      <button type="submit" class="btn btn-success" [disabled]="isLoading">
-        Update
-      </button>
-      <button type="button" class="btn btn-secondary" (click)="cancelEdit()" [disabled]="isLoading">
-        Cancel
-      </button>
+  
+      <div class="comic-genres">
+        <strong>Genres:</strong>
+        <span *ngFor="let genre of comicSingleItem.genres" class="genre-badge">
+          {{ genre }}
+        </span>
+      </div>
     </div>
-  </form>
+  <button (click)="enableEdit()" class="btn btn-warning">Edit</button>
+</div>
 
-  <app-edit-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-edit-episode-list>
+<!-- Режим редагування -->
+<form *ngIf="isEditing && updateForm" [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="comic-form">
+  <!-- Обкладинка -->
+  <div class="form-group">
+      <div class="center">
+          <div *ngIf="coverImagePreview">
+            <img [src]="coverImagePreview" alt="Preview" class="comic-cover-preview" />
+          </div>
+          <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
+      </div>
+   
+  </div>
+
+  <!-- Назва -->
+  <div class="form-group">
+    <label>Name:</label>
+    <input type="text" formControlName="name" class="form-control" />
+    @if (updateForm.get('name')?.hasError('required') && updateForm.get('name')?.touched) {
+      <small class="error">Name is required.</small>
+    }
+    @if (updateForm.get('name')?.hasError('minlength') && updateForm.get('name')?.touched) {
+      <small class="error">Name cannot be less than 3 characters.</small>
+    }
+    @if (updateForm.get('name')?.hasError('comicNameTaken') && updateForm.get('name')?.touched) {
+      <small class="error">Name is already taken.</small>
+    }
+  </div>
+
+  <!-- Опис -->
+  <div class="form-group">
+    <label>Description:</label>
+    <textarea formControlName="description" class="form-control"></textarea>
+    @if (updateForm.get('description')?.hasError('required') && updateForm.get('description')?.touched) {
+      <small class="error">Description is required.</small>
+    }
+    @if (updateForm.get('description')?.hasError('minlength') && updateForm.get('description')?.touched) {
+      <small class="error">Description cannot be less than 10 characters.</small>
+    }
+  </div>
+
+  <!-- Статус -->
+  <div class="form-group">
+    <label>Status:</label>
+    <select formControlName="status" class="form-control">
+      <option value="ongoing">Ongoing</option>
+      <option value="completed">Completed</option>
+    </select>
+    @if (updateForm.get('status')?.hasError('required') && updateForm.get('status')?.touched) {
+      <small class="error">Status is required.</small>
+    }
+  </div>
+
+  <!-- Рейтинг -->
+  <div class="form-group">
+    <label>Age Rating:</label>
+    <select formControlName="ageRating" class="form-control">
+      <option value="13+">13+</option>
+      <option value="15+">15+</option>
+      <option value="17+">17+</option>
+    </select>
+    @if (updateForm.get('ageRating')?.hasError('required') && updateForm.get('ageRating')?.touched) {
+      <small class="error">Age rating is required.</small>
+    }
+  </div>
+
+  <!-- Жанри -->
+  <div class="form-group">
+    <label>Genres:</label>
+    <select formControlName="genres" class="form-control" multiple>
+      <option value="action">Action</option>
+      <option value="comedy">Comedy</option>
+      <option value="drama">Drama</option>
+      <option value="horror">Horror</option>
+      <option value="fantasy">Fantasy</option>
+      <option value="romance">Romance</option>
+    </select>
+    @if (updateForm.get('genres')?.hasError('required') && updateForm.get('genres')?.touched) {
+      <small class="error">Genres are required.</small>
+    }
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Saving...</p>
+    </div>
+
+  <!-- Кнопки -->
+  <div class="form-buttons">
+    <button type="submit" class="btn btn-success" [disabled]="isLoading || !updateForm.valid">
+      Update
+    </button>    
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()" [disabled]="isLoading">
+      Cancel
+    </button>
+  </div>
+</form>
+
+<app-edit-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-edit-episode-list>
+</div>
+
+
 
   

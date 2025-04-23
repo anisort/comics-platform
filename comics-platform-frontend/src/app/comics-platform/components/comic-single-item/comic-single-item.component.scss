@@ -1,49 +1,67 @@
+.main-container {
+  padding: 120px 20px 80px; /* Відступи згори і знизу, щоб не перекривало header/footer */
+  max-width: 1200px;
+  margin: 0 auto;
+  //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
 .comic-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: auto;
-  }
-  
-  .comic-cover {
-    width: 200px;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .comic-info {
-    flex: 1;
-  }
-  
-  .comic-title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .comic-description {
-    font-size: 16px;
-    margin: 10px 0;
-  }
-  
-  .comic-details p {
-    margin: 5px 0;
-  }
-  
-  .comic-genres {
-    margin-top: 10px;
-  }
-  
-  .genre-badge {
-    display: inline-block;
-    background-color: #f1a892;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 5px;
-    font-size: 14px;
-  }
-  
+  display: flex;
+  flex-direction: column; /* Робимо вертикальне розташування */
+  align-items: center; /* Центруємо обкладинку */
+  background-color: #f3f6fd;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.comic-cover {
+  width: 100%;
+  max-width: 400px; /* Обмежуємо ширину */
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.comic-info {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center; /* Центруємо текст */
+}
+
+.comic-title {
+  font-size: 32px;
+  margin: 0;
+  color: #3f51b5;
+}
+
+.comic-description {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.comic-details p {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.comic-genres {
+  margin-top: 10px;
+}
+
+.genre-badge {
+  background-color: #5c6bc0;
+  color: white;
+  padding: 6px 12px;
+  margin: 4px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+}
