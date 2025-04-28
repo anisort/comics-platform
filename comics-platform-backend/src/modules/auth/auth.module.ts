@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
     imports: [
@@ -19,7 +20,8 @@ import { PassportModule } from '@nestjs/passport';
         }),
         }),
         UsersModule,
-        PassportModule
+        PassportModule,
+        MailModule
     ],
     providers: [AuthService],
     controllers: [AuthController],

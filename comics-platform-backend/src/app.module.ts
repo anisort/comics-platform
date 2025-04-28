@@ -19,6 +19,8 @@ import { Page } from './entities/page.entity';
 import { SubscriptionModule } from './modules/subscription/subscription.module';
 import { Notification } from './entities/notification.entity';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { CleanupModule } from './cleanup/cleanup.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -49,7 +51,9 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     EpisodesModule,
     PagesModule,
     SubscriptionModule,
-    NotificationsModule
+    NotificationsModule,
+    CleanupModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],
