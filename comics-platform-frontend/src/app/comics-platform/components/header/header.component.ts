@@ -10,7 +10,7 @@ import { ComicItem } from '../../models/comic-item';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) { }
 
   logout() {
     this.authService.logout();
@@ -22,8 +22,5 @@ export class HeaderComponent {
       window.location.reload();
     });
   }
-  
-  
-  
-  
+
 }

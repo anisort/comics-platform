@@ -1,48 +1,46 @@
-
-
 .comics-item {
   position: relative;
-  width: 200px; /* Устанавливаем фиксированную ширину для каждого элемента */
-  height: 300px; /* Фиксированная высота */
-  overflow: hidden; /* Скрываем все, что выходит за пределы блока */
-  border-radius: 10px; /* Скругляем углы */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Легкая тень для красоты */
-  cursor: pointer; /* Курсор руки */
+  width: 200px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .comics-item img {
-  width: 100%; /* Картинка растягивается на всю ширину контейнера */
-  height: 100%; /* Картинка растягивается на всю высоту контейнера */
-  object-fit: cover; /* Обеспечиваем, чтобы картинка покрывала весь блок */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .comics-item button {
-  all: unset; /* Убираем стандартные стили кнопки */
-  display: block; /* Блоковый элемент */
+  all: unset;
+  display: block;
   width: 100%;
   height: 100%;
 }
 
 .comics-item .overlay {
   position: absolute;
-  bottom: 0; /* Позиционируем блок внизу картинки */
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 20%; /* Блок занимает 1/5 высоты картинки */
-  background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+  height: 20%;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0; /* Начальная невидимость */
-  transition: opacity 0.3s ease; /* Плавный переход для появления */
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .comics-item:hover .overlay {
-  opacity: 1; /* Блок становится видимым при наведении */
+  opacity: 1;
 }
 
 .comics-item h3 {
-  margin: 0; /* Убираем отступы */
-  font-size: 1.2rem; /* Размер шрифта */
+  margin: 0;
+  font-size: 1.2rem;
 }

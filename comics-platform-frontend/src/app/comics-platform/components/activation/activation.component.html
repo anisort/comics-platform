@@ -1,11 +1,11 @@
-<div>
-    @if (successMessage) {
-        <p>{{ successMessage }}. Go to login: <a href="/comics-platform/login">Sign in</a></p>
-    }
-    
-    @if (errorMessage) {
-        <p>{{ errorMessage }}. Go to register: <a href="/comics-platform/register">Sign up</a></p>
-    }
-</div>
+<div class="main-container">
+    <div class="message">
+        @if (successMessage) {
+        <p class="successMessage">{{ successMessage }}. Go to login: <a href="/comics-platform/login">Sign in</a></p>
+        }
 
-  
+        @if (errorMessage) {
+        <p class="errorMessage">{{ errorMessage }}. Go to register: <a href="/comics-platform/register">Sign up</a></p>
+        }
+    </div>
+</div>

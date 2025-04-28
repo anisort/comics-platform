@@ -18,14 +18,14 @@ export class EditEpisodeItemComponent implements OnInit {
   @Input() index!: number;
   @Input() comicId!: number;
 
-  @Output() updateName = new EventEmitter<{ id: number, name: string}>();
+  @Output() updateName = new EventEmitter<{ id: number, name: string }>();
   @Output() deleteEpisode = new EventEmitter<number>();
   @Output() toggleAvailability = new EventEmitter<number>();
 
   isEditingName = false;
   nameControl = new FormControl();
 
-  constructor(private dialog: MatDialog, private episodesService: EpisodesService){}
+  constructor(private dialog: MatDialog, private episodesService: EpisodesService) { }
 
   ngOnInit(): void {
     this.nameControl = new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId));
@@ -50,8 +50,8 @@ export class EditEpisodeItemComponent implements OnInit {
 
   openPagesEditor(): void {
     this.dialog.open(EditPageListComponent, {
-      data: { 
-        episodeId: this.episode.id, 
+      data: {
+        episodeId: this.episode.id,
         episodeName: this.episode.name
       },
       width: '80%',
@@ -61,7 +61,6 @@ export class EditEpisodeItemComponent implements OnInit {
       autoFocus: false,
     });
   }
-  
 
   confirmDelete(): void {
     if (confirm('Are you sure you want to delete this episode?')) {

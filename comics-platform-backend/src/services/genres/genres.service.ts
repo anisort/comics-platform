@@ -16,10 +16,5 @@ export class GenresService {
       where: namesArray.map(name => ({ name })),
     });
   }
-
-  // make controller
-  async getAllGenres(): Promise<Genre[]>{
-    return this.genreRepository.find();
-  }
   
 }

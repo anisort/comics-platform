@@ -1,117 +1,101 @@
 h3 {
-    color: rgb(99, 99, 99); /* Белый цвет текста */
-    text-align: center; /* Центрируем заголовок */
-    //margin-bottom: 20px; /* Добавляем отступ снизу, чтобы заголовок не был слишком близко к форме */
-  }
-  
+  color: rgb(99, 99, 99);
+  text-align: center;
+}
 
-/* Основные стили для формы */
-/* Родительский контейнер для центрирования */
 .container {
-    display: flex;
-    justify-content: center; /* Центрирует форму по горизонтали */
-    align-items: center; /* Центрирует форму по вертикали */
-    height: 100vh; /* Занимает всю высоту экрана */
-    padding: 0 20px; /* Немного отступов по бокам */
-  }
-  
-  /* Основные стили для формы */
-  form {
-    max-width: 400px;
-    width: 100%; /* Чтобы форма не выходила за пределы контейнера */
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Заголовок сообщения активации */
-  .activation-message {
-    padding: 10px;
-    background-color: #e0ffe0;
-    color: #2e7d32;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  /* Метки для полей формы */
-  label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 6px;
-    color: #333;
-    text-align: left; /* Для выравнивания меток слева */
-  }
-  
-  /* Поля ввода */
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 2px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease;
-  }
-  
-  /* Активный фокус на поле ввода */
-  input:focus {
-    border-color: #208ac3;
-    outline: none;
-  }
-  
-  /* Сообщения об ошибках и текста справа */
-  small.error {
-    color: #d32f2f;
-    font-size: 12px;
-    margin: 2px;
-    display: block;
-    text-align: left; /* Выравнивание ошибки справа */
-  }
-  
-  /* Кнопка отправки */
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #208ac3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  
-  /* Эффект наведения на кнопку */
-  button:hover {
-    background-color: #196d9a;
-  }
-  
-  /* Отключенная кнопка */
-  button:disabled {
-    background-color: #b0b0b0;
-    cursor: not-allowed;
-  }
-  
-  /* Ссылка на вход */
-  div {
-    margin-top: 10px;
-    text-align: center;
-    font-size: 14px;
-  }
-  
-  div a {
-    color: #208ac3;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  
-  /* Ссылка при наведении */
-  div a:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0 20px;
+}
+
+form {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activation-message {
+  padding: 10px;
+  background-color: #e0ffe0;
+  color: #2e7d32;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 2px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #208ac3;
+  outline: none;
+}
+
+small.error {
+  color: #d32f2f;
+  font-size: 12px;
+  margin: 2px;
+  display: block;
+  text-align: left;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #208ac3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #196d9a;
+}
+
+button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+div {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+div a {
+  color: #208ac3;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+div a:hover {
+  text-decoration: underline;
+}

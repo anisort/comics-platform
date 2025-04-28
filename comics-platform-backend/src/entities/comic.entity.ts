@@ -39,4 +39,7 @@ export class Comic {
 
   @OneToMany(() => Episode, (episode) => episode.comic)
   episodes: Episode[];
+
+  @ManyToMany(() => User, user => user.subscribedComics)
+  subscribers: User[];
 }

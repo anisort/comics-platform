@@ -1,0 +1,38 @@
+<div class="notification-container">
+  <span class="material-icons bell-icon" [class.has-unread]="hasUnread()" (click)="toggleDropdown()">
+    notifications
+  </span>
+
+  <div *ngIf="showDropdown" class="notifications-dropdown">
+    <div class="notifications-header">
+      <h4>Notifications</h4>
+      <button class="mark-all" (click)="markAllAsRead()">Mark all as read</button>
+    </div>
+
+    <div *ngIf="notifications.length === 0" class="empty-state">
+      No notifications yet.
+    </div>
+
+    <div *ngFor="let notification of notifications" class="notification-item">
+      <div class="notification-image" *ngIf="notification.notificationCoverUrl">
+        <img [src]="notification.notificationCoverUrl" alt="Notification Cover" />
+      </div>
+
+      <div class="notification-content">
+        <a *ngIf="notification.link" (click)="handleNotificationClick($event, notification.id, notification.link)"
+          class="notification-link">
+          <strong>{{ notification.title }}</strong>
+        </a>
+
+        <strong *ngIf="!notification.link">{{ notification.title }}</strong>
+
+        <p>{{ notification.message }}</p>
+        <small>{{ notification.createdAt | date: 'MMM d, y' }}</small>
+      </div>
+
+      <button *ngIf="!notification.isRead" class="mark-read-button" (click)="markAsRead(notification.id)">
+        Mark as read
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,7 @@
-
 .main-container {
   padding: 120px 20px 80px;
   max-width: 1200px;
   margin: 0 auto;
-  //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
@@ -84,8 +82,8 @@ textarea {
 select:focus,
 textarea:focus,
 .form-control:focus {
-  outline: none;  /* Прибирає стандартне обведення */
-  border: 1px solid #208ac3;  /* Можна встановити свій бажаний колір для фокусу */
+  outline: none;
+  border: 1px solid #208ac3;
 }
 
 textarea {
@@ -107,9 +105,11 @@ textarea {
 
 .loading-overlay {
   position: absolute;
-  top: 0; left: 0;
-  right: 0; bottom: 0;
-  background: rgba(255,255,255,0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,11 +129,11 @@ textarea {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-
-/* Основні стилі для кнопок */
 .btn {
   padding: 10px 20px;
   border-radius: 5px;
@@ -142,7 +142,6 @@ textarea {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* Стиль для кнопки "Update" */
 .btn-success {
   background-color: #4caf50;
   color: white;
@@ -160,7 +159,6 @@ textarea {
   color: #bdbdbd;
 }
 
-/* Стиль для кнопки "Edit" */
 .btn-warning {
   background-color: #ff9800;
   color: white;
@@ -171,7 +169,6 @@ textarea {
   background-color: #bc6a04;
 }
 
-/* Стиль для кнопки "Cancel" */
 .btn-secondary {
   background-color: #607d8b;
   color: white;
@@ -182,7 +179,6 @@ textarea {
   background-color: #455a64;
 }
 
-/* Стиль для кнопок в режимі редагування */
 .form-buttons {
   display: flex;
   gap: 10px;

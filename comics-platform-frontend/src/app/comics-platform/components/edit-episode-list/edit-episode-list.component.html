@@ -1,44 +1,34 @@
 <div class="episodes-list">
-    <div cdkDropList (cdkDropListDropped)="drop($event)">
-      <div *ngFor="let episode of episodes; let i = index" cdkDrag>
-        <app-edit-episode-item
-          [episode]="episode"
-          [index]="i"
-          [comicId]="comicId"
-          (updateName)="onNameUpdate($event)"
-          (deleteEpisode)="onDelete($event)"
-          (toggleAvailability)="onToggleAvailability($event)"
-        ></app-edit-episode-item>
-      </div>
-    </div>
-  
-    <div class="add-episode">
-      <input
-        [formControl]="newEpisodeControl"
-        placeholder="New episode name"
-      />
-      <button (click)="addEpisode()" [disabled]="newEpisodeControl.invalid">
-        Add new episode
-      </button>
-      @if (newEpisodeControl.hasError('required') && newEpisodeControl.touched) {
-        <small class="error-message">Name is required.</small>
-      }
-      @if (newEpisodeControl.hasError('minlength') && newEpisodeControl.touched) {
-        <small class="error-message">Name must be at least 3 characters long.</small>
-      }
-      @if (newEpisodeControl.hasError('episodeNameTaken') && newEpisodeControl.touched) {
-        <small class="error-message">Name is already taken.</small>
-      }
-    </div>
-    
-
-    <div *ngIf="isLoading" class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Loading...</p>
-    </div>
-  
-    <div *ngIf="isReorderChanged" class="reorder-actions">
-      <button (click)="saveOrder()">Save order</button>
+  <div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let episode of episodes; let i = index" cdkDrag>
+      <app-edit-episode-item [episode]="episode" [index]="i" [comicId]="comicId" (updateName)="onNameUpdate($event)"
+        (deleteEpisode)="onDelete($event)" (toggleAvailability)="onToggleAvailability($event)"></app-edit-episode-item>
     </div>
   </div>
-  
+
+  <div class="add-episode">
+    <input [formControl]="newEpisodeControl" placeholder="New episode name" />
+    <button (click)="addEpisode()" [disabled]="newEpisodeControl.invalid">
+      Add new episode
+    </button>
+    @if (newEpisodeControl.hasError('required') && newEpisodeControl.touched) {
+    <small class="error-message">Name is required.</small>
+    }
+    @if (newEpisodeControl.hasError('minlength') && newEpisodeControl.touched) {
+    <small class="error-message">Name must be at least 3 characters long.</small>
+    }
+    @if (newEpisodeControl.hasError('episodeNameTaken') && newEpisodeControl.touched) {
+    <small class="error-message">Name is already taken.</small>
+    }
+  </div>
+
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="isReorderChanged" class="reorder-actions">
+    <button (click)="saveOrder()">Save order</button>
+  </div>
+</div>

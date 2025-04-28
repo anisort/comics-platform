@@ -1,60 +1,87 @@
 .search-container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 300px;
-  background-color: white;
-  transition: width 0.3s ease;
-}
-
-.search-input:focus {
-  width: 350px;
+  padding: 10px 15px;
+  width: 250px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  color: #333;
   outline: none;
+  transition: all 0.3s ease;
+
+  &:focus {
+    box-shadow: 0 0 8px rgba(30, 136, 229, 0.7);
+  }
 }
 
 .search-results {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 45px;
   width: 100%;
-  max-height: 200px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 1000;
+  max-height: 300px;
   overflow-y: auto;
-  background-color: #565656;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10;
 }
 
 .search-result-item {
-  padding: 10px;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-}
+  transition: background-color 0.3s;
 
-.search-result-item:hover {
-  background-color: rgb(121, 121, 121);
+  &:hover {
+    background-color: #f5f5f5;
+  }
 }
 
 .comic-item {
   display: flex;
-  align-items: center;  /* Вирівнювання по вертикалі */
+  align-items: center;
+  gap: 10px;
+
+  .comic-cover {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin: 0;
+    color: #333;
+  }
 }
 
-.comic-cover {
-  width: 100px;
-  height: 100px;
+.no-results {
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+.search-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
   border-radius: 4px;
-  margin-right: 10px;
-  object-fit: cover;
 }
 
-h3 {
-  margin: 0;  /* Прибираємо відступи у заголовку */
-  font-size: 16px;  /* Можна налаштувати розмір шрифта заголовка */
-  color: white;  /* Можна змінити колір тексту */
+.search-results::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
 }

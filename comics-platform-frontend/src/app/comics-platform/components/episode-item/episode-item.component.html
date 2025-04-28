@@ -1,10 +1,10 @@
 <div class="episode-item" (click)="openEpisode()">
-    <div class="episode-info">
-        <strong>{{ episode.name }}</strong>
-        <p>{{ episode.created_at | date:'mediumDate' }}</p>
-    </div>
-  
-    <div class="episode-order">
-      #{{ index + 1 }}
-    </div>
+  <div class="episode-info">
+    <strong>{{ episode.name }}</strong>
+    <p>{{ episode.created_at | date:'mediumDate' }}</p>
+  </div>
+
+  <div class="episode-order">
+    #{{ index + 1 }}
+  </div>
 </div>

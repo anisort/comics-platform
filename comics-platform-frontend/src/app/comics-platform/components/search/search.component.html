@@ -1,21 +1,9 @@
 <div class="search-container">
-  <input
-    type="text"
-    [(ngModel)]="searchQuery"
-    placeholder="Search comics..."
-    class="search-input"
-    (input)="onSearchChange()"
-    (focus)="onSearchFocus()"
-    (blur)="onSearchBlur()"
-  />
+  <input type="text" [(ngModel)]="searchQuery" placeholder="Search comics..." class="search-input"
+    (input)="onSearchChange()" (focus)="onSearchFocus()" (blur)="onSearchBlur()" />
   <div *ngIf="isSearchFocused && searchQuery.length > 0" class="search-results">
-    <!-- Если есть комиксы в фильтре, показываем их -->
     <div *ngIf="filteredComics.length > 0; else noResults">
-      <div
-        *ngFor="let comic of filteredComics"
-        class="search-result-item"
-        (click)="selectComic(comic)"
-      >
+      <div *ngFor="let comic of filteredComics" class="search-result-item" (click)="selectComic(comic)">
         <div class="comic-item">
           <img [src]="comic.coverUrl" alt="Comic cover" class="comic-cover" />
           <h3>{{ comic.name }}</h3>
@@ -28,8 +16,4 @@
       </div>
     </ng-template>
   </div>
-  
-  
-  
-  
 </div>

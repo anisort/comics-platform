@@ -1,30 +1,38 @@
 <div class="main-container">
-
   <div class="comic-container" *ngIf="comicSingleItem">
     <img [src]="comicSingleItem.coverUrl" [alt]="comicSingleItem.name" class="comic-cover" />
-  
     <div class="comic-info">
       <h1 class="comic-title">{{ comicSingleItem.name }}</h1>
+      <div *ngIf="isAuthenticated && !isAuthor" class="subscription-button">
+        <button *ngIf="!isSubscribed" (click)="onSubscribe()">Subscribe</button>
+        <div *ngIf="isSubscribed">
+          <p>You are subscribed.</p>
+          <button (click)="onUnsubscribe()">Unsubscribe</button>
+        </div>
+      </div>
+      <div *ngIf="isAuthenticated && isAuthor" class="subscription-button">
+        <p>You are the author of this comic.</p>
+      </div>
       <p class="comic-description">{{ comicSingleItem.description }}</p>
-  
+
       <div class="comic-details">
         <p><strong>Status:</strong> {{ comicSingleItem.status === 'ongoing' ? 'Ongoing' : 'Completed' }}</p>
         <p><strong>Age rating:</strong> {{ comicSingleItem.ageRating }}</p>
         <p><strong>Year of creation:</strong> {{ comicSingleItem.createdAt }}</p>
         <p><strong>Author:</strong> {{ comicSingleItem.user }}</p>
       </div>
-  
+
       <div class="comic-genres">
         <strong>Genres:</strong>
         <span *ngFor="let genre of comicSingleItem.genres" class="genre-badge">
           {{ genre }}
         </span>
       </div>
+
     </div>
   </div>
   <app-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-episode-list>
   @if(errorMessage){
-    <p>{{errorMessage}}</p>
+  <p>{{errorMessage}}</p>
   }
-
 </div>

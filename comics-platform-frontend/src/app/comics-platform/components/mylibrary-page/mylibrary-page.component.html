@@ -1,16 +1,46 @@
 <div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Loading...</p>
-  </div>
-<div class="main-container">
-    <h2>My Library</h2>
-    <div class="container">
-        <div class="comics-list">
-            <button class="add-button" (click)="onAddNewComic()">+</button>
-            @for(comicItem of comics; track comicItem.id; let index = $index){
-                <app-comic-item-mylibrary [comicItem]="comicItem" (comicDeleted)="onComicDeleted($event)"></app-comic-item-mylibrary>
-            }
-        </div>
-    </div>
+  <div class="spinner"></div>
+  <p>Loading...</p>
 </div>
+<div class="main-container">
+  <h2>My Library</h2>
+  <nav class="section-nav">
+    <button (click)="scrollToSection('my-comics')">My Comics</button>
+    <button (click)="scrollToSection('subscriptions')">Subscribed Comics</button>
+  </nav>
 
+  <!-- Контейнер для My Comics -->
+  <div class="section-container my-comics-container" id="my-comics">
+    <h3>My Comics</h3>
+    <div class="comics-list">
+      <button class="add-button" (click)="onAddNewComic()">+</button>
+
+      @if (comics.length > 0) {
+      @for (comicItem of comics; track comicItem.id; let index = $index) {
+      <app-comic-item-mylibrary [comicItem]="comicItem" (comicDeleted)="onComicDeleted($event)">
+      </app-comic-item-mylibrary>
+      }
+      } @else {
+      <p>You have no created comics yet.</p>
+      }
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Контейнер для Subscribed Comics -->
+  <div class="section-container subscribed-comics-container" id="subscriptions">
+    <h3>Subscribed Comics</h3>
+    <div class="comics-list">
+      @if (subscribedComics.length > 0) {
+      @for (comicItem of subscribedComics; track comicItem.id; let index = $index) {
+      <app-comic-item [comicItem]="comicItem">
+      </app-comic-item>
+      }
+      } @else {
+      <p>You are not subscribed to any comics yet.</p>
+      }
+    </div>
+  </div>
+
+</div>

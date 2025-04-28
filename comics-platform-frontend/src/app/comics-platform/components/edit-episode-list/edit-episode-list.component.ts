@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EpisodeItem } from '../../models/episode-item';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { EpisodesService } from '../../services/episodes.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CustomValidator } from '../../validators/custom.validator';
@@ -22,11 +22,11 @@ export class EditEpisodeListComponent implements OnInit {
   newEpisodeControl = new FormControl();
 
 
-  constructor(private episodesService: EpisodesService, private router: Router) {}
+  constructor(private episodesService: EpisodesService, private router: Router) { }
 
 
   ngOnInit(): void {
-    
+
     this.newEpisodeControl = new FormControl(
       '',
       [Validators.required, Validators.minLength(3)],
@@ -110,7 +110,7 @@ export class EditEpisodeListComponent implements OnInit {
 
   addEpisode() {
     const comicName = this.newEpisodeControl.value?.trim()!;
-    if (this.newEpisodeControl.valid){
+    if (this.newEpisodeControl.valid) {
       this.isLoading = true;
       this.episodesService.createEpisode({ comicId: this.comicId, name: comicName }).subscribe({
         next: () => {
@@ -129,7 +129,7 @@ export class EditEpisodeListComponent implements OnInit {
       });
     }
   }
-  
+
 
   drop(event: CdkDragDrop<EpisodeItem[]>) {
     moveItemInArray(this.episodes, event.previousIndex, event.currentIndex);

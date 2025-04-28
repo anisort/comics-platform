@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
             //console.log(token)
             //console.log("Full Token Payload guard:", tokenPayload);
             request.user = {
-                userId: tokenPayload.sub,
+                userId: tokenPayload.userId,
                 username: tokenPayload.username
             }
             return true;

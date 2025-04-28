@@ -12,8 +12,8 @@ export class EpisodeItemComponent {
   @Input() comicId!: number;
   @Input() episode!: EpisodeItem;
   @Input() index!: number;
-  
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) { }
 
   openEpisode() {
     this.router.navigate(

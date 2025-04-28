@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class ComicItemComponent {
   @Input() comicItem!: ComicItem
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   openComic() {
     this.router.navigate(['comics-platform/comic-detail-info', this.comicItem.id]);

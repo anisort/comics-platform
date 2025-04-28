@@ -1,13 +1,8 @@
 <div class="episodes-list">
-
     <div *ngFor="let episode of episodes; let i = index">
-    <app-episode-item
-        [comicId]="comicId"
-        [episode]="episode"
-        [index]="i"
-    ></app-episode-item>
+        <app-episode-item [comicId]="comicId" [episode]="episode" [index]="i"></app-episode-item>
     </div>
-        <div *ngIf="isLoading" class="loading-overlay">
+    <div *ngIf="isLoading" class="loading-overlay">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>

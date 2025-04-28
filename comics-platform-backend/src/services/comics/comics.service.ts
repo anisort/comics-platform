@@ -79,8 +79,6 @@ export class ComicsService {
       coverUrl: comic.coverUrl,
     }));
   }
-  
-  
 
   async findComicById(id: number): Promise<ComicItemSingleDto | null> {
     const comic = await this.comicRepository.findOne({
@@ -141,7 +139,8 @@ export class ComicsService {
   }
 
   async createComic(createComicDto: CreateComicDto,coverImage: Express.Multer.File, username: string): Promise<Comic> {
-    const genres: Genre[] = await this.genresService.findByNames(createComicDto.genres);
+    try{
+      const genres: Genre[] = await this.genresService.findByNames(createComicDto.genres);
     const user = await this.usersService.findUserByName(username);
 
     if (!user){
@@ -163,7 +162,12 @@ export class ComicsService {
     const coverResult = await this.uploadService.upload(coverImage, folder);
     newComic.coverUrl = coverResult.secure_url;
 
-    return this.comicRepository.save(newComic);
+    return await this.comicRepository.save(newComic);
+    } catch (err){
+      console.error('🧨 Comic creation error:', err);
+      throw err;
+    }
+    
   }
 
   async updateComic(id: number, updateComicDto: UpdateComicDto, username: string, newCoverImage?: Express.Multer.File) : Promise<Comic>{
@@ -250,4 +254,32 @@ export class ComicsService {
       return {isAuthor: true};
     }
   }
+  
+  async findComicEntityByIdWithSubscribers(comicId: number): Promise<Comic> {
+    const comic = await this.comicRepository.findOne({
+      where: { id: comicId },
+      relations: ['subscribers'],
+    });
+  
+    if (!comic) {
+      throw new NotFoundException('Comic not found');
+    }
+  
+    return comic;
+  }
+  
+  async findComicEntityByIdWithAuthor(comicId: number): Promise<Comic> {
+    const comic = await this.comicRepository.findOne({
+      where: { id: comicId },
+      relations: ['user'],
+    });
+  
+    if (!comic) {
+      throw new NotFoundException('Comic not found');
+    }
+  
+    return comic;
+  }
+  
+
 }

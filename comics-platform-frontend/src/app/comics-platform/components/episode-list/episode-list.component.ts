@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
   templateUrl: './episode-list.component.html',
   styleUrl: './episode-list.component.scss'
 })
-export class EpisodeListComponent implements OnInit{
+export class EpisodeListComponent implements OnInit {
 
   @Input() comicId!: number;
   episodes: EpisodeItem[] = [];
   isLoading = false;
 
-  constructor(private episodesService: EpisodesService) {}
+  constructor(private episodesService: EpisodesService) { }
 
   ngOnInit(): void {
     this.loadEpisodes();

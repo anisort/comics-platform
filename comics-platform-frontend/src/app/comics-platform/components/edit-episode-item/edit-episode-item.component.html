@@ -10,13 +10,13 @@
     <ng-template #editTemplate>
       <input [formControl]="nameControl" />
       @if (nameControl.hasError('required') && nameControl.touched) {
-        <small class="error">Name is required.</small>
+      <small class="error">Name is required.</small>
       }
       @if (nameControl.hasError('minlength') && nameControl.touched) {
-        <small class="error">Name must be at least 3 characters long.</small>
+      <small class="error">Name must be at least 3 characters long.</small>
       }
       @if (nameControl.hasError('episodeNameTaken') && nameControl.touched) {
-        <small class="error">Name is already taken.</small>
+      <small class="error">Name is already taken.</small>
       }
     </ng-template>
   </div>

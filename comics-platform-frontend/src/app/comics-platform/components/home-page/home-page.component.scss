@@ -1,15 +1,13 @@
-/* Родительский контейнер для центрирования */
 h2 {
-  margin: 20px; 
+  margin: 20px;
 }
 
 .main-container {
   display: flex;
-  justify-content: flex-start; /* Центрируем дочерний элемент по горизонтали */
-  align-items: center; /* Центрируем по вертикали, но с учетом блока пагинации */
-  flex-direction: column; /* Размещение элементов по вертикали */
-  height: 100vh; /* Высота контейнера по всей высоте экрана */
-  //padding: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
   margin-top: -10px;
   position: relative;
   z-index: 0;
@@ -18,20 +16,19 @@ h2 {
 .container {
   width: 1200px;
   display: flex;
-  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
-  align-items: flex-start; /* Центрируем по вертикали */
+  justify-content: center;
+  align-items: flex-start;
   padding: 20px;
-  // border: 2px solid #5c6bc0;
-  border-radius: 10px; /* Скругляем углы */
+  border-radius: 10px;
   margin: 20px;
 }
 
 .comics-list {
-  display: flex; /* Используем flexbox для выстраивания элементов */
-  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
-  justify-content: flex-start; /* Размещаем элементы в начале строки по горизонтали */
-  align-items: flex-start; /* Размещаем элементы в начале строки по вертикали */
-  gap: 20px; /* Расстояние между элементами */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
   margin-right: 50px;
   margin-bottom: 20px;
   margin-left: 50px;
@@ -48,7 +45,6 @@ h2 {
   margin-top: -80px;
 }
 
-/* Текст на банері */
 .banner-title {
   position: absolute;
   top: 50%;
@@ -56,7 +52,7 @@ h2 {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 48px;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
   z-index: 2;
 }
 
@@ -72,10 +68,10 @@ h2 {
 
 
 .navigation-blocks {
-  display: flex; /* Розташовує блоки горизонтально */
-  gap: 20px; /* Відступ між блоками */
-  justify-content: center; /* Центрування по горизонталі */
-  margin: 30px 0; /* Відступи зверху і знизу */
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 30px 0;
 }
 
 .block {
@@ -87,11 +83,11 @@ h2 {
   transition: transform 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
   text-align: center;
-  text-decoration: none; /* Прибрати підкреслення */
-  display: flex; /* Додаємо флекс */
-  justify-content: center; /* Горизонтальне центровання */
-  align-items: center; /* Вертикальне центровання */
-  color: inherit; /* Спадкування кольору (не синій як у посилань) */
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: inherit;
 }
 
 .block:hover {
@@ -107,10 +103,9 @@ h2 {
 }
 
 .updates {
-  //background-color: #ca99cb;
   background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
   width: 90%;
-  max-width: 1200px; /* Щоб не розтягувалося надто сильно */
+  max-width: 1200px;
   padding: 20px;
   border-radius: 10px;
   margin: 10px auto 50px auto;
@@ -118,8 +113,8 @@ h2 {
 }
 
 h2 {
-  text-align: center; /* Вирівнювання заголовка по центру */
-  margin-bottom: 20px; /* Відступ знизу */
+  text-align: center;
+  margin-bottom: 20px;
   color: white;
 }
 
@@ -128,15 +123,15 @@ h2 {
   justify-content: center;
   align-items: center;
   position: relative;
-  
+
 }
 
 .carousel-items {
   display: flex;
-  justify-content: center; /* Центрування айтемів по горизонталі */
-  gap: 20px; /* Відстань між елементами (можна змінити за потреби) */
+  justify-content: center;
+  gap: 20px;
   overflow: hidden;
-  width: 80%; /* Ширина контейнера каруселі */
+  width: 80%;
 }
 
 .carousel-nav {

@@ -21,7 +21,7 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
   episodeName: string = '';
   isLoading = false;
   errorMessage: string = '';
-  noAvailablePages: string  = '';
+  noAvailablePages: string = '';
   private destroy$ = new Subject<void>();
 
 
@@ -30,41 +30,28 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
     private router: Router,
     private pagesService: PagesService,
     private episodesService: EpisodesService
-  ) {}
-
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe(params => {
-  //     this.episodeId = Number(params.get('episodeId'));
-  
-  //     this.route.queryParamMap.subscribe(queryParams => {
-  //       this.currentPage = Number(queryParams.get('page')) || 1;
-  //       this.loadPage();
-  //     });
-  
-  //     this.loadEpisodeMeta();
-  //   });
-  // }
+  ) { }
 
   ngOnInit(): void {
     combineLatest([
       this.route.paramMap.pipe(map(params => Number(params.get('episodeId')))),
       this.route.queryParamMap.pipe(map(query => Number(query.get('page')) || 1))
     ])
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(([episodeId, page]) => {
-      this.episodeId = episodeId;
-      this.currentPage = page;
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([episodeId, page]) => {
+        this.episodeId = episodeId;
+        this.currentPage = page;
 
-      this.loadEpisodeMeta(); // або один раз, або обгорни логікою, щоб не викликалась зайвий раз
-      this.loadPage();
-    });
+        this.loadEpisodeMeta();
+        this.loadPage();
+      });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  
+
   loadEpisodeMeta() {
     this.isLoading = true;
     this.episodesService.getEpisodeMeta(this.episodeId).subscribe({
@@ -84,13 +71,13 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
   loadEpisodes() {
     this.isLoading = true;
     this.episodesService.getEpisodesByComic(this.comicId).subscribe({
       next: (episodes) => {
         this.episodes = episodes;
-    
+
         const current = this.episodes.find(e => e.id === this.episodeId);
         this.episodeName = current?.name || 'Episode';
         this.isLoading = false;
@@ -111,9 +98,9 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
           this.pageImageUrl = res.page.imageUrl;
           this.totalPages = res.totalPages;
           this.currentPage = res.currentPage;
-          this.errorMessage = '';  // Якщо сторінка є, очищаємо помилку
+          this.errorMessage = '';
         } else {
-          this.pageImageUrl = '';  // Якщо сторінки немає
+          this.pageImageUrl = '';
           this.totalPages = 1;
           this.noAvailablePages = 'No pages available for this episode';
         }
@@ -130,7 +117,7 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
+
 
   goToPage(page: number) {
     if (page < 1) page = 1;
@@ -174,9 +161,9 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
       this.router.navigate(['/comics-platform/read', prevEpisode.id], {
         queryParams: { page: 1 }
       });
-    }else {
-    this.router.navigate(['comics-platform/comic-detail-info', this.comicId]);
-  }
-    
+    } else {
+      this.router.navigate(['comics-platform/comic-detail-info', this.comicId]);
+    }
+
   }
 }

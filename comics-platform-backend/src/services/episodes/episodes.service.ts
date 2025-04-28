@@ -7,6 +7,7 @@ import { ComicsService } from '../comics/comics.service';
 import { ReorderDto } from 'src/dto/reorder.dto';
 import { EpisodeItemDto } from 'src/dto/episode-item.dto';
 import { UploadService } from '../upload/upload.service';
+import { EpisodeNotificationService } from '../episode-notification/episode-notification.service';
 
 @Injectable()
 export class EpisodesService {
@@ -16,6 +17,7 @@ export class EpisodesService {
         private episodeRepository: Repository<Episode>,
         private comicsService: ComicsService,
         private uploadService: UploadService,
+        private readonly episodeNotificationService: EpisodeNotificationService,
     ){}
 
     async findByComic(comicId: number, username?: string): Promise<EpisodeItemDto[]> {
@@ -103,11 +105,13 @@ export class EpisodesService {
         episode.isAvailable = newAvailability;
         if (newAvailability) {
             episode.created_at = new Date();
-        }
-        await this.episodeRepository.save(episode);
+            await this.episodeNotificationService.notifySubscribersAboutNewEpisode(comic, episode);
+          }
+        
+          await this.episodeRepository.save(episode);
+        
         return await this.episodeRepository.findOne({where: {id: episodeId}});
     }
-    
 
     async reorder(dto: ReorderDto, username: string, comicId: number): Promise<EpisodeItemDto[]> {
         const comic = await this.comicsService.findComicById(comicId);

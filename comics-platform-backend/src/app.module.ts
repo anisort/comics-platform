@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { IsUniqueConstraint } from './validators/is-unique-constraint.validator';
 import { UsersModule } from './modules/users/users.module';
@@ -16,19 +16,29 @@ import { EpisodesModule } from './modules/episodes/episodes.module';
 import { PagesModule } from './modules/pages/pages.module';
 import { Episode } from './entities/episode.entity';
 import { Page } from './entities/page.entity';
+import { SubscriptionModule } from './modules/subscription/subscription.module';
+import { Notification } from './entities/notification.entity';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '1234',
-      database: 'comics-platform',
-      entities: [User, Comic, Genre, Episode, Page],
-      autoLoadEntities: true,
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DATABASE_HOST'),
+        port: configService.get<number>('DATABASE_PORT'),
+        username: configService.get<string>('DATABASE_USER'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
+        database: configService.get<string>('DATABASE_NAME'),
+        entities: [User, Comic, Genre, Episode, Page, Notification],
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
     }),
     AuthModule,
     UsersModule,
@@ -38,6 +48,8 @@ import { Page } from './entities/page.entity';
     ConfigModule.forRoot(),
     EpisodesModule,
     PagesModule,
+    SubscriptionModule,
+    NotificationsModule
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],

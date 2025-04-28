@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Request, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from 'src/guards/auth.guards';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { PagesService } from 'src/services/pages/pages.service';
 import { ReorderDto } from 'src/dto/reorder.dto';
 import { fileFilter } from '../../utils/image-file.filter'
@@ -57,20 +57,3 @@ export class PagesController {
 
 
 }
-
-/*
-
-
-    @UseGuards(AuthGuard)
-    @UseInterceptors(FileInterceptor('image'))
-    @Post(':episodeId')
-    async uploadPage(
-        @Param('episodeId') episodeId: number,
-        @UploadedFile() image: Express.Multer.File,
-        @Request() req
-    ) {
-        const username = req.user.username;
-        return await this.pagesService.createPageWithUpload(episodeId, image, username);
-    }
-
-*/ 

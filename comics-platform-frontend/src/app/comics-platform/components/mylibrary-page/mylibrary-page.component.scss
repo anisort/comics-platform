@@ -1,98 +1,95 @@
-/* Родительский контейнер для центрирования */
-
-h2 {
-  margin: 20px;
-  color: aliceblue;
-}
 .main-container {
   display: flex;
-  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
-  align-items: center; /* Центрируем по вертикали, но с учетом блока пагинации */
-  flex-direction: column; /* Размещение элементов по вертикали */
-  height: 100vh;
-  padding-top: 100px; /* Щоб контент не залазив під header */
-  padding-bottom: 80px; /* Щоб не залазив під footer */
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px 80px;
+  min-height: 100vh;
 }
 
-.container {
-  width: 1200px;
+h2 {
+  margin: 50px;
+  color: aliceblue;
+  font-size: 32px;
+}
+
+.section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: rgb(82, 77, 107);
   display: flex;
-  justify-content: center; /* Центрируем дочерний элемент по горизонтали */
-  align-items: flex-start; /* Центрируем по вертикали */
-  padding: 20px;
-  border-radius: 10px; /* Скругляем углы */
-  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
-}
-/* Контейнер с элементами */
-.comics-list {
-  display: flex; /* Используем flexbox для выстраивания элементов */
-  flex-wrap: wrap; /* Разрешаем перенос элементов на новую строку */
-  justify-content: flex-start; /* Размещаем элементы в начале строки по горизонтали */
-  align-items: center; /* Размещаем элементы в начале строки по вертикали */
-  gap: 20px; /* Расстояние между элементами */
-  //margin-top: 5px;
-  margin-right: 50px;
-  margin-bottom: 20px;
-  margin-left: 50px;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px 0;
+  margin-bottom: 30px;
+  width: 100%;
+
+  button {
+    background: none;
+    border: none;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #196d9a;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
 
+.section-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 50px;
+  background: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg") no-repeat center/cover;
+}
+
+h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #ffffff;
+  padding-bottom: 10px;
+}
+
+.comics-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
 
 .add-button {
-  width: 100px; /* Увеличиваем размер кнопки в два раза */
-  height: 100px; /* Увеличиваем размер кнопки в два раза */
-  border: 2px solid #4caf50; /* Зеленая граница */
-  border-radius: 5px; /* Закругленные углы */
-  background-color: #fff;
-  color: #4caf50; /* Зеленый цвет текста */
-  font-size: 48px; /* Увеличиваем размер шрифта для плюса */
+  width: 100px;
+  height: 100px;
+  background-color: #ffffff;
+  border: 2px dashed #4caf50;
+  color: #4caf50;
+  font-size: 48px;
   font-weight: bold;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  margin: 50px;
-}
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  margin: 10px;
 
-/* Эффект при наведении */
-.add-button:hover {
-  background-color: #4caf50; /* Изменение фона на зеленый */
-  color: #fff; /* Белый цвет текста при наведении */
-  transform: scale(1.1); /* Легкое увеличение кнопки */
-}
+  &:hover {
+    background-color: #4caf50;
+    color: #ffffff;
+    transform: scale(1.1);
+  }
 
-/* Эффект при нажатии */
-.add-button:active {
-  transform: scale(1); /* Возвращаем в нормальный размер при нажатии */
-}
-
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  z-index: 1000;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 6px solid #fff;
-  border-top: 6px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-right: 10px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  &:active {
+    transform: scale(1);
+  }
 }

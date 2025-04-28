@@ -1,79 +1,80 @@
-/* Основные стили для шапки */
 header {
+  position: relative;
   background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
-    padding: 20px 50px; /* Отступы вокруг шапки */
-    color: white; /* Белый цвет текста */
-    margin-bottom: -60px;
+  padding: 20px 50px;
+  color: white;
+  margin-bottom: -60px;
+}
 
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+
+.logo a {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #59527a;
+  color: #f0f0f0;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin: 2px;
+}
+
+button:hover {
+  background-color: #3f51b5;
+  transform: scale(1.05);
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-links span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.material-icons {
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #34c759;
   }
-  
-  /* Используем flexbox для выравнивания элементов */
-  nav {
-    display: flex;
-    justify-content: space-between; /* Размещение элементов между краями */
-    align-items: center; /* Выравнивание по вертикали */
-    position: relative;
-    z-index: 3; /* Поверх банера */
-  }
-  
-  /* Логотип */
-  .logo a {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  /* Ссылки по центру */
-  .nav-links {
-    display: flex;
-    gap: 20px;
-  }
-  
-  /* Стили для ссылок */
-  .nav-links a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px; /* Отступы вокруг текста */
-    border-radius: 5px; /* Закругленные углы */
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  /* Наведение на ссылки */
-  .nav-links a:hover {
-    background-color: #59527a;
-    color: #f0f0f0;
-  }
-  
-  /* Стили для кнопок */
-  button {
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #5c6bc0;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin: 2px;
-  }
-  
-  /* Кнопка при наведении */
-  button:hover {
-    background-color: #3f51b5;
-    transform: scale(1.05);
-  }
-  
-  /* Для блока авторизации */
-  .auth-links {
-    display: flex;
-    align-items: center; /* Выравниваем элементы по вертикали */
-    gap: 10px;
-  }
-  
-  .auth-links span {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
+}

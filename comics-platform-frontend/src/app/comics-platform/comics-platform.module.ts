@@ -22,9 +22,9 @@ import { EpisodeListComponent } from './components/episode-list/episode-list.com
 import { EditPageComponent } from './components/edit-page/edit-page.component';
 import { EditPageListComponent } from './components/edit-page-list/edit-page-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { EpisodePageViewerComponent } from './components/episode-page-viewer/episode-page-viewer.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 
 @NgModule({
@@ -48,6 +48,7 @@ import { EpisodePageViewerComponent } from './components/episode-page-viewer/epi
     EditPageComponent,
     EditPageListComponent,
     EpisodePageViewerComponent,
+    NotificationsComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +61,6 @@ import { EpisodePageViewerComponent } from './components/episode-page-viewer/epi
     MatDialogModule,
     MatIconModule
   ],
-  exports: [SearchComponent]
+  exports: [SearchComponent, NotificationsComponent]
 })
 export class ComicsPlatformModule { }

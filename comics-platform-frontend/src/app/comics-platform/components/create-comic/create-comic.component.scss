@@ -1,159 +1,158 @@
-
 .main-container {
-    padding: 120px 20px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-    //font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+  padding: 120px 20px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #333;
+}
+
+.comic-view,
+.comic-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f3f6fd;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  gap: 30px;
+}
+
+.comic-cover,
+.comic-cover-preview {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.comic-info,
+.center,
+.form-group {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+h1,
+h2 {
+  font-size: 32px;
+  color: #3f51b5;
+  margin: 0;
+}
+
+.comic-description,
+.form-control,
+textarea {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.comic-details p,
+p {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.genre,
+.genre-badge {
+  background-color: #5c6bc0;
+  color: white;
+  padding: 6px 12px;
+  margin: 4px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.form-control,
+select,
+textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+select:focus,
+textarea:focus,
+.form-control:focus {
+  outline: none;
+  border: 1px solid #208ac3;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 14px;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  z-index: 100;
+}
+
+.spinner {
+  border: 4px solid #ccc;
+  border-top: 4px solid #3f51b5;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  .comic-view,
-  .comic-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f3f6fd;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-    gap: 30px;
-  }
-  
-  .comic-cover,
-  .comic-cover-preview {
-    width: 100%;
-    max-width: 400px;
-    height: auto;
-    border-radius: 10px;
-    object-fit: cover;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  }
-  
-  .comic-info,
-  .center,
-  .form-group {
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-  }
-  
-  h1,
-  h2 {
-    font-size: 32px;
-    color: #3f51b5;
-    margin: 0;
-  }
-  
-  .comic-description,
-  .form-control,
-  textarea {
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  
-  .comic-details p,
-  p {
-    margin: 4px 0;
-    font-size: 16px;
-  }
-  
-  .genre,
-  .genre-badge {
-    background-color: #5c6bc0;
-    color: white;
-    padding: 6px 12px;
-    margin: 4px;
-    border-radius: 20px;
-    display: inline-block;
-    font-size: 14px;
-  }
-  
-  .form-control,
-  select,
-  textarea {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  select:focus,
-  textarea:focus,
-  .form-control:focus {
-    outline: none;  /* Прибирає стандартне обведення */
-    border: 1px solid #208ac3;  /* Можна встановити свій бажаний колір для фокусу */
-  }
-  
-  textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .form-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .error {
-    color: #d32f2f;
-    font-size: 14px;
-  }
-  
-  .loading-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    right: 0; bottom: 0;
-    background: rgba(255,255,255,0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    z-index: 100;
-  }
-  
-  .spinner {
-    border: 4px solid #ccc;
-    border-top: 4px solid #3f51b5;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 10px;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  
-  /* Стиль кнопки */
+}
+
+
 .btn {
-    background-color: #007bff; /* Синій фон */
-    color: white; /* Білий текст */
-    border: none; /* Без меж */
-    border-radius: 8px; /* Заокруглені кути */
-    padding: 10px 20px; /* Відступи */
-    font-size: 16px; /* Розмір шрифта */
-    cursor: pointer; /* Курсор руки */
-    transition: background-color 0.3s, transform 0.3s; /* Анімація фону і масштабу */
-  }
-  
-  /* Зміни при ховері */
-  .btn:hover {
-    background-color: #0056b3; /* Темніший синій при наведенні */
-    transform: scale(1.05); /* Трохи збільшується кнопка */
-  }
-  
-  /* Стиль для деактивованої кнопки */
-  .btn:disabled {
-    background-color: #ccc; /* Світло-сірий фон */
-    color: #666; /* Тьмяний текст */
-    cursor: not-allowed; /* Змінюється курсор на заблокований */
-  }
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}

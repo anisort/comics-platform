@@ -1,0 +1,28 @@
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.message {
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+p {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.successMessage {
+    background-color: #e0ffe0;
+    color: #2e7d32;
+}
+
+.errorMessage {
+    background-color: #ffe0e0;
+    color: #d32f2f;
+}

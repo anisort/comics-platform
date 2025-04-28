@@ -10,16 +10,16 @@
 <div *ngIf="!isLoading && !errorMessage" class="viewer-container">
   <h2 class="episode-title">{{ episodeName }}</h2>
 
-  
+
   <!-- Якщо сторінка є, відобразити її -->
   <img *ngIf="pageImageUrl" [src]="pageImageUrl" alt="Page" class="page-image" />
   <p *ngIf="!pageImageUrl">{{noAvailablePages}}</p>
-  
+
   <div class="controls">
     <!-- Стрілочка назад (якщо є попередній епізод) -->
     <button (click)="prevPage()">←</button>
 
-    <!-- Вхід для переходу на певну сторінку -->
+    <!-- Поле для переходу на певну сторінку -->
     <input type="number" [(ngModel)]="currentPage" (change)="goToPage(currentPage)" />
 
     <span>/ {{ totalPages }}</span>
@@ -28,4 +28,3 @@
     <button (click)="nextPage()">→</button>
   </div>
 </div>
-

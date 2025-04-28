@@ -41,14 +41,12 @@
   color: #666;
 }
 
-/* Виведення помилок під полем додавання */
 .error-message {
   color: #e74c3c;
   font-size: 12px;
   margin-top: 5px;
 }
 
-/* Стилі для overlay під час завантаження */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -79,12 +77,12 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
-/* Стилі для кнопки "Save order" */
 .reorder-actions {
   margin-top: 20px;
 }

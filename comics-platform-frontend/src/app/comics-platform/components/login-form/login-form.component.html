@@ -2,13 +2,13 @@
     <form [formGroup]="loginForm">
         <h3 id="loginPage">Sign in</h3>
         @if(errorMessage){
-            <div class="error-message">
-                {{ errorMessage }}
-              </div>
+        <div class="error-message">
+            {{ errorMessage }}
+        </div>
         }
         <div>
             <label for="username">Username:</label>
-            <input id="username" formControlName="username"/>
+            <input id="username" formControlName="username" />
         </div>
         <div>
             <label for="password">Password:</label>

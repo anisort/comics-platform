@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComicsService } from '../../services/comics.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateUpdateComic } from '../../models/create-update-comic';
 import { Router } from '@angular/router';
 import { CustomValidator } from '../../validators/custom.validator';
@@ -11,9 +11,9 @@ import { CustomValidator } from '../../validators/custom.validator';
   templateUrl: './create-comic.component.html',
   styleUrl: './create-comic.component.scss'
 })
-export class CreateComicComponent implements OnInit{
+export class CreateComicComponent implements OnInit {
 
-  constructor(private comicsService: ComicsService, private router: Router){}
+  constructor(private comicsService: ComicsService, private router: Router) { }
   isLoading = false;
   createForm!: FormGroup;
   coverImage!: File;
@@ -34,7 +34,7 @@ export class CreateComicComponent implements OnInit{
   onFileChange(event: any): void {
     const file: File = event.target.files[0];
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-  
+
     if (file) {
       if (!allowedTypes.includes(file.type)) {
         this.coverImageError = 'Only JPG, JPEG, or PNG files are allowed.';
@@ -42,10 +42,10 @@ export class CreateComicComponent implements OnInit{
         this.coverImagePreview = null;
         return;
       }
-  
-      this.coverImageError = null; // Очистити попередню помилку
+
+      this.coverImageError = null;
       this.coverImage = file;
-  
+
       const reader = new FileReader();
       reader.onload = () => {
         this.coverImagePreview = reader.result;
@@ -53,7 +53,7 @@ export class CreateComicComponent implements OnInit{
       reader.readAsDataURL(file);
     }
   }
-  
+
 
   onSubmit(): void {
     if (this.createForm.valid && this.coverImage) {
@@ -84,12 +84,12 @@ export class CreateComicComponent implements OnInit{
         error: (err) => {
           console.log(err.message)
           this.isLoading = false;
-          if (err.status === 401) { 
+          if (err.status === 401) {
             this.router.navigate(['/comics-platform/login']);
           }
         }
       });
-    
+
     } else {
       console.log('Form is disabled')
     }

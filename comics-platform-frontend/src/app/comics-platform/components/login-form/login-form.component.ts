@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './login-form.component.scss'
 })
 export class LoginFormComponent implements OnInit {
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService, private router: Router) { }
 
   loginForm!: FormGroup;
   errorMessage: string | null = null;

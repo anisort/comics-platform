@@ -7,8 +7,8 @@ export class UsersController {
 
     constructor(private readonly usersService: UsersService) {}
 
-      @Get('check-username-email')
-      async checkUsernameOrEmail(@Query('value') value: string) {
-        return await this.usersService.checkUsernameOrEmail(value);
+    @Get('check-username-email')
+    async checkUsernameOrEmail(@Query('value') value: string) {
+      return await this.usersService.checkUsernameOrEmail(value);
     }
 }

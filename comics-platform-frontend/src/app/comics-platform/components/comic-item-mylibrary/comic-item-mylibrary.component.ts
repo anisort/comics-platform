@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ComicItem } from '../../models/comic-item';
 import { Router } from '@angular/router';
-import { ComicsService } from '../../services/comics.service';
 
 @Component({
   selector: 'app-comic-item-mylibrary',
@@ -15,13 +14,13 @@ export class ComicItemMylibraryComponent {
 
   constructor(
     private router: Router,
-  ) {}
+  ) { }
 
   openComic() {
     this.router.navigate(['comics-platform/comic-detail-info', this.comicItem.id]);
   }
 
-  editComic(){
+  editComic() {
     this.router.navigate(['comics-platform/edit-comic', this.comicItem.id])
   }
 

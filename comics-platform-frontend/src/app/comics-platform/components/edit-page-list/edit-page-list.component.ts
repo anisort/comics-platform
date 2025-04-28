@@ -18,10 +18,10 @@ export class EditPageListComponent {
   fileError: string | null = null;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { episodeId: number, episodeName: string }, 
+    @Inject(MAT_DIALOG_DATA) public data: { episodeId: number, episodeName: string },
     private pagesService: PagesService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadPages();
@@ -123,7 +123,7 @@ export class EditPageListComponent {
           console.error('Error saving order:', err);
         }
       }
-      
+
     });
   }
 }

@@ -1,53 +1,30 @@
-<!-- <header>
-    <nav>
+<header>
+  <nav>
+    <div class="logo">
+      <a href="/comics-platform">Logo</a>
+    </div>
 
-      @if(authService.isAuthenticated()){
-        <div><a href="/comics-platform/home">Home</a></div>
-        <div><a href="/comics-platform/my-library">My Library</a></div>
-        <span *ngIf="authService.isAuthenticated()">
-            {{ authService.getUsername() }} | <button (click)="logout()">Sign out</button>
-          </span>
-      }
+    <div class="nav-links">
+      <a routerLink="/comics-platform/home">Home</a>
+      <a routerLink="/comics-platform/all-comics">All comics</a>
+      <a routerLink="/comics-platform/my-library" class="my-library">My Library</a>
+    </div>
 
-      @if(!authService.isAuthenticated()){
-        <div><a href="/comics-platform/home">Home</a></div>
-        <div><a href="/comics-platform/my-library">My Library</a></div>
-        <div><button routerLink="/comics-platform/register">Sign up</button></div>
-        <div><button routerLink="/comics-platform/login">Sign in</button></div>
-      }
-      
-    </nav>
+    <div class="auth-links">
+      <div class="search-container-header">
+        <app-search (comicSelected)="onComicSelected($event)"></app-search>
+      </div>
+      <div *ngIf="authService.isAuthenticated()" class="notification-wrapper">
+        <app-notifications></app-notifications>
+      </div>
+      <span *ngIf="authService.isAuthenticated()">
+        {{ authService.getUsername() }} |
+        <button id="logoutButton" (click)="logout()">Sign out</button>
+      </span>
+      <div class="buttons" *ngIf="!authService.isAuthenticated()">
+        <button routerLink="/comics-platform/register">Sign up</button>
+        <button routerLink="/comics-platform/login">Sign in</button>
+      </div>
+    </div>
+  </nav>
 </header>
-
-   -->
-
-
-   <header>
-    <nav>
-      <div class="logo">
-        <a href="/comics-platform">Logo</a>
-      </div>
-  
-      <div class="nav-links">
-        <a routerLink="/comics-platform/home">Home</a>
-        <a routerLink="/comics-platform/all-comics">All comics</a>
-        <a routerLink="/comics-platform/my-library">My Library</a>
-      </div>
-  
-      <div class="auth-links">
-        <!-- Компонент пошуку -->
-        <div class="search-container-header">
-          <app-search (comicSelected)="onComicSelected($event)"></app-search>
-        </div>
-        <span *ngIf="authService.isAuthenticated()">
-          {{ authService.getUsername() }} | 
-          <button id="logoutButton" (click)="logout()">Sign out</button>
-        </span>
-        <div class="buttons" *ngIf="!authService.isAuthenticated()">
-          <button routerLink="/comics-platform/register">Sign up</button>
-          <button routerLink="/comics-platform/login">Sign in</button>
-        </div>
-      </div>
-    </nav>
-  </header>
-  

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,12 +11,12 @@ import { CustomValidator } from '../../validators/custom.validator';
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
 })
-export class RegisterFormComponent implements OnInit{
+export class RegisterFormComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private authService: AuthService,){}
-    
+    private authService: AuthService,) { }
+
   registerForm!: FormGroup;
 
   message: string | null = null;
@@ -28,7 +28,7 @@ export class RegisterFormComponent implements OnInit{
       password: new FormControl('', [Validators.required, Validators.minLength(8), CustomValidator.passwordStrengthValidator()]),
       repeatPassword: new FormControl('', [Validators.required])
     },
-    { validators: CustomValidator.passwordMatchValidator() }
+      { validators: CustomValidator.passwordMatchValidator() }
     );
   }
 

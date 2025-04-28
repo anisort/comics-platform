@@ -27,22 +27,7 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
     private comicsService: ComicsService,
     private route: ActivatedRoute,
     private router: Router
-  ){}
-
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe(params => {
-  //     const id = Number(params.get('id'));
-  //     if (id) {
-  //       this.comicsService.checkAuthority(id).subscribe(data => {
-  //         if (data.isAuthor) {
-  //           this.getComicById(id);
-  //         } else {
-  //           this.router.navigate(['/comics-platform/my-library']);
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(

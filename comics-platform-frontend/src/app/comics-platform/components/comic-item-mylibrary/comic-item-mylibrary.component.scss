@@ -31,8 +31,8 @@
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Центрируем содержимое по вертикали */
-  align-items: center; /* Центрируем содержимое по горизонтали */
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -52,10 +52,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Центрируем кнопки по горизонтали */
+  align-items: center;
   width: 100%;
   opacity: 0;
-  //transition: opacity 0.3s ease;
   gap: 10px;
 }
 
@@ -68,13 +67,12 @@
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
-  width: 80%; /* Кнопки занимают 80% ширины */
-  //transition: background-color 0.3s ease;
+  width: 80%;
   font-size: 1rem;
 }
 
 .get-btn {
-  background-color: #28a745; /* Зеленый для "Get" */
+  background-color: #28a745;
   color: white;
 }
 
@@ -83,7 +81,7 @@
 }
 
 .edit-btn {
-  background-color: #17a2b8; /* Голубой для "Edit" */
+  background-color: #17a2b8;
   color: white;
 }
 
@@ -92,7 +90,7 @@
 }
 
 .delete-btn {
-  background-color: #dc3545; /* Красный для "Delete" */
+  background-color: #dc3545;
   color: white;
 }
 

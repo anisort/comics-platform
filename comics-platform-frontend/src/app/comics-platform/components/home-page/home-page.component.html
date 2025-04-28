@@ -4,12 +4,17 @@
 
 <div class="welcome-text">
   <h2>Welcome!</h2>
-  <p>Here you can explore amazing comics, follow your favorite authors, and build your personal library. Dive into the world of imagination!</p>
+  <p>Here you can explore amazing comics, follow your favorite authors, and build your personal library. Dive into the
+    world of imagination!</p>
 </div>
 
 <div class="navigation-blocks">
-    <a class="block" routerLink="/comics-platform/all-comics"><h3>Choose favorite comics</h3></a>
-    <a class="block" routerLink="/comics-platform/my-library"><h3>Create your own comics</h3></a>
+  <a class="block" routerLink="/comics-platform/all-comics">
+    <h3>Choose favorite comics</h3>
+  </a>
+  <a class="block" routerLink="/comics-platform/my-library">
+    <h3>Create your own comics</h3>
+  </a>
 </div>
 
 <h2>Latest updates</h2>
@@ -17,21 +22,9 @@
   <div class="carousel-container">
     <button class="carousel-nav prev" (click)="prevComic()">&#10094;</button>
     <div class="carousel-items">
-      <app-comic-item *ngFor="let comicItem of comics.slice(startIndex, startIndex + visibleItems)" [comicItem]="comicItem"></app-comic-item>
+      <app-comic-item *ngFor="let comicItem of comics.slice(startIndex, startIndex + visibleItems)"
+        [comicItem]="comicItem"></app-comic-item>
     </div>
     <button class="carousel-nav next" (click)="nextComic()">&#10095;</button>
   </div>
 </div>
-
-
-
-<!-- <div class="updates">Latest updates</div>
-<div class="main-container">
-  <div class="container">
-    <div class="comics-list">
-      @for(comicItem of comics; track comicItem.id; let index = $index){
-        <app-comic-item [comicItem]="comicItem"></app-comic-item>
-      }
-    </div>
-  </div>
-</div> -->

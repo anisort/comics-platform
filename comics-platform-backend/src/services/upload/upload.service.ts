@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {v2} from 'cloudinary';
 import { UploadApiResponse } from 'cloudinary';
-import { Page } from 'src/entities/page.entity';
 
 @Injectable()
 export class UploadService {
@@ -39,6 +38,4 @@ export class UploadService {
     await this.delete(valueToDelete);
     await Promise.all(pageUrls.map(p => this.deletePageFromCloudService(p)));
   }
-  
-
 }

@@ -1,0 +1,139 @@
+.notification-container {
+  position: relative;
+  z-index: 20;
+}
+
+.bell-icon {
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.bell-icon.has-unread {
+  color: #ff3b30;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  z-index: 1000;
+}
+
+.notifications-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notifications-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 4px;
+}
+
+.notifications-dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+
+  h4 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+  }
+
+  .mark-all {
+    background: none;
+    border: 1px solid #4caf50;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #4caf50;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #4caf50;
+      color: white;
+    }
+  }
+}
+
+.notification-item {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+
+  .notification-image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  .notification-content {
+    flex: 1;
+
+    strong {
+      font-size: 16px;
+      color: #333;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    small {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .notification-link {
+      text-decoration: none;
+      color: #1e88e5;
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .mark-read-button {
+    background: none;
+    border: 1px solid #1e88e5;
+    padding: 3px 8px;
+    border-radius: 5px;
+    color: #1e88e5;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #1e88e5;
+      color: white;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}

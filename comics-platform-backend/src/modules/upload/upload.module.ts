@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { UploadService } from 'src/services/upload/upload.service';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [],
   providers: [UploadService],
   exports: [UploadService],
 })

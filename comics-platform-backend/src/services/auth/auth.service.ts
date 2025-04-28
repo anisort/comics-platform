@@ -36,22 +36,6 @@ export class AuthService {
     return user;
   }
 
-  // async register(newUser: RegisterUserDto): Promise<RegisterUserDto> {
-  //   newUser.password = await bcrypt.hash(newUser.password, 10);
-  //   const user = this.usersRepository.create(newUser);
-  //   console.log('Creating user:', user); // Логування перед збереженням
-  //   try {
-  //     await this.usersRepository.save(user);
-  //     console.log('User saved successfully:', user); // Логування після збереження
-  //   } catch (error) {
-  //     console.error('Error saving user:', error); // Логування помилки
-  //   }
-  //   const token = this.generateToken(user.id, user.username);
-  //   this.sendActivationEmail(newUser.email, token);
-  //   return user;
-  // }
-  
-
   async sendActivationEmail(email: string, token: string) {
     const transporter = nodemailer.createTransport({
       host: this.configService.get<string>('EMAIL_HOST'),
@@ -113,7 +97,7 @@ export class AuthService {
         const diffInMinutes = (currentTime.getTime() - createdAtTime) / (1000 * 60);
         //console.log(`Diff in minutes for user ${user.id}: ${diffInMinutes.toFixed(2)} min`);
         
-        return diffInMinutes >= 125;
+        return diffInMinutes >= 185;
       });
 
       if (filteredUsers.length > 0) {

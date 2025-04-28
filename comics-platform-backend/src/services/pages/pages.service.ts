@@ -4,7 +4,6 @@ import { Page } from 'src/entities/page.entity';
 import { In, Repository } from 'typeorm';
 import { EpisodesService } from '../episodes/episodes.service';
 import { UploadService } from '../upload/upload.service';
-import { ComicsService } from '../comics/comics.service';
 import { ReorderDto } from 'src/dto/reorder.dto';
 
 @Injectable()
@@ -53,7 +52,6 @@ export class PagesService {
       currentPage: safePage
     };
   }
-  
 
   async createPagesWithUpload(
     episodeId: number,
@@ -90,7 +88,6 @@ export class PagesService {
     return await this.pageRepository.save(pages);
   }
   
-
   async reorder(dto: ReorderDto, username: string, episodeId: number): Promise<Page[]>{
     const episode = await this.episodesService.findById(episodeId);
     const comic = episode.comic;

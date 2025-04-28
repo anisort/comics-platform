@@ -13,7 +13,7 @@ export class HomePageComponent implements OnInit {
   startIndex: number = 0;
   visibleItems: number = 4;
 
-  constructor(private comicsService: ComicsService) {}
+  constructor(private comicsService: ComicsService) { }
 
   ngOnInit(): void {
     this.loadComics();

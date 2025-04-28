@@ -1,100 +1,93 @@
 <div class="main-container">
-    <form  [formGroup]="createForm" (ngSubmit)="onSubmit()" class="comic-form">
-      <h2>Add a New Comic</h2>
-      <!-- Обкладинка -->
-      <div class="form-group">
-          <div class="center">
-              <div *ngIf="coverImagePreview">
-                <img [src]="coverImagePreview" alt="Preview" class="comic-cover-preview" />
-              </div>
-              <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
-          </div>
-       
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="comic-form">
+    <h2>Add a New Comic</h2>
+    <!-- Обкладинка -->
+    <div class="form-group">
+      <div class="center">
+        <div *ngIf="coverImagePreview">
+          <img [src]="coverImagePreview" alt="Preview" class="comic-cover-preview" />
+        </div>
+        <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
       </div>
-    
-      <!-- Назва -->
-      <div class="form-group">
-        <label>Name:</label>
-        <input type="text" formControlName="name" class="form-control" />
-        @if (createForm.get('name')?.hasError('required') && createForm.get('name')?.touched) {
-          <small class="error">Name is required.</small>
-        }
-        @if (createForm.get('name')?.hasError('minlength') && createForm.get('name')?.touched) {
-          <small class="error">Name cannot be less than 3 characters.</small>
-        }
-        @if (createForm.get('name')?.hasError('comicNameTaken') && createForm.get('name')?.touched) {
-          <small class="error">Name is already taken.</small>
-        }
-      </div>
-    
-      <!-- Опис -->
-      <div class="form-group">
-        <label>Description:</label>
-        <textarea formControlName="description" class="form-control"></textarea>
-        @if (createForm.get('description')?.hasError('required') && createForm.get('description')?.touched) {
-          <small class="error">Description is required.</small>
-        }
-        @if (createForm.get('description')?.hasError('minlength') && createForm.get('description')?.touched) {
-          <small class="error">Description cannot be less than 10 characters.</small>
-        }
-      </div>
-    
-      <!-- Статус -->
-      <div class="form-group">
-        <label>Status:</label>
-        <select formControlName="status" class="form-control">
-          <option value="ongoing">Ongoing</option>
-          <option value="completed">Completed</option>
-        </select>
-        @if (createForm.get('status')?.hasError('required') && createForm.get('status')?.touched) {
-          <small class="error">Status is required.</small>
-        }
-      </div>
-    
-      <!-- Рейтинг -->
-      <div class="form-group">
-        <label>Age Rating:</label>
-        <select formControlName="ageRating" class="form-control">
-          <option value="13+">13+</option>
-          <option value="15+">15+</option>
-          <option value="17+">17+</option>
-        </select>
-        @if (createForm.get('ageRating')?.hasError('required') && createForm.get('ageRating')?.touched) {
-          <small class="error">Age rating is required.</small>
-        }
-      </div>
-    
-      <!-- Жанри -->
-      <div class="form-group">
-        <label>Genres:</label>
-        <select formControlName="genres" class="form-control" multiple>
-          <option value="action">Action</option>
-          <option value="comedy">Comedy</option>
-          <option value="drama">Drama</option>
-          <option value="horror">Horror</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="romance">Romance</option>
-        </select>
-        @if (createForm.get('genres')?.hasError('required') && createForm.get('genres')?.touched) {
-          <small class="error">Genres are required.</small>
-        }
-      </div>
-    
-  
-      
-  
-      <!-- Додайте цей блок перед кнопкою -->
-  <div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Uploading...</p>
-  </div>
-  
-  <!-- Змінюємо кнопку, щоб вона відключалася під час завантаження -->
-  <button type="submit" class="btn btn-primary" [disabled]="createForm.invalid || !coverImage || isLoading">
-    {{ isLoading ? 'Uploading...' : 'Add Comic' }}
-  </button>
-  
-    </form>
-  </div>
 
+    </div>
 
+    <!-- Назва -->
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" formControlName="name" class="form-control" />
+      @if (createForm.get('name')?.hasError('required') && createForm.get('name')?.touched) {
+      <small class="error">Name is required.</small>
+      }
+      @if (createForm.get('name')?.hasError('minlength') && createForm.get('name')?.touched) {
+      <small class="error">Name cannot be less than 3 characters.</small>
+      }
+      @if (createForm.get('name')?.hasError('comicNameTaken') && createForm.get('name')?.touched) {
+      <small class="error">Name is already taken.</small>
+      }
+    </div>
+
+    <!-- Опис -->
+    <div class="form-group">
+      <label>Description:</label>
+      <textarea formControlName="description" class="form-control"></textarea>
+      @if (createForm.get('description')?.hasError('required') && createForm.get('description')?.touched) {
+      <small class="error">Description is required.</small>
+      }
+      @if (createForm.get('description')?.hasError('minlength') && createForm.get('description')?.touched) {
+      <small class="error">Description cannot be less than 10 characters.</small>
+      }
+    </div>
+
+    <!-- Статус -->
+    <div class="form-group">
+      <label>Status:</label>
+      <select formControlName="status" class="form-control">
+        <option value="ongoing">Ongoing</option>
+        <option value="completed">Completed</option>
+      </select>
+      @if (createForm.get('status')?.hasError('required') && createForm.get('status')?.touched) {
+      <small class="error">Status is required.</small>
+      }
+    </div>
+
+    <!-- Рейтинг -->
+    <div class="form-group">
+      <label>Age Rating:</label>
+      <select formControlName="ageRating" class="form-control">
+        <option value="13+">13+</option>
+        <option value="15+">15+</option>
+        <option value="17+">17+</option>
+      </select>
+      @if (createForm.get('ageRating')?.hasError('required') && createForm.get('ageRating')?.touched) {
+      <small class="error">Age rating is required.</small>
+      }
+    </div>
+
+    <!-- Жанри -->
+    <div class="form-group">
+      <label>Genres:</label>
+      <select formControlName="genres" class="form-control" multiple>
+        <option value="action">Action</option>
+        <option value="comedy">Comedy</option>
+        <option value="drama">Drama</option>
+        <option value="horror">Horror</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="romance">Romance</option>
+      </select>
+      @if (createForm.get('genres')?.hasError('required') && createForm.get('genres')?.touched) {
+      <small class="error">Genres are required.</small>
+      }
+    </div>
+
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Uploading...</p>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="createForm.invalid || !coverImage || isLoading">
+      {{ isLoading ? 'Uploading...' : 'Add Comic' }}
+    </button>
+
+  </form>
+</div>

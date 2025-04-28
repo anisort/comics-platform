@@ -14,7 +14,7 @@ export class SearchComponent {
 
   @Output() comicSelected = new EventEmitter<ComicItem>();
 
-  constructor(private comicsService: ComicsService) {}
+  constructor(private comicsService: ComicsService) { }
 
   onSearchChange(): void {
     if (this.searchQuery.trim() === '') {
@@ -25,8 +25,6 @@ export class SearchComponent {
       });
     }
   }
-  
-
 
   selectComic(comic: ComicItem) {
     this.comicSelected.emit(comic);

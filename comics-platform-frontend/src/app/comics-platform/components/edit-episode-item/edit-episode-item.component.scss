@@ -1,53 +1,52 @@
 .episode-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .episode-item:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
-  }
-  
-  .episode-info {
-    flex: 1;
-    padding: 0 10px;
-  }
-  
-  .episode-info strong {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .episode-info p {
-    font-size: 14px;
-    color: #777;
-    margin: 5px 0 0;
-  }
-  
-  .episode-actions {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .episode-order {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    background-color: #e7e7e7;
-    padding: 5px 10px;
-    border-radius: 20px;
-  }
-  
-  /* Загальний стиль для кнопок */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.episode-item:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.episode-info {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.episode-info strong {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.episode-info p {
+  font-size: 14px;
+  color: #777;
+  margin: 5px 0 0;
+}
+
+.episode-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.episode-order {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  background-color: #e7e7e7;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
 button {
   padding: 10px 20px;
   border: none;
@@ -63,9 +62,8 @@ button:disabled {
   color: #777;
 }
 
-/* Стилі для кнопки "Edit" */
 .btn-edit {
-  background-color: #ff9800; /* Зелений */
+  background-color: #ff9800;
   color: white;
 }
 
@@ -73,9 +71,8 @@ button:disabled {
   background-color: #bc6a04;
 }
 
-/* Стилі для кнопки "Edit pages" */
 .btn-pages {
-  background-color: #2196F3; /* Синій */
+  background-color: #2196F3;
   color: white;
 }
 
@@ -83,9 +80,8 @@ button:disabled {
   background-color: #0b7dda;
 }
 
-/* Стилі для кнопки "Delete" */
 .btn-delete {
-  background-color: #f44336; /* Червоний */
+  background-color: #f44336;
   color: white;
 }
 
@@ -93,9 +89,8 @@ button:disabled {
   background-color: #e53935;
 }
 
-/* Стилі для кнопки "Save" */
 .btn-save {
-  background-color: #4CAF50; /* Зелений */
+  background-color: #4CAF50;
   color: white;
 }
 
@@ -103,9 +98,8 @@ button:disabled {
   background-color: #45a049;
 }
 
-/* Стилі для кнопки "Cancel" */
 .btn-cancel {
-  background-color: #9e9e9e; /* Сірий */
+  background-color: #9e9e9e;
   color: white;
 }
 
