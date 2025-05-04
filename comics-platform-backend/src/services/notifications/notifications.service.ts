@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from 'src/entities/notification.entity';
 import { Repository } from 'typeorm';
@@ -39,9 +39,9 @@ export class NotificationsService implements Subscriber{
     if (notification) {
       notification.isRead = true;
       return await this.notificationRepository.save(notification);
+    } else{
+      throw new NotFoundException();
     }
-
-    return null;
   }
 
   async markAllAsRead(userId: number) {
@@ -53,8 +53,6 @@ export class NotificationsService implements Subscriber{
       notification.isRead = true;
     }
 
-    await this.notificationRepository.save(unreadNotifications);
-
-    return { message: `Marked ${unreadNotifications.length} notifications as read` };
+    return await this.notificationRepository.save(unreadNotifications);
   }
 }

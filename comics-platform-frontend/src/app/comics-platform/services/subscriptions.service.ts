@@ -17,12 +17,12 @@ export class SubscriptionsService {
     this.apiUrl = `${this.config.apiUrl}/subscriptions`;
   }
 
-  subscribe(comicId: number): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(`${this.apiUrl}/${comicId}`, {});
+  subscribe(comicId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${comicId}`, {});
   }
 
-  unsubscribe(comicId: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/${comicId}`);
+  unsubscribe(comicId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${comicId}`);
   }
 
   getMySubscriptions(): Observable<ComicItem[]>{

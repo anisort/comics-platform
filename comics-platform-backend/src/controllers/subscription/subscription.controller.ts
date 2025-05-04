@@ -11,14 +11,12 @@ export class SubscriptionController {
   async subscribe(@Param('comicId') comicId: number, @Request() req) {
     const userId = req.user.userId;
     await this.subscriptionService.subscribe(userId, comicId);
-    return { message: 'Successfully subscribed' };
   }
 
   @Delete(':comicId')
   async unsubscribe(@Param('comicId') comicId: number, @Request() req) {
     const userId = req.user.userId;
     await this.subscriptionService.unsubscribe(userId, comicId);
-    return { message: 'Successfully unsubscribed' };
   }
 
   @Get('/my-list')

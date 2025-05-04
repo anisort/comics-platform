@@ -7,6 +7,7 @@ import { UnauthorizedException } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../entities/user.entity';
 import { compare } from 'bcryptjs';
+import { MailService } from '../mail/mail.service';
 
 jest.mock('bcryptjs', () => ({
   compare: jest.fn(),
@@ -28,6 +29,10 @@ describe('AuthService', () => {
     get: jest.fn().mockReturnValue('mock_secret'),
   };
 
+  const mockMailService = {
+    sendMail: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -36,6 +41,7 @@ describe('AuthService', () => {
         { provide: getRepositoryToken(User), useValue: mockUserRepository },
         { provide: JwtService, useValue: mockJwtService },
         { provide: ConfigService, useValue: mockConfigService },
+        { provide: MailService, useValue: mockMailService },
       ],
     }).compile();
 

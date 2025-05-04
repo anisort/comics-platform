@@ -21,11 +21,11 @@ export class NotificationsService {
     return this.http.get<Notification[]>(this.apiUrl);
   }
 
-  markAsRead(id: number): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/${id}/read`, {});
+  markAsRead(id: number): Observable<Notification> {
+    return this.http.patch<Notification>(`${this.apiUrl}/${id}/read`, {});
   }
 
-  markAllAsRead(): Observable<any> {
-    return this.http.patch(`${this.apiUrl}/read-all`, {});
+  markAllAsRead(): Observable<Notification[]> {
+    return this.http.patch<Notification[]>(`${this.apiUrl}/read-all`, {});
   }
 }

@@ -4,11 +4,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class NotificationsCleanupFactory extends CleanupFactory {
-  constructor(private readonly task: ReadNotificationsCleanupTask) {
+  constructor(
+    private readonly readNotificationsCleanupTask: ReadNotificationsCleanupTask,
+  ) {
     super();
   }
 
   createCleanupTask() {
-    return this.task;
+    return this.readNotificationsCleanupTask;
   }
 }
