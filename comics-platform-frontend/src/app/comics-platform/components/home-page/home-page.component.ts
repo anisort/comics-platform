@@ -11,7 +11,7 @@ import { ComicItem } from '../../models/comic-item';
 export class HomePageComponent implements OnInit {
   comics: ComicItem[] = [];
   startIndex: number = 0;
-  visibleItems: number = 4;
+  visibleItems: number = 3;
 
   constructor(private comicsService: ComicsService) { }
 

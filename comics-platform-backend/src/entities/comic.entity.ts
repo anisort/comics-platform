@@ -4,7 +4,7 @@ import { Genre } from './genre.entity';
 import { Episode } from './episode.entity';
 
 export type ComicStatus = 'ongoing' | 'completed';
-export type AgeRating = '13+' | '15+' | '17+';
+export type AgeRating = '13+' | '16+' | '18+';
 
 @Entity('comics')
 export class Comic {
@@ -20,7 +20,7 @@ export class Comic {
   @Column({ type: 'enum', enum: ['ongoing', 'completed'], default: 'ongoing' })
   status: ComicStatus;
 
-  @Column({ type: 'enum', enum: ['13+', '15+', '17+'] })
+  @Column({ type: 'enum', enum: ['13+', '16+', '18+'] })
   ageRating: AgeRating;
 
   @Column({ nullable: true })

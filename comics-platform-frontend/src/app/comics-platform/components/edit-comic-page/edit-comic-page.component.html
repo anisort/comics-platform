@@ -81,8 +81,8 @@
       <label>Age Rating:</label>
       <select formControlName="ageRating" class="form-control">
         <option value="13+">13+</option>
-        <option value="15+">15+</option>
-        <option value="17+">17+</option>
+        <option value="16+">16+</option>
+        <option value="18+">18+</option>
       </select>
       @if (updateForm.get('ageRating')?.hasError('required') && updateForm.get('ageRating')?.touched) {
       <small class="error">Age rating is required.</small>

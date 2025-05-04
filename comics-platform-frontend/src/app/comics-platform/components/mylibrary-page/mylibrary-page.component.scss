@@ -93,3 +93,10 @@ h3 {
     transform: scale(1);
   }
 }
+
+@media (max-width: 1000px) {
+
+  .section-container {
+    width: 80%;
+  }
+}

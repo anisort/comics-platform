@@ -1,8 +1,12 @@
 <div class="comics-item" *ngIf="comicItem">
     <button (click)="openComic()">
-        <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
-        <div class="overlay">
-            <h3>{{ comicItem.name }}</h3>
-        </div>
+      <img [src]="comicItem.coverUrl" [alt]="comicItem.name" class="comics-cover" />
+      <div class="overlay">
+        <h3>{{ comicItem.name }}</h3>
+      </div>
     </button>
-</div>
+    <div class="title-mobile">
+      <h3>{{ comicItem.name }}</h3>
+    </div>
+  </div>
+  

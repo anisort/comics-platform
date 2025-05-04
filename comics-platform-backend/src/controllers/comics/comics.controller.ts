@@ -31,11 +31,11 @@ export class ComicsController {
     return await this.comicsService.searchComics(query);
   }
 
+  @Get('/my-library')
   @UseGuards(AuthGuard)
-  @Get("/my-library")
-  async getUserComics(@Request() req){
-    const username = req.user.username;
-    return await this.comicsService.getComicsByUsername(username);
+  async getUserComics(@Request() req) {
+    const userId = req.user.userId;
+    return this.comicsService.getComicsByUserId(userId);
   }
 
   @Get('check-name')

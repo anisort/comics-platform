@@ -8,8 +8,8 @@ export class ComicItemSingleDto extends ComicItemDto{
   @IsEnum(['ongoing', 'completed'])
   status: 'ongoing' | 'completed';
 
-  @IsEnum(['13+', '15+', '17+'])
-  ageRating: '13+' | '15+' | '17+';
+  @IsEnum(['13+', '16+', '18+'])
+  ageRating: '13+' | '16+' | '18+';
 
   @IsString()
   createdAt: string;

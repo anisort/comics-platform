@@ -137,3 +137,11 @@
   padding: 20px;
   color: #666;
 }
+
+
+@media (max-width: 1000px) {
+  .notifications-dropdown {
+    left: 0;
+    right: auto;
+  }
+}

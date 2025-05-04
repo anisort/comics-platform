@@ -8,7 +8,7 @@ h2 {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 100px;
   padding-bottom: 80px;
 }
@@ -72,5 +72,18 @@ input {
 
   &:focus {
     border-color: #0056b3;
+  }
+}
+
+@media (max-width: 1000px) {
+  .container {
+    width: 760px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    border: 2px solid #5c6bc0;
+    border-radius: 10px;
+    background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
   }
 }

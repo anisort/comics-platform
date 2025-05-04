@@ -119,24 +119,24 @@ export class ComicsService {
     }));
   }
 
-  async getComicsByUsername(currentUsername: string): Promise<ComicItemDto[]> {
-    
-    const currentUser = await this.usersService.findUserByName(currentUsername);
+  async getComicsByUserId(userId: number): Promise<ComicItemDto[]> {
+    const currentUser = await this.usersService.findUserById(userId);
     if (!currentUser) {
-      throw new NotFoundException('Library not found');
+      throw new UnauthorizedException();
     }
-    
+  
     const comics = await this.comicRepository.find({
       relations: ['user'],
       where: { user: { id: currentUser.id } },
     });
-    
+  
     return comics.map(comic => ({
       id: comic.id,
       name: comic.name,
       coverUrl: comic.coverUrl,
     }));
   }
+  
 
   async createComic(createComicDto: CreateComicDto,coverImage: Express.Multer.File, username: string): Promise<Comic> {
     try{

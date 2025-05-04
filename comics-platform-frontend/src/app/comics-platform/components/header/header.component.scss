@@ -3,7 +3,8 @@ header {
   background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
   padding: 20px 50px;
   color: white;
-  margin-bottom: -60px;
+  //margin-bottom: -60px;
+  width: 100%;
 }
 
 nav {
@@ -78,3 +79,51 @@ button:hover {
     color: #34c759;
   }
 }
+
+@media screen and (max-width: 1000px) {
+
+  button{
+    border: 1px solid white;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .logo a {
+    font-size: 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: left;
+    padding-left: 0;
+  }
+
+  .auth-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .auth-links span,
+  .auth-links .buttons,
+  .search-container-header {
+    width: 50%;
+  }
+
+  .auth-links button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
