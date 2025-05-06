@@ -54,7 +54,6 @@ export class CreateComicComponent implements OnInit {
     }
   }
 
-
   onSubmit(): void {
     if (this.createForm.valid && this.coverImage) {
       this.isLoading = true;

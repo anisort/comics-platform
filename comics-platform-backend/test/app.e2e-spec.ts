@@ -31,7 +31,7 @@ import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { DataSource } from 'typeorm';
 
-describe('EpisodesController (e2e)', () => {
+describe('Comics (e2e)', () => {
   let app: INestApplication;
   let dataSource: DataSource;
   let jwtToken: string;
@@ -55,7 +55,6 @@ describe('EpisodesController (e2e)', () => {
       });
 
     jwtToken = loginRes.body.accessToken;
-    console.log('JWT Token:', jwtToken);
 
   });
 

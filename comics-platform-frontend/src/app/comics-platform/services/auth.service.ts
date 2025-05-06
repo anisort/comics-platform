@@ -39,7 +39,6 @@ export class AuthService {
     return this.http.get<ActivationResponse>(`${this.apiUrl}/activate`, { params });
   }
 
-
   login(username: string, password: string): Observable<{ accessToken: string; username: string }> {
     return this.http.post<{ accessToken: string; username: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(response => {
@@ -62,5 +61,9 @@ export class AuthService {
 
   getUsername(): string | null {
     return localStorage.getItem('username');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 }

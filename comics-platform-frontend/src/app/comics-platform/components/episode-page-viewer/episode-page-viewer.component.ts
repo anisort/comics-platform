@@ -118,7 +118,6 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
     });
   }
 
-
   goToPage(page: number) {
     if (page < 1) page = 1;
     if (page > this.totalPages) page = this.totalPages;

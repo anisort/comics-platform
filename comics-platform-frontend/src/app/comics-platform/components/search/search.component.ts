@@ -11,6 +11,7 @@ import { ComicsService } from '../../services/comics.service';
 export class SearchComponent {
   searchQuery: string = '';
   filteredComics: ComicItem[] = [];
+  isSearchFocused: boolean = false;
 
   @Output() comicSelected = new EventEmitter<ComicItem>();
 
@@ -34,7 +35,6 @@ export class SearchComponent {
     }
   }
 
-  isSearchFocused: boolean = true;
 
   onSearchBlur() {
     if (this.searchQuery.trim() === '') {

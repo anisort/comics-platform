@@ -108,7 +108,6 @@ export class ComicsService {
   
     const comics = await this.comicRepository.find({
       where: { name: ILike(`%${searchQuery}%`) },
-      relations: ['user'],
       take: 5,
     });
   

@@ -5,26 +5,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 
-body {
-  background-color: rgb(82, 77, 107);
-  display: flex;
-  flex-direction: column;
-}
-
 * {
   font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: rgb(82, 77, 107);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
 }
