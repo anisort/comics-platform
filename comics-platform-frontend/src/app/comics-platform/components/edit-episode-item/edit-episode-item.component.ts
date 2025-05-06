@@ -28,7 +28,7 @@ export class EditEpisodeItemComponent implements OnInit {
   constructor(private dialog: MatDialog, private episodesService: EpisodesService) { }
 
   ngOnInit(): void {
-    this.nameControl = new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId));
+    this.nameControl = new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId, this.episode.name));
     this.nameControl.setValue(this.episode.name);
   }
 
