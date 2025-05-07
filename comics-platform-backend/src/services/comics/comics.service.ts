@@ -163,7 +163,7 @@ export class ComicsService {
 
     return await this.comicRepository.save(newComic);
     } catch (err){
-      console.error('🧨 Comic creation error:', err);
+      console.error('Comic creation error:', err);
       throw err;
     }
     

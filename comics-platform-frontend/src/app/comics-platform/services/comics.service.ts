@@ -42,7 +42,7 @@ export class ComicsService {
   
 
   getComicsByCurrentUser(): Observable<ComicItem[]> {
-    return this.http.get<ComicItem[]>(`${this.apiUrl}/my-library`)
+    return this.http.get<ComicItem[]>(`${this.apiUrl}/own-comics`)
   }
 
   createComic(formData: FormData): Observable<CreateUpdateComic> {

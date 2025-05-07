@@ -31,7 +31,7 @@ export class ComicsController {
     return await this.comicsService.searchComics(query);
   }
 
-  @Get('/my-library')
+  @Get('/own-comics')
   @UseGuards(AuthGuard)
   async getUserComics(@Request() req) {
     const userId = req.user.userId;

@@ -50,7 +50,7 @@ describe('Comics (e2e)', () => {
     const loginRes = await request(app.getHttpServer())
       .post('/auth/login')
       .send({
-        username: 'fake',
+        username: 'anisort',
         password: 'Test100#',
       });
 
@@ -63,7 +63,10 @@ describe('Comics (e2e)', () => {
   });
 
   it('should show concrete user\'s comics', () => {
-    return request(app.getHttpServer()).get('/comics/my-library').set('Authorization', `Bearer ${jwtToken}`).expect(200);
+    return request(app.getHttpServer())
+      .get('/comics/my-library')
+      .set('Authorization', `Bearer ${jwtToken}`)
+      .expect(200);
   })
     
 });
