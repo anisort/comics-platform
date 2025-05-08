@@ -15,6 +15,7 @@ export class AllComicsPageComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   pageInput: number = 1;
+  isLoading: boolean = false;
 
   constructor(private comicsService: ComicsService) { }
 
@@ -23,11 +24,13 @@ export class AllComicsPageComponent implements OnInit {
   }
 
   loadComics(): void {
+    this.isLoading = true;
     this.comicsService.getAllComics(this.currentPage, this.itemsPerPage).subscribe(
       (data) => {
         this.comics = data.comics;
         this.totalComics = data.total;
         this.totalPages = data.totalPages ?? 0;
+        this.isLoading = false;
       }
     );
   }

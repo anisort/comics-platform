@@ -14,6 +14,8 @@ export class LoginFormComponent implements OnInit {
 
   loginForm!: FormGroup;
   errorMessage: string | null = null;
+  isLoading: boolean = false;
+
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -25,9 +27,14 @@ export class LoginFormComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
+      this.isLoading = true;
       this.authService.login(username, password).subscribe({
-        next: () => this.router.navigate(['/comics-platform/home']),
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/comics-platform/home'])
+        },
         error: () => {
+          this.isLoading = false;
           this.loginForm.reset();
           this.errorMessage = 'Invalid username or password';
         }

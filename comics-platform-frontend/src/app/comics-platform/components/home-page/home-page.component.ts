@@ -12,6 +12,7 @@ export class HomePageComponent implements OnInit {
   comics: ComicItem[] = [];
   startIndex: number = 0;
   visibleItems: number = 3;
+  isLoading: boolean = false;
 
   constructor(private comicsService: ComicsService) { }
 
@@ -20,8 +21,10 @@ export class HomePageComponent implements OnInit {
   }
 
   loadComics(): void {
+    this.isLoading = true;
     this.comicsService.getTopByLatest().subscribe((data) => {
       this.comics = data;
+      this.isLoading = false;
     });
   }
 

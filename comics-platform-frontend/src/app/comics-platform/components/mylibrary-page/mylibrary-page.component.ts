@@ -45,11 +45,14 @@ export class MyLibraryPageComponent implements OnInit {
   }
 
   loadSubscribedComics() {
+    this.isLoading = true;
     this.subscriptionService.getMySubscriptions().subscribe({
       next: data => {
         this.subscribedComics = data;
+        this.isLoading = false;
       },
       error: err => {
+        this.isLoading = false;
         if (err.status === 401) {
           this.router.navigate(['/comics-platform/login']);
         } else {

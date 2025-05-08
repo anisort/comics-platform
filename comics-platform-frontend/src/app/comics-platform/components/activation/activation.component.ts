@@ -15,6 +15,7 @@ export class ActivationComponent implements OnInit, OnDestroy {
   username: string = '';
   email: string = '';
   private destroy$ = new Subject<void>();
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +23,7 @@ export class ActivationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.queryParamMap.pipe(
       takeUntil(this.destroy$),
       map(params => params.get('token')),
@@ -29,6 +31,7 @@ export class ActivationComponent implements OnInit, OnDestroy {
       switchMap(token => this.authService.activateAccount(token)),
     ).subscribe({
       next: (response: ActivationResponse) => {
+        this.isLoading = false;
         if ('email' in response && 'username' in response) {
           this.email = response.email;
           this.username = response.username;
@@ -38,6 +41,7 @@ export class ActivationComponent implements OnInit, OnDestroy {
         }
       },
       error: () => {
+        this.isLoading = false;
         this.errorMessage = 'An error occurred while activating your account. Please try again later.';
       }
     });

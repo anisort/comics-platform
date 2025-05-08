@@ -59,7 +59,7 @@ export class ComicsService {
       ])
       .groupBy('comic.id')
       .orderBy('latestEpisodeDate', 'DESC')
-      .limit(10)
+      .limit(9)
       .getRawMany();
   
     const comicIds = rawComics.map((row) => row.comic_id);

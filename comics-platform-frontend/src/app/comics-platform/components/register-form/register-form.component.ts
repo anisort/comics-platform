@@ -18,8 +18,8 @@ export class RegisterFormComponent implements OnInit {
     private authService: AuthService,) { }
 
   registerForm!: FormGroup;
-
   message: string | null = null;
+  isLoading: boolean = false;
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -34,16 +34,19 @@ export class RegisterFormComponent implements OnInit {
 
   register() {
     if (this.registerForm.valid) {
+      this.isLoading = true;
       const { username, email, password } = this.registerForm.value;
       const user: User = { username, email, password };
       console.log('User object to send:', user);
 
       this.authService.register(user).subscribe({
         next: () => {
+          this.isLoading = false;
           this.message = 'An activation link has been sent to your email. It will expire in 5 minutes.';
           this.registerForm.reset();
         },
         error: (err) => {
+          this.isLoading = false;
           console.log(err)
         }
       })
