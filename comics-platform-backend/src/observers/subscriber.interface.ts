@@ -7,6 +7,8 @@ export interface NotificationContext {
   coverUrl?: string;
 }
   
+export const SUBSCRIBERS = 'SUBSCRIBERS';
+
 export interface Subscriber {
   update(context: NotificationContext): Promise<void>;
 }

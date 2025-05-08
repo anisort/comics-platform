@@ -5,6 +5,7 @@ import { NotificationsService } from 'src/services/notifications/notifications.s
 import { NotificationsController } from 'src/controllers/notifications/notifications.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
+import { SUBSCRIBERS } from 'src/observers/subscriber.interface';
 
 @Module({
   imports: [
@@ -12,8 +13,15 @@ import { AuthModule } from '../auth/auth.module';
     JwtModule,
     AuthModule
 ],
-  providers: [NotificationsService],
+  providers: [
+    NotificationsService,
+    {
+      provide: SUBSCRIBERS,
+      useFactory: (notificationsService: NotificationsService) => [notificationsService],
+      inject: [NotificationsService],
+    },
+  ],
   controllers: [NotificationsController],
-  exports: [NotificationsService],
+  exports: [NotificationsService, SUBSCRIBERS],
 })
 export class NotificationsModule {}
