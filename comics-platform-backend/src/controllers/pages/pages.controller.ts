@@ -15,7 +15,6 @@ import { AuthGuard } from 'src/guards/auth.guards';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { PagesService } from 'src/services/pages/pages.service';
 import { ReorderDto } from 'src/dto/reorder.dto';
-import { fileFilter } from '../../utils/image-file.filter';
 import { RequestWithUser } from '../../utils/user-payload';
 
 @Controller('pages')
@@ -41,7 +40,7 @@ export class PagesController {
   }
 
   @UseGuards(AuthGuard)
-  @UseInterceptors(FilesInterceptor('images', 100, { fileFilter }))
+  @UseInterceptors(FilesInterceptor('images', 100))
   @Post(':episodeId')
   async uploadPages(
     @Param('episodeId') episodeId: number,
