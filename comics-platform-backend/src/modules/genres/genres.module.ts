@@ -4,10 +4,8 @@ import { Genre } from 'src/entities/genre.entity';
 import { GenresService } from 'src/services/genres/genres.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Genre]),],
-    providers: [GenresService],
-    exports: [GenresService]
+  imports: [TypeOrmModule.forFeature([Genre])],
+  providers: [GenresService],
+  exports: [GenresService],
 })
-export class GenresModule {
-
-}
+export class GenresModule {}

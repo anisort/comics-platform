@@ -8,16 +8,14 @@ import { AuthModule } from '../auth/auth.module';
 import { SUBSCRIBERS } from 'src/observers/subscriber.interface';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Notification]),
-    JwtModule,
-    AuthModule
-],
+  imports: [TypeOrmModule.forFeature([Notification]), JwtModule, AuthModule],
   providers: [
     NotificationsService,
     {
       provide: SUBSCRIBERS,
-      useFactory: (notificationsService: NotificationsService) => [notificationsService],
+      useFactory: (notificationsService: NotificationsService) => [
+        notificationsService,
+      ],
       inject: [NotificationsService],
     },
   ],

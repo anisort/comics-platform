@@ -10,21 +10,21 @@ import { PassportModule } from '@nestjs/passport';
 import { MailModule } from '../mail/mail.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([User]),
-        JwtModule.registerAsync({
-        inject: [ConfigService],
-        useFactory: (configService: ConfigService) => ({
-            secret: configService.get<string>('JWT_SECRET'),
-            signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
-        }),
-        }),
-        UsersModule,
-        PassportModule,
-        MailModule
-    ],
-    providers: [AuthService],
-    controllers: [AuthController],
-    exports: [JwtModule],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
+      }),
+    }),
+    UsersModule,
+    PassportModule,
+    MailModule,
+  ],
+  providers: [AuthService],
+  controllers: [AuthController],
+  exports: [JwtModule],
 })
 export class AuthModule {}

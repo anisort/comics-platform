@@ -7,14 +7,9 @@ import { ComicsModule } from '../comics/comics.module';
 import { UsersModule } from '../users/users.module';
 
 @Module({
-    imports: [
-        JwtModule,
-        AuthModule,
-        ComicsModule,
-        UsersModule
-      ],
-    controllers: [SubscriptionController],
-    providers: [SubscriptionService],
-    exports: [SubscriptionService]
+  imports: [JwtModule, AuthModule, ComicsModule, UsersModule],
+  controllers: [SubscriptionController],
+  providers: [SubscriptionService],
+  exports: [SubscriptionService],
 })
 export class SubscriptionModule {}

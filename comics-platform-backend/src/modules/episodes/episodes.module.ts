@@ -12,18 +12,17 @@ import { NotificationsModule } from '../notifications/notifications.module';
 import { EpisodeNotificationService } from 'src/services/episode-notification/episode-notification.service';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Episode]),
-        JwtModule,
-        AuthModule,
-        ComicsModule,
-        UploadModule,
-        SubscriptionModule,
-        NotificationsModule
-    ],
-    controllers: [EpisodesController],
-    providers: [EpisodesService, EpisodeNotificationService],
-    exports: [EpisodesService]
+  imports: [
+    TypeOrmModule.forFeature([Episode]),
+    JwtModule,
+    AuthModule,
+    ComicsModule,
+    UploadModule,
+    SubscriptionModule,
+    NotificationsModule,
+  ],
+  controllers: [EpisodesController],
+  providers: [EpisodesService, EpisodeNotificationService],
+  exports: [EpisodesService],
 })
-export class EpisodesModule {
-}
+export class EpisodesModule {}

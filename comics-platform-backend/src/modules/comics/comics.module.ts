@@ -11,17 +11,17 @@ import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Comic]), 
+    TypeOrmModule.forFeature([Comic]),
     MulterModule.register({
-      dest: '../../../uploads'
+      dest: '../../../uploads',
     }),
     UploadModule,
     GenresModule,
     UsersModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [ComicsController],
   providers: [ComicsService],
-  exports: [ComicsService]
+  exports: [ComicsService],
 })
 export class ComicsModule {}

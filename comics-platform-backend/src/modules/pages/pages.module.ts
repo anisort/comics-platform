@@ -7,21 +7,20 @@ import { UploadModule } from '../upload/upload.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
 import { EpisodesModule } from '../episodes/episodes.module';
-import { ComicsModule } from '../comics/comics.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Page]),
-        MulterModule.register({
-            dest: '../../../uploads'
-        }),
-        UploadModule,
-        JwtModule,
-        AuthModule,
-        EpisodesModule,
-    ],
-    controllers: [PagesController],
-    providers: [PagesService]
+  imports: [
+    TypeOrmModule.forFeature([Page]),
+    MulterModule.register({
+      dest: '../../../uploads',
+    }),
+    UploadModule,
+    JwtModule,
+    AuthModule,
+    EpisodesModule,
+  ],
+  controllers: [PagesController],
+  providers: [PagesService],
 })
 export class PagesModule {}
