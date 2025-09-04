@@ -1,6 +1,10 @@
-import { Injectable, NotFoundException, Request, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { ILike, In, Repository } from 'typeorm';
 import { Comic } from '../../entities/comic.entity';
 import { CreateComicDto } from '../../dto/create-comic.dto';
 import { GenresService } from '../genres/genres.service';
@@ -18,27 +22,20 @@ export class ComicsService {
     private comicRepository: Repository<Comic>,
     private genresService: GenresService,
     private uploadService: UploadService,
-    private usersService: UsersService
+    private usersService: UsersService,
   ) {}
 
-  async findAllComics(filters: { [key: string]: string }, page: number, limit: number): Promise<{ comics: ComicItemDto[], total: number, totalPages: number }> {
-    let where: any = {};
-
-    if (filters.genre) {
-      where.genre = filters.genre;
-    }
-    if (filters.year) {
-      where.year = filters.year;
-    }
+  async findAllComics(
+    page: number,
+    limit: number,
+  ): Promise<{ comics: ComicItemDto[]; total: number; totalPages: number }> {
     const [comics, total] = await this.comicRepository.findAndCount({
       relations: ['user'],
-      where,
       take: limit,
       skip: (page - 1) * limit,
     });
-
     return {
-      comics: comics.map(comic => ({
+      comics: comics.map((comic) => ({
         id: comic.id,
         name: comic.name,
         coverUrl: comic.coverUrl,
@@ -61,19 +58,21 @@ export class ComicsService {
       .orderBy('latestEpisodeDate', 'DESC')
       .limit(9)
       .getRawMany();
-  
-    const comicIds = rawComics.map((row) => row.comic_id);
-  
+
+    const comicIds = rawComics.map((row: { comic_id: number }) => row.comic_id);
+
     if (!comicIds.length) return [];
-  
-    const comics = await this.comicRepository.findByIds(comicIds);
-  
-    const comicMap = new Map(comics.map(c => [c.id, c]));
+
+    const comics = await this.comicRepository.find({
+      where: { id: In(comicIds) },
+    });
+
+    const comicMap = new Map(comics.map((c) => [c.id, c]));
     const sortedComics = comicIds
-      .map(id => comicMap.get(id))
+      .map((id) => comicMap.get(id))
       .filter((comic): comic is Comic => comic !== undefined);
-  
-    return sortedComics.map(comic => ({
+
+    return sortedComics.map((comic) => ({
       id: comic.id,
       name: comic.name,
       coverUrl: comic.coverUrl,
@@ -85,11 +84,11 @@ export class ComicsService {
       where: { id },
       relations: ['user', 'genres'],
     });
-  
+
     if (!comic) {
       return null;
     }
-  
+
     return {
       id: comic.id,
       name: comic.name,
@@ -99,19 +98,19 @@ export class ComicsService {
       coverUrl: comic.coverUrl,
       createdAt: comic.createdAt.getFullYear().toString(),
       user: comic.user.username,
-      genres: comic.genres.map(genre => genre.name),
+      genres: comic.genres.map((genre) => genre.name),
     };
   }
 
   async searchComics(searchQuery: string): Promise<ComicItemDto[]> {
     if (!searchQuery) return [];
-  
+
     const comics = await this.comicRepository.find({
       where: { name: ILike(`%${searchQuery}%`) },
       take: 5,
     });
-  
-    return comics.map(comic => ({
+
+    return comics.map((comic) => ({
       id: comic.id,
       name: comic.name,
       coverUrl: comic.coverUrl,
@@ -123,36 +122,40 @@ export class ComicsService {
     if (!currentUser) {
       throw new UnauthorizedException();
     }
-  
+
     const comics = await this.comicRepository.find({
       relations: ['user'],
       where: { user: { id: currentUser.id } },
     });
-  
-    return comics.map(comic => ({
+
+    return comics.map((comic) => ({
       id: comic.id,
       name: comic.name,
       coverUrl: comic.coverUrl,
     }));
   }
-  
 
-  async createComic(createComicDto: CreateComicDto,coverImage: Express.Multer.File, username: string): Promise<Comic> {
-    try{
-      const genres: Genre[] = await this.genresService.findByNames(createComicDto.genres);
+  async createComic(
+    createComicDto: CreateComicDto,
+    coverImage: Express.Multer.File,
+    username: string,
+  ): Promise<Comic> {
+    const genres: Genre[] = await this.genresService.findByNames(
+      createComicDto.genres,
+    );
     const user = await this.usersService.findUserByName(username);
 
-    if (!user){
-      throw new NotFoundException('User not found');;
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
 
-    let newComic = await this.comicRepository.create({
+    let newComic = this.comicRepository.create({
       name: createComicDto.name,
       description: createComicDto.description,
       status: createComicDto.status,
       ageRating: createComicDto.ageRating,
-      coverUrl: "",
-      user: { id: user.id, username: user.username},
+      coverUrl: '',
+      user: { id: user.id, username: user.username },
       genres: genres,
     });
 
@@ -162,51 +165,55 @@ export class ComicsService {
     newComic.coverUrl = coverResult.secure_url;
 
     return await this.comicRepository.save(newComic);
-    } catch (err){
-      console.error('Comic creation error:', err);
-      throw err;
-    }
-    
   }
 
-  async updateComic(id: number, updateComicDto: UpdateComicDto, username: string, newCoverImage?: Express.Multer.File) : Promise<Comic>{
+  async updateComic(
+    id: number,
+    updateComicDto: UpdateComicDto,
+    username: string,
+    newCoverImage?: Express.Multer.File,
+  ): Promise<Comic> {
     const comic = await this.comicRepository.findOne({
       where: { id },
       relations: ['user', 'genres'],
     });
 
     if (!comic || comic.user.username !== username) {
-      throw new NotFoundException('Comic not found' );
+      throw new NotFoundException('Comic not found');
     }
 
     if (updateComicDto.genres !== undefined) {
-      const newGenres: Genre[] = await this.genresService.findByNames(updateComicDto.genres);
-      comic.genres = newGenres;
+      comic.genres = await this.genresService.findByNames(
+        updateComicDto.genres,
+      );
     }
 
-    if (updateComicDto.name !== undefined){
+    if (updateComicDto.name !== undefined) {
       comic.name = updateComicDto.name;
     }
 
-    if (updateComicDto.description !== undefined){
+    if (updateComicDto.description !== undefined) {
       comic.description = updateComicDto.description;
     }
 
-    if (updateComicDto.status !== undefined){
+    if (updateComicDto.status !== undefined) {
       comic.status = updateComicDto.status;
     }
 
-    if(updateComicDto.ageRating !== undefined){
+    if (updateComicDto.ageRating !== undefined) {
       comic.ageRating = updateComicDto.ageRating;
     }
-    
+
     if (newCoverImage) {
-      const publicId = (comic.coverUrl).split('/').pop()?.split('.')[0];
-      const valueToDelete = `comics-platform/comics/covers/${publicId}`
+      const publicId = comic.coverUrl.split('/').pop()?.split('.')[0];
+      const valueToDelete = `comics-platform/comics/covers/${publicId}`;
       await this.uploadService.delete(valueToDelete);
 
       const folder = `comics-platform/comics/covers`;
-      const coverResult = await this.uploadService.upload(newCoverImage, folder);
+      const coverResult = await this.uploadService.upload(
+        newCoverImage,
+        folder,
+      );
 
       comic.coverUrl = coverResult.secure_url;
     }
@@ -217,68 +224,67 @@ export class ComicsService {
     };
   }
 
-  async deleteComic(id: number, username: string){
-
+  async deleteComic(id: number, username: string) {
     const comic = await this.comicRepository.findOne({
       where: { id },
       relations: ['user', 'genres', 'episodes', 'episodes.pages'],
     });
 
     if (!comic || comic.user.username !== username) {
-      throw new NotFoundException('Comic not found' );
+      throw new NotFoundException('Comic not found');
     }
-    
+
     await this.comicRepository.remove(comic);
 
-    const pageUrls = comic.episodes.flatMap(episode => episode.pages.map(page => page.imageUrl));
-    await this.uploadService.deleteComicFromCloudService(comic.coverUrl, pageUrls);
-
-
+    const pageUrls = comic.episodes.flatMap((episode) =>
+      episode.pages.map((page) => page.imageUrl),
+    );
+    await this.uploadService.deleteComicFromCloudService(
+      comic.coverUrl,
+      pageUrls,
+    );
   }
-  
+
   async isNameTaken(name: string): Promise<boolean> {
     return this.comicRepository.exists({ where: { name } });
   }
 
-  async isAuthor(id: number, username: string): Promise<{isAuthor: boolean}>{
+  async isAuthor(id: number, username: string): Promise<{ isAuthor: boolean }> {
     const comic = await this.comicRepository.findOne({
       where: { id },
       relations: ['user'],
     });
 
     if (!comic || comic.user.username !== username) {
-      return {isAuthor: false};
-    }
-    else{
-      return {isAuthor: true};
+      return { isAuthor: false };
+    } else {
+      return { isAuthor: true };
     }
   }
-  
+
   async findComicEntityByIdWithSubscribers(comicId: number): Promise<Comic> {
     const comic = await this.comicRepository.findOne({
       where: { id: comicId },
       relations: ['subscribers'],
     });
-  
+
     if (!comic) {
       throw new NotFoundException('Comic not found');
     }
-  
+
     return comic;
   }
-  
+
   async findComicEntityByIdWithAuthor(comicId: number): Promise<Comic> {
     const comic = await this.comicRepository.findOne({
       where: { id: comicId },
       relations: ['user'],
     });
-  
+
     if (!comic) {
       throw new NotFoundException('Comic not found');
     }
-  
+
     return comic;
   }
-  
-
 }

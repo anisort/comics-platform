@@ -37,12 +37,6 @@ describe('ComicsService - searchComics', () => {
     jest.clearAllMocks();
   });
 
-  // it('should return empty array if searchQuery is empty', async () => {
-  //   const result = await service.searchComics('');
-  //   expect(result).toEqual([]);
-  //   expect(mockComicRepository.find).not.toHaveBeenCalled();
-  // });
-
   it('should return array of comics matching search query', async () => {
     mockComicRepository.find.mockResolvedValue(mockComics);
 
