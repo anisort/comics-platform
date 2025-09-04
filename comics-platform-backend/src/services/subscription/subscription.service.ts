@@ -13,14 +13,15 @@ export class SubscriptionService {
 
   async subscribe(userId: number, comicId: number) {
     const user = await this.usersService.findUserByIdWithSubscriptions(userId);
-    const comic = await this.comicsService.findComicEntityByIdWithAuthor(comicId);
-  
+    const comic =
+      await this.comicsService.findComicEntityByIdWithAuthor(comicId);
+
     if (user && comic) {
       if (comic.user.id === user.id) {
         throw new NotFoundException('You cannot subscribe to your own comic');
       }
-  
-      if (!user.subscribedComics.find(c => c.id === comic.id)) {
+
+      if (!user.subscribedComics.find((c) => c.id === comic.id)) {
         user.subscribedComics.push(comic);
         await this.usersService.saveUser(user);
       }
@@ -30,13 +31,16 @@ export class SubscriptionService {
   async unsubscribe(userId: number, comicId: number) {
     const user = await this.usersService.findUserByIdWithSubscriptions(userId);
     if (user) {
-      user.subscribedComics = user.subscribedComics.filter(c => c.id !== comicId);
+      user.subscribedComics = user.subscribedComics.filter(
+        (c) => c.id !== comicId,
+      );
       await this.usersService.saveUser(user);
     }
   }
 
   async getSubscribers(comicId: number): Promise<User[]> {
-    const comic = await this.comicsService.findComicEntityByIdWithSubscribers(comicId);
+    const comic =
+      await this.comicsService.findComicEntityByIdWithSubscribers(comicId);
     return comic?.subscribers || [];
   }
 
@@ -45,17 +49,17 @@ export class SubscriptionService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user.subscribedComics.map(comic => ({
+    return user.subscribedComics.map((comic) => ({
       id: comic.id,
       name: comic.name,
       coverUrl: comic.coverUrl,
     }));
   }
-  
+
   async isSubscribed(userId: number, comicId: number): Promise<boolean> {
     const user = await this.usersService.findUserByIdWithSubscriptions(userId);
     if (user) {
-      return user.subscribedComics.some(c => c.id === comicId);
+      return user.subscribedComics.some((c) => c.id === comicId);
     }
     return false;
   }
