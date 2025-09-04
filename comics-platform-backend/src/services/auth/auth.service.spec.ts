@@ -61,7 +61,9 @@ describe('AuthService', () => {
       isActive: true,
     };
 
-    jest.spyOn(usersService, 'findUserByName').mockResolvedValue(mockUser as any);
+    jest
+      .spyOn(usersService, 'findUserByName')
+      .mockResolvedValue(mockUser as User);
     (compare as jest.Mock).mockResolvedValue(true);
 
     const result = await authService.authenticate({
