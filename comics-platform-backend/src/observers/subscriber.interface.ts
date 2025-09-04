@@ -6,7 +6,7 @@ export interface NotificationContext {
   link?: string;
   coverUrl?: string;
 }
-  
+
 export const SUBSCRIBERS = 'SUBSCRIBERS';
 
 export interface Subscriber {
