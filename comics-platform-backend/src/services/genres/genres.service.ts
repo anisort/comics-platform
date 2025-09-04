@@ -13,8 +13,7 @@ export class GenresService {
   async findByNames(names: string[] | string): Promise<Genre[]> {
     const namesArray = Array.isArray(names) ? names : [names];
     return this.genreRepository.find({
-      where: namesArray.map(name => ({ name })),
+      where: namesArray.map((name) => ({ name })),
     });
   }
-  
 }
