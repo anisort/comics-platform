@@ -15,7 +15,10 @@ export class EpisodeNotificationService {
     private readonly configService: ConfigService,
   ) {}
 
-  async notifySubscribersAboutNewEpisode(comic: Comic, episode: Episode): Promise<void> {
+  async notifySubscribersAboutNewEpisode(
+    comic: Comic,
+    episode: Episode,
+  ): Promise<void> {
     const users = await this.subscriptionService.getSubscribers(comic.id);
     if (!users.length) return;
 
@@ -36,4 +39,3 @@ export class EpisodeNotificationService {
     }
   }
 }
-
