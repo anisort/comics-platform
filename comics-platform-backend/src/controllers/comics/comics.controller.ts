@@ -31,7 +31,7 @@ export class ComicsController {
     @Query('page') page: number,
     @Query('limit') limit: number,
   ): Promise<{ comics: ComicItemDto[]; total: number; totalPages?: number }> {
-    return await this.comicsService.findAllComics(filters, page, limit);
+    return await this.comicsService.findAllComics(page, limit);
   }
 
   @Get('home')
