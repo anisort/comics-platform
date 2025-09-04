@@ -1,7 +1,7 @@
 import { IsString, IsEnum, IsArray } from 'class-validator';
 import { ComicItemDto } from './comic.item.dto';
 
-export class ComicItemSingleDto extends ComicItemDto{
+export class ComicItemSingleDto extends ComicItemDto {
   @IsString()
   description: string;
 

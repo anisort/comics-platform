@@ -15,7 +15,7 @@ export class CreateComicDto {
 
   @IsEnum(['13+', '16+', '18+'])
   ageRating: '13+' | '16+' | '18+';
-  
+
   @IsString({ each: true })
   genres: string[] | string;
 }

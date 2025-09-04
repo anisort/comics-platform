@@ -1,19 +1,18 @@
-import { IsBoolean, IsDate, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
 
 export class EpisodeItemDto {
+  @IsNumber()
+  id: number;
 
-    @IsNumber()
-    id: number;
+  @IsString()
+  name: string;
 
-    @IsString()
-    name: string;
+  @IsNumber()
+  order: number;
 
-    @IsNumber()
-    order: number;
+  @IsBoolean()
+  isAvailable: boolean;
 
-    @IsBoolean()
-    isAvailable: boolean;
-
-    @IsDate()
-    created_at: Date;
+  @IsDate()
+  created_at: Date;
 }
