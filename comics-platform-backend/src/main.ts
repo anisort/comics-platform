@@ -6,9 +6,12 @@ import { useContainer } from 'class-validator';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  useContainer(app.select(AppModule), {fallbackOnErrors: true});
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.enableCors();
-  app.setGlobalPrefix('api'); 
+  app.setGlobalPrefix('api');
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+bootstrap().catch((err) => {
+  console.error('Bootstrap failed', err);
+  process.exit(1);
+});
