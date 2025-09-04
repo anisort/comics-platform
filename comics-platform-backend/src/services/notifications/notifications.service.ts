@@ -2,10 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from 'src/entities/notification.entity';
 import { Repository } from 'typeorm';
-import { NotificationContext, Subscriber } from 'src/observers/subscriber.interface';
+import {
+  NotificationContext,
+  Subscriber,
+} from 'src/observers/subscriber.interface';
 
 @Injectable()
-export class NotificationsService implements Subscriber{
+export class NotificationsService implements Subscriber {
   constructor(
     @InjectRepository(Notification)
     private notificationRepository: Repository<Notification>,
@@ -39,7 +42,7 @@ export class NotificationsService implements Subscriber{
     if (notification) {
       notification.isRead = true;
       return await this.notificationRepository.save(notification);
-    } else{
+    } else {
       throw new NotFoundException();
     }
   }
