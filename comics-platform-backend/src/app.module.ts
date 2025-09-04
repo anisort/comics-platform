@@ -53,7 +53,7 @@ import { MailModule } from './modules/mail/mail.module';
     SubscriptionModule,
     NotificationsModule,
     CleanupModule,
-    MailModule
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService, IsUniqueConstraint],
