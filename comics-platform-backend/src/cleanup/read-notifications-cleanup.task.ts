@@ -9,19 +9,24 @@ export class ReadNotificationsCleanupTask implements CleanupTask {
   private readonly logger = new Logger(ReadNotificationsCleanupTask.name);
 
   constructor(
-    @InjectRepository(Notification) private readonly notificationsRepository: Repository<Notification>,
+    @InjectRepository(Notification)
+    private readonly notificationsRepository: Repository<Notification>,
   ) {}
 
   async cleanup(): Promise<void> {
     this.logger.log('Starting read notifications cleanup job...');
 
-    const notifications = await this.notificationsRepository.find({ where: { isRead: true } });
+    const notifications = await this.notificationsRepository.find({
+      where: { isRead: true },
+    });
     this.logger.log(`Found ${notifications.length} read notifications.`);
 
     const now = Date.now();
     const cutoffInMilliseconds = 185 * 60 * 1000;
 
-    const expired = notifications.filter(n => (now - new Date(n.createdAt).getTime()) > cutoffInMilliseconds);
+    const expired = notifications.filter(
+      (n) => now - new Date(n.createdAt).getTime() > cutoffInMilliseconds,
+    );
     this.logger.log(`Notifications eligible for deletion: ${expired.length}`);
 
     if (expired.length > 0) {

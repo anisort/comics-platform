@@ -15,11 +15,15 @@ export class InactiveUsersCleanupTask implements CleanupTask {
   async cleanup(): Promise<void> {
     this.logger.log('Starting inactive users cleanup job...');
 
-    const users = await this.usersRepository.find({ where: { isActive: false } });
+    const users = await this.usersRepository.find({
+      where: { isActive: false },
+    });
     this.logger.log(`Found ${users.length} inactive users.`);
 
     const now = Date.now();
-    const expired = users.filter(u => (now - new Date(u.createdAt).getTime()) > 185 * 60 * 1000);
+    const expired = users.filter(
+      (u) => now - new Date(u.createdAt).getTime() > 185 * 60 * 1000,
+    );
     this.logger.log(`Users eligible for deletion: ${expired.length}`);
 
     if (expired.length > 0) {

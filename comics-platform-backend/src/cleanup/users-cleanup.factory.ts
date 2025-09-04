@@ -14,4 +14,3 @@ export class UsersCleanupFactory extends CleanupFactory {
     return this.inactiveUsersCleanupTask;
   }
 }
-

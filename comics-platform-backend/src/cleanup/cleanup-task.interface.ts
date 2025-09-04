@@ -1,4 +1,3 @@
 export interface CleanupTask {
-    cleanup(): Promise<void>;
+  cleanup(): Promise<void>;
 }
-  

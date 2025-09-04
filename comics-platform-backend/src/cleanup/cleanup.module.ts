@@ -10,9 +10,7 @@ import { CleanupService } from './cleanup.service';
 import { CleanupFactory } from './cleanup.factory';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User, Notification]),
-  ],
+  imports: [TypeOrmModule.forFeature([User, Notification])],
   providers: [
     InactiveUsersCleanupTask,
     ReadNotificationsCleanupTask,
@@ -31,9 +29,10 @@ import { CleanupFactory } from './cleanup.factory';
     },
     {
       provide: CleanupService,
-      useFactory: (factories: CleanupFactory[]) => new CleanupService(factories),
+      useFactory: (factories: CleanupFactory[]) =>
+        new CleanupService(factories),
       inject: ['CleanupFactoryArray'],
-    }
+    },
   ],
 })
 export class CleanupModule {}
