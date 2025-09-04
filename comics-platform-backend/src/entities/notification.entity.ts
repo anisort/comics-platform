@@ -1,10 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { User } from './user.entity';
 
 export enum NotificationType {
   NEW_EPISODE = 'NEW_EPISODE',
-  NEW_COMMENT = 'NEW_COMMENT',
-  NEW_SUBSCRIBER = 'NEW_SUBSCRIBER',
   SYSTEM_MESSAGE = 'SYSTEM_MESSAGE',
 }
 
@@ -38,6 +42,6 @@ export class Notification {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User, user => user.notifications, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.notifications, { onDelete: 'CASCADE' })
   user: User;
 }

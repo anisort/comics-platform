@@ -1,8 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Comic } from './comic.entity';
 import { Notification } from './notification.entity';
 
-@Entity("users")
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,10 +33,10 @@ export class User {
   @OneToMany(() => Comic, (comic) => comic.user)
   comics: Comic[];
 
-  @ManyToMany(() => Comic, comic => comic.subscribers)
+  @ManyToMany(() => Comic, (comic) => comic.subscribers)
   @JoinTable()
   subscribedComics: Comic[];
 
-  @OneToMany(() => Notification, notification => notification.user)
+  @OneToMany(() => Notification, (notification) => notification.user)
   notifications: Notification[];
 }

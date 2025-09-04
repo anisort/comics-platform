@@ -1,18 +1,24 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Episode } from "./episode.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Episode } from './episode.entity';
 
 @Entity('pages')
 export class Page {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    order: number;
+  @Column()
+  order: number;
 
-    @Column()
-    imageUrl: string;
+  @Column()
+  imageUrl: string;
 
-    @ManyToOne(() => Episode, (episode) => episode.pages, {onDelete: 'CASCADE'})
-    @JoinColumn({name: "episodeId"})
-    episode: Episode;
-}   
+  @ManyToOne(() => Episode, (episode) => episode.pages, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'episodeId' })
+  episode: Episode;
+}
