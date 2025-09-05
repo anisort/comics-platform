@@ -1,16 +1,14 @@
-<div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Loading...</p>
-  </div>
-
-<div class="main-container">
+@if(isLoading){
+  <app-loader></app-loader>
+} @else {
+  <div class="main-container">
     <div class="message">
-        @if (successMessage) {
-        <p class="successMessage">{{ successMessage }}. Go to login: <a href="/comics-platform/login">Sign in</a></p>
-        }
-
-        @if (errorMessage) {
-        <p class="errorMessage">{{ errorMessage }}. Go to register: <a href="/comics-platform/register">Sign up</a></p>
-        }
+      @if (successMessage) {
+        <p class="successMessage">{{ successMessage }}. Go to login: <a href="/auth/login">Sign in</a></p>
+      }
+      @if (errorMessage) {
+        <p class="errorMessage">{{ errorMessage }}. Go to register: <a href="/auth/register">Sign up</a></p>
+      }
     </div>
-</div>
+  </div>
+}
