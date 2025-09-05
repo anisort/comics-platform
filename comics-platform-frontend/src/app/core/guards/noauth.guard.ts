@@ -8,9 +8,9 @@ import { AuthService } from '../../features/auth/services/auth/auth.service';
 export class NoAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) { }
 
-  canActivate(): boolean {
+  async canActivate(): Promise<boolean> {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['comics/home']);
+      await this.router.navigate(['comics/home']);
       return false;
     }
     return true;
