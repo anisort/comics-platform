@@ -12,17 +12,20 @@
       <div class="search-container-header">
         <app-search (comicSelected)="onComicSelected($event)"></app-search>
       </div>
-      <div *ngIf="authService.isAuthenticated()" class="notification-wrapper">
-        <app-notifications></app-notifications>
-      </div>
-      <span *ngIf="authService.isAuthenticated()">
-        {{ authService.getUsername() }}
-        <button id="logoutButton" (click)="logout()">Sign out</button>
-      </span>
-      <div class="buttons" *ngIf="!authService.isAuthenticated()">
-        <button routerLink="/auth/register">Sign up</button>
-        <button routerLink="/auth/login">Sign in</button>
-      </div>
+      @if (authService.isAuthenticated()){
+        <div class="notification-wrapper">
+          <app-notifications></app-notifications>
+        </div>
+        <span>
+          {{ authService.getUsername() }}
+          <button id="logoutButton" (click)="logout()">Sign out</button>
+        </span>
+      } @else {
+        <div class="buttons">
+          <button routerLink="/auth/register">Sign up</button>
+          <button routerLink="/auth/login">Sign in</button>
+        </div>
+      }
     </div>
   </nav>
 </header>

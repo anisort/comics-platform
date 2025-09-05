@@ -12,9 +12,9 @@ import { ComicItem } from '../../models/comic-item';
 export class HeaderComponent {
   constructor(public authService: AuthService, private router: Router) { }
 
-  logout() {
+  async logout() {
     this.authService.logout();
-    this.router.navigate(['auth/login']);
+    await this.router.navigate(['auth/login']);
   }
 
   onComicSelected(comicItem: ComicItem) {

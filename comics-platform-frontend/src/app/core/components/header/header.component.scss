@@ -1,9 +1,10 @@
+$background-url: '/background.jpg';
+
 header {
   position: relative;
-  background-image: url("https://res.cloudinary.com/dxfzid9o9/image/upload/v1745395713/783321-download-neat-backgrounds-1920x1080_kh7dru.jpg");
+  background-image: url(#{$background-url});
   padding: 20px 50px;
   color: white;
-  //margin-bottom: -60px;
   width: 100%;
 }
 
