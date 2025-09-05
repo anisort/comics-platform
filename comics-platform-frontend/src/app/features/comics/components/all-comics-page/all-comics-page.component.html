@@ -1,27 +1,28 @@
-<div *ngIf="isLoading" class="loading-overlay">
-  <div class="spinner"></div>
-  <p>Loading...</p>
-</div>
-<div class="main-container">
-  <h2>All comics</h2>
-  <div class="container">
-    <div class="comics-list">
-      @if(comics.length > 0){
-      @for(comicItem of comics; track comicItem.id; let index = $index){
-      <app-comic-item [comicItem]="comicItem"></app-comic-item>
-      }
-      }
-      @if(comics.length < 0){ <p class="no-comics-message">No comics available in the system.</p>
+@if(isLoading) {
+  <app-loader></app-loader>
+} @else {
+  <div class="main-container">
+    <h2>All comics</h2>
+    <div class="container">
+      <div class="comics-list">
+        @if(comics.length > 0){
+          @for(comicItem of comics; track comicItem.id){
+            <app-comic-item [comicItem]="comicItem"></app-comic-item>
+          }
+        } @else {
+          <p class="no-comics-message">No comics available in the system.</p>
         }
+      </div>
+    </div>
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+
+      <span>Page</span>
+      <input type="number" [(ngModel)]="pageInput" (keyup.enter)="goToPage()" min="1" [max]="totalPages">
+      <span>by {{ totalPages }}</span>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
     </div>
   </div>
-  <div class="pagination">
-    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+}
 
-    <span>Page</span>
-    <input type="number" [(ngModel)]="pageInput" (keyup.enter)="goToPage()" min="1" [max]="totalPages">
-    <span>by {{ totalPages }}</span>
-
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-  </div>
-</div>
