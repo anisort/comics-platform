@@ -5,12 +5,14 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
+import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 
 
 
 @NgModule({
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    AuthButtonComponent
   ],
   imports: [],
   exports: [
@@ -20,7 +22,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     RouterModule,
     DragDropModule,
     MatIconModule,
-    LoaderComponent
+    LoaderComponent,
+    AuthButtonComponent
   ]
 })
 export class SharedModule { }
