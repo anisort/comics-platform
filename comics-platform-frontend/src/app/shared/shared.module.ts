@@ -4,11 +4,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoaderComponent
+  ],
   imports: [],
   exports: [
     CommonModule,
@@ -16,7 +19,8 @@ import {RouterModule} from '@angular/router';
     ReactiveFormsModule,
     RouterModule,
     DragDropModule,
-    MatIconModule
+    MatIconModule,
+    LoaderComponent
   ]
 })
 export class SharedModule { }
