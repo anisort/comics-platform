@@ -1,8 +1,11 @@
+import { User } from '../entities/user.entity';
+import { NotificationType } from '../entities/notification.entity';
+
 export interface NotificationContext {
-  user: any;
+  user: User;
   title: string;
   message: string;
-  type: any;
+  type: NotificationType;
   link?: string;
   coverUrl?: string;
 }
