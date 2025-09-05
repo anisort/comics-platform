@@ -1,0 +1,28 @@
+<header>
+  <nav>
+    <div class="logo">
+      <a href="/comics/home">Logo</a>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/comics/home">Home</a>
+      <a routerLink="/comics/all-comics">All comics</a>
+      <a routerLink="/comics/my-library" class="my-library">My Library</a>
+    </div>
+    <div class="auth-links">
+      <div class="search-container-header">
+        <app-search (comicSelected)="onComicSelected($event)"></app-search>
+      </div>
+      <div *ngIf="authService.isAuthenticated()" class="notification-wrapper">
+        <app-notifications></app-notifications>
+      </div>
+      <span *ngIf="authService.isAuthenticated()">
+        {{ authService.getUsername() }}
+        <button id="logoutButton" (click)="logout()">Sign out</button>
+      </span>
+      <div class="buttons" *ngIf="!authService.isAuthenticated()">
+        <button routerLink="/auth/register">Sign up</button>
+        <button routerLink="/auth/login">Sign in</button>
+      </div>
+    </div>
+  </nav>
+</header>
