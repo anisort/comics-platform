@@ -8,7 +8,7 @@ import { ComicItem } from '../../../../core/models/comic-item';
   providedIn: 'root'
 })
 export class SubscriptionsService {
-  private apiUrl: string;
+  private readonly apiUrl: string;
 
   constructor(
     private http: HttpClient,
