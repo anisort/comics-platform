@@ -26,7 +26,6 @@ import {MatButtonModule} from '@angular/material/button';
     LoaderComponent,
     AuthButtonComponent,
     MatButtonModule,
-    MatIconModule
   ]
 })
 export class SharedModule { }
