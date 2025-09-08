@@ -5,7 +5,10 @@
     <div *ngIf="filteredComics.length > 0; else noResults">
       <div *ngFor="let comic of filteredComics" class="search-result-item" (click)="selectComic(comic)">
         <div class="comic-item">
-          <img [src]="comic.coverUrl" alt="Comic cover" class="comic-cover" />
+          <img [ngSrc]="comic.coverUrl"
+               alt="Comic cover"
+               fill
+               class="comic-cover" />
           <h3>{{ comic.name }}</h3>
         </div>
       </div>

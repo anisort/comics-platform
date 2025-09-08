@@ -22,10 +22,19 @@ export class HomePageComponent implements OnInit {
 
   loadComics(): void {
     this.isLoading = true;
-    this.comicsService.getTopByLatest().subscribe((data) => {
-      this.comics = data;
-      this.isLoading = false;
+    this.comicsService.getTopByLatest().subscribe({
+      next: (data) => {
+        this.comics = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      }
     });
+  }
+
+  get visibleComics(): ComicItem[] {
+    return this.comics.slice(this.startIndex, this.startIndex + this.visibleItems);
   }
 
   prevComic(): void {

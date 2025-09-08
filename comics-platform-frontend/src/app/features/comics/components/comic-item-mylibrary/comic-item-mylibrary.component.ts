@@ -17,11 +17,11 @@ export class ComicItemMylibraryComponent {
   ) { }
 
   openComic() {
-    this.router.navigate(['comics/comic-detail-info', this.comicItem.id]);
+    void this.router.navigate(['comics/comic-detail-info', this.comicItem.id]);
   }
 
   editComic() {
-    this.router.navigate(['comics/edit-comic', this.comicItem.id])
+    void this.router.navigate(['comics/edit-comic', this.comicItem.id])
   }
 
   deleteComic() {

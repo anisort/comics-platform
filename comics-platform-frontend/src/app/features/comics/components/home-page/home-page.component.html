@@ -7,10 +7,10 @@
     world of imagination!</p>
 </div>
 <div class="navigation-blocks">
-  <a class="block" routerLink="/comics-platform/all-comics">
+  <a class="block" routerLink="/comics/all-comics">
     <h3>Choose favorite comics</h3>
   </a>
-  <a class="block" routerLink="/comics-platform/my-library">
+  <a class="block" routerLink="/comics/my-library">
     <h3>Create your own comics</h3>
   </a>
 </div>
@@ -22,8 +22,9 @@
     <div class="carousel-container">
       <button class="carousel-nav prev" (click)="prevComic()">&#10094;</button>
       <div class="carousel-items">
-        <app-comic-item *ngFor="let comicItem of comics.slice(startIndex, startIndex + visibleItems)"
-                        [comicItem]="comicItem"></app-comic-item>
+        @for (comicItem of visibleComics; track comicItem.id) {
+          <app-comic-item [comicItem]="comicItem"></app-comic-item>
+        }
       </div>
       <button class="carousel-nav next" (click)="nextComic()">&#10095;</button>
     </div>

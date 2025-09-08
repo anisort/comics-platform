@@ -12,7 +12,7 @@ import { CreateUpdateComic } from '../../../../core/models/create-update-comic';
 })
 export class ComicsService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
   constructor(
     private http: HttpClient,
     @Inject(CONFIG_TOKEN) private config: AppConfig

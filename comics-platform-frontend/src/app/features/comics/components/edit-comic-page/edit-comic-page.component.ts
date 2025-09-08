@@ -48,7 +48,7 @@ export class EditComicPageComponent implements OnInit, OnDestroy {
       if (result.isAuthor) {
         this.getComicById(result.id);
       } else {
-        this.router.navigate(['/comics-platform/my-library']);
+        void this.router.navigate(['/comics-platform/my-library']);
       }
     });
   }

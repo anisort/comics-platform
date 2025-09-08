@@ -35,7 +35,6 @@ export class SearchComponent {
     }
   }
 
-
   onSearchBlur() {
     if (this.searchQuery.trim() === '') {
       this.isSearchFocused = false;

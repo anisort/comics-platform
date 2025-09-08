@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { ComicsRoutingModule } from './comics-routing.module';
 import {AllComicsPageComponent} from './components/all-comics-page/all-comics-page.component';
 import {ComicItemComponent} from './components/comic-item/comic-item.component';

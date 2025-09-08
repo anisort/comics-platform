@@ -53,7 +53,7 @@ export class MyLibraryPageComponent implements OnInit {
   }
 
   onAddNewComic() {
-    this.router.navigate(['comics/add-comic']);
+    void this.router.navigate(['comics/add-comic']);
   }
 
   onComicDeleted(id: number) {

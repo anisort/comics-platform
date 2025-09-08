@@ -25,14 +25,17 @@ export class AllComicsPageComponent implements OnInit {
 
   loadComics(): void {
     this.isLoading = true;
-    this.comicsService.getAllComics(this.currentPage, this.itemsPerPage).subscribe(
-      (data) => {
+    this.comicsService.getAllComics(this.currentPage, this.itemsPerPage).subscribe({
+      next: (data) => {
         this.comics = data.comics;
         this.totalComics = data.total;
         this.totalPages = data.totalPages ?? 0;
         this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
       }
-    );
+    });
   }
 
   nextPage(): void {

@@ -14,6 +14,6 @@ export class ComicItemComponent {
   constructor(private router: Router) { }
 
   openComic() {
-    this.router.navigate(['comics/comic-detail-info', this.comicItem.id]);
+    void this.router.navigate(['comics/comic-detail-info', this.comicItem.id]);
   }
 }
