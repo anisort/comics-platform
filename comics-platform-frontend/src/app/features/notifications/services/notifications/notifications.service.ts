@@ -9,7 +9,7 @@ import { Notification } from '../../../../core/models/notification';
 })
 export class NotificationsService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
   constructor(
     private http: HttpClient,
     @Inject(CONFIG_TOKEN) private config: AppConfig
