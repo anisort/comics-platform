@@ -32,7 +32,7 @@ export class MailService {
 
   async sendActivationEmail(email: string, token: string): Promise<void> {
     const frontendUrl = this.configService.get<string>('FRONTEND_URL');
-    const activationLink = `${frontendUrl}/activate?token=${token}`;
+    const activationLink = `${frontendUrl}/auth/activate?token=${token}`;
 
     const text = `Please activate your account by clicking on the following link: ${activationLink}`;
 
