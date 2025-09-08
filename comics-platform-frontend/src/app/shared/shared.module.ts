@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -23,7 +24,9 @@ import { AuthButtonComponent } from './components/auth-button/auth-button.compon
     DragDropModule,
     MatIconModule,
     LoaderComponent,
-    AuthButtonComponent
+    AuthButtonComponent,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class SharedModule { }
