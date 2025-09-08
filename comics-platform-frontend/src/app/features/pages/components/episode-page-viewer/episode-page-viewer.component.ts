@@ -145,11 +145,11 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
     const currentIndex = this.episodes.findIndex(e => e.id === this.episodeId);
     const nextEpisode = this.episodes[currentIndex + 1];
     if (nextEpisode) {
-      this.router.navigate(['pages/read', nextEpisode.id], {
+      void this.router.navigate(['pages/read', nextEpisode.id], {
         queryParams: { page: 1 }
       });
     } else {
-      this.router.navigate(['comics/comic-detail-info', this.comicId]);
+      void this.router.navigate(['comics/comic-detail-info', this.comicId]);
     }
   }
 
@@ -157,11 +157,11 @@ export class EpisodePageViewerComponent implements OnInit, OnDestroy {
     const currentIndex = this.episodes.findIndex(e => e.id === this.episodeId);
     const prevEpisode = this.episodes[currentIndex - 1];
     if (prevEpisode) {
-      this.router.navigate(['pages/read', prevEpisode.id], {
+      void this.router.navigate(['pages/read', prevEpisode.id], {
         queryParams: { page: 1 }
       });
     } else {
-      this.router.navigate(['comics/comic-detail-info', this.comicId]);
+      void this.router.navigate(['comics/comic-detail-info', this.comicId]);
     }
 
   }

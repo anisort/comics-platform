@@ -9,7 +9,7 @@ import { PageItem } from '../../../../core/models/page-item';
 })
 export class PagesService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
   constructor(
     private http: HttpClient,
     @Inject(CONFIG_TOKEN) private config: AppConfig
