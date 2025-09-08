@@ -14,24 +14,24 @@ import { CustomValidator } from '../../../../core/validators/custom.validator';
 })
 export class EditEpisodeListComponent implements OnInit {
   @Input() comicId!: number;
-
   episodes: EpisodeItem[] = [];
   isReorderChanged = false;
   isLoading = false;
   newEpisodeControl = new FormControl();
 
-
   constructor(private episodesService: EpisodesService) { }
 
-
   ngOnInit(): void {
+    this.initControl();
+    this.loadEpisodes();
+  }
 
+  initControl(){
     this.newEpisodeControl = new FormControl(
       '',
       [Validators.required, Validators.minLength(3)],
       [CustomValidator.uniqueEpisodeNameValidator(this.episodesService, this.comicId)]
     );
-    this.loadEpisodes();
   }
 
   loadEpisodes(): void {
@@ -103,7 +103,6 @@ export class EditEpisodeListComponent implements OnInit {
       });
     }
   }
-
 
   drop(event: CdkDragDrop<EpisodeItem[]>) {
     moveItemInArray(this.episodes, event.previousIndex, event.currentIndex);

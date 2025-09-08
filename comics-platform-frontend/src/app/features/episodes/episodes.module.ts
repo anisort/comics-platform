@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {EditEpisodeItemComponent} from './components/edit-episode-item/edit-episode-item.component';
 import {EditEpisodeListComponent} from './components/edit-episode-list/edit-episode-list.component';
 import {EpisodeItemComponent} from './components/episode-item/episode-item.component';

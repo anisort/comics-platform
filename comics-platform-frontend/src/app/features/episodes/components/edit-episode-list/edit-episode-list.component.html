@@ -1,9 +1,17 @@
 <div class="episodes-list">
   <div cdkDropList (cdkDropListDropped)="drop($event)">
-    <div *ngFor="let episode of episodes; let i = index" cdkDrag>
-      <app-edit-episode-item [episode]="episode" [index]="i" [comicId]="comicId" (updateName)="onNameUpdate($event)"
-        (deleteEpisode)="onDelete($event)" (toggleAvailability)="onToggleAvailability($event)"></app-edit-episode-item>
-    </div>
+    @for (episode of episodes; track episode.id; let i = $index) {
+      <div cdkDrag>
+        <app-edit-episode-item
+          [episode]="episode"
+          [index]="i"
+          [comicId]="comicId"
+          (updateName)="onNameUpdate($event)"
+          (deleteEpisode)="onDelete($event)"
+          (toggleAvailability)="onToggleAvailability($event)">
+        </app-edit-episode-item>
+      </div>
+    }
   </div>
 
   <div class="add-episode">
@@ -22,13 +30,13 @@
     }
   </div>
 
+  @if (isLoading) {
+    <app-loader></app-loader>
+  }
 
-  <div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner"></div>
-    <p>Loading...</p>
-  </div>
-
-  <div *ngIf="isReorderChanged" class="reorder-actions">
-    <button (click)="saveOrder()">Save order</button>
-  </div>
+  @if (isReorderChanged) {
+    <div class="reorder-actions">
+      <button (click)="saveOrder()">Save order</button>
+    </div>
+  }
 </div>

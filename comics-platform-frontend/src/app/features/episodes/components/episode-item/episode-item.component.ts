@@ -16,7 +16,7 @@ export class EpisodeItemComponent {
   constructor(private router: Router) { }
 
   openEpisode() {
-    this.router.navigate(
+    void this.router.navigate(
       ['pages/read', this.episode.id],
       { queryParams: { page: 1 } }
     );
