@@ -1,7 +1,6 @@
 <div class="comics-item" *ngIf="comicItem">
-    <img [ngSrc]="comicItem.coverUrl"
+    <img [src]="comicItem.coverUrl"
          [alt]="comicItem.name"
-         fill
          class="comics-cover" />
 
     <div class="mobile-info">

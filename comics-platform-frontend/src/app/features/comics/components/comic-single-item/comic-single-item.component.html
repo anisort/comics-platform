@@ -1,11 +1,10 @@
 @if (isLoading) {
   <app-loader></app-loader>
-} @else {
+} @else if(comicSingleItem) {
   <div class="main-container">
     <div class="comic-container">
-      <img [ngSrc]="comicSingleItem.coverUrl"
+      <img [src]="comicSingleItem.coverUrl"
            [alt]="comicSingleItem.name"
-           fill
            class="comic-cover" />
       <div class="comic-info">
         <h1 class="comic-title">{{ comicSingleItem.name }}</h1>
@@ -38,13 +37,13 @@
           @for (genre of comicSingleItem.genres; track genre) {
             <span class="genre-badge">
             {{ genre }}
-          </span>
+            </span>
           }
         </div>
 
       </div>
     </div>
-    <app-episode-list [comicId]="comicSingleItem.id"></app-episode-list>
+    <app-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-episode-list>
     @if(errorMessage){
       <p>{{errorMessage}}</p>
     }

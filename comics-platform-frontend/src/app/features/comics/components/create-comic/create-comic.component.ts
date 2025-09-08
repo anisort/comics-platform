@@ -60,8 +60,6 @@ export class CreateComicComponent implements OnInit {
   onSubmit(): void {
     if (this.createForm.valid && this.coverImage) {
       this.isLoading = true;
-      const comic: CreateUpdateComic = this.createForm.value;
-      console.log(comic)
       const formData = new FormData();
 
       formData.append('name', this.createForm.get('name')?.value);
@@ -70,7 +68,6 @@ export class CreateComicComponent implements OnInit {
       formData.append('ageRating', this.createForm.get('ageRating')?.value);
       this.createForm.value.genres.forEach((genre: string) => formData.append('genres', genre));
       formData.append('coverImage', this.coverImage);
-      formData.forEach((value, key) => console.log(key, value));
 
       this.comicsService.createComic(formData).subscribe({
         next: () => {

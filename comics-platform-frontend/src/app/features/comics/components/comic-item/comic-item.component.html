@@ -1,8 +1,7 @@
 <div class="comics-item" *ngIf="comicItem">
     <button (click)="openComic()">
-      <img [ngSrc]="comicItem.coverUrl"
+      <img [src]="comicItem.coverUrl"
            [alt]="comicItem.name"
-           fill
            class="comics-cover" />
       <div class="overlay">
         <h3>{{ comicItem.name }}</h3>

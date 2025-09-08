@@ -2,11 +2,10 @@
   @if (isLoading) {
     <app-loader></app-loader>
   }
-  @if (!isEditing) {
+  @if (!isEditing && comicSingleItem) {
     <div class="comic-view">
-      <img [ngSrc]="comicSingleItem.coverUrl"
+      <img [src]="comicSingleItem.coverUrl"
            [alt]="comicSingleItem.name"
-           fill
            class="comic-cover" />
 
       <div class="comic-info">
@@ -31,15 +30,14 @@
       </div>
       <button (click)="enableEdit()" class="btn btn-warning">Edit</button>
     </div>
-  } @else if (isEditing) {
+  } @else if (isEditing && comicSingleItem) {
     <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="comic-form">
 
       <div class="form-group">
         <div class="center">
           <div *ngIf="coverImagePreview">
-            <img [ngSrc]="coverImagePreview"
+            <img [src]="coverImagePreview"
                  alt="Preview"
-                 fill
                  class="comic-cover-preview" />
           </div>
           <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
@@ -119,5 +117,5 @@
       </div>
     </form>
   }
-  <app-edit-episode-list [comicId]="comicSingleItem.id"></app-edit-episode-list>
+  <app-edit-episode-list *ngIf="comicSingleItem" [comicId]="comicSingleItem.id"></app-edit-episode-list>
 </div>

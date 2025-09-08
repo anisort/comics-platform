@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ComicSingleItem } from '../../../../core/models/comic-single-item';
 import { ComicsService } from '../../services/comics/comics.service';
-import {finalize, map, of, Subject, switchMap, takeUntil} from 'rxjs';
+import { map, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth/auth.service';
 import { SubscriptionsService } from '../../../subscriptions/services/subscriptions/subscriptions.service';
 
@@ -29,46 +29,41 @@ export class ComicSingleItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
-    this.loadComic();
-  }
-
-  private loadComic(): void {
     this.isLoading = true;
-
+    this.isAuthenticated = this.authService.isAuthenticated();
     this.route.paramMap.pipe(
       takeUntil(this.destroy$),
       map(params => Number(params.get('id'))),
-      switchMap(id => id ? this.comicsService.getComicById(id) : of(null)),
-      finalize(() => {
-        this.isLoading = false;
-      })
-    ).subscribe({
-      next: (data) => {
-        if (data) {
-          this.comicSingleItem = data;
-          const currentUsername = this.authService.getUsername();
-          this.isAuthor = currentUsername === this.comicSingleItem.user;
-
-          if (this.isAuthenticated && !this.isAuthor) {
-            this.subscriptionService.checkSubscription(this.comicSingleItem.id).subscribe({
-              next: (res) => {
-                this.isSubscribed = res.isSubscribed;
-              },
-              error: () => {
-                this.errorMessage = 'Failed to check subscription status';
-              }
-            });
-          }
+      switchMap(id => {
+        if (id) {
+          return this.comicsService.getComicById(id);
         } else {
-          this.errorMessage = 'Comic not found';
+          return of(null);
         }
-      },
-      error: () => {
-        this.errorMessage = 'Failed to load comic';
+      })
+    ).subscribe(data => {
+      if (data) {
+        this.comicSingleItem = data;
+        console.log(this.comicSingleItem.genres);
+        const currentUsername = this.authService.getUsername();
+        this.isAuthor = currentUsername === this.comicSingleItem.user;
+        if (this.isAuthenticated && !this.isAuthor) {
+          this.subscriptionService.checkSubscription(this.comicSingleItem.id).subscribe({
+            next: (res) => {
+              this.isSubscribed = res.isSubscribed;
+            },
+            error: () => {
+              this.errorMessage = 'Failed to check subscription status';
+            }
+          });
+        }
+      } else {
+        this.errorMessage = 'Comic not found';
       }
+      this.isLoading = false;
     });
   }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -77,15 +72,12 @@ export class ComicSingleItemComponent implements OnInit, OnDestroy {
 
   onSubscribe(): void {
     if (this.comicSingleItem) {
-      this.isLoading = true;
       this.subscriptionService.subscribe(this.comicSingleItem.id).subscribe({
         next: () => {
           this.isSubscribed = true;
-          this.isLoading = false;
         },
         error: () => {
           this.errorMessage = 'Failed to subscribe';
-          this.isLoading = false;
         }
       });
     }
@@ -93,15 +85,12 @@ export class ComicSingleItemComponent implements OnInit, OnDestroy {
 
   onUnsubscribe(): void {
     if (this.comicSingleItem) {
-      this.isLoading = true;
       this.subscriptionService.unsubscribe(this.comicSingleItem.id).subscribe({
         next: () => {
           this.isSubscribed = false;
-          this.isLoading = false;
         },
         error: () => {
           this.errorMessage = 'Failed to unsubscribe';
-          this.isLoading = false;
         }
       });
     }

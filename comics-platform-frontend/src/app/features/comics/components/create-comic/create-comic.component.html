@@ -4,10 +4,11 @@
     <div class="form-group">
       <div class="center">
         @if (coverImagePreview) {
-          <img [ngSrc]="coverImagePreview"
-               alt="Preview"
-               fill
-               class="comic-cover-preview" />
+          <div>
+            <img [src]="coverImagePreview"
+                 alt="Preview"
+                 class="comic-cover-preview" />
+          </div>
         }
         <input type="file" (change)="onFileChange($event)" accept="image/*" class="form-control" />
       </div>
