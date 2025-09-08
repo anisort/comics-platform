@@ -23,7 +23,7 @@ export class EpisodeNotificationService {
     if (!users.length) return;
 
     const frontendUrl = this.configService.get<string>('FRONTEND_URL');
-    const link = `${frontendUrl}/read/${episode.id}?page=1`;
+    const link = `${frontendUrl}/pages/read/${episode.id}?page=1`;
 
     for (const subscriber of this.subscribers) {
       for (const user of users) {
