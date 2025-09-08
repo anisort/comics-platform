@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { AuthRoutingModule } from './auth-routing.module';
 import {RegisterFormComponent} from './components/register-form/register-form.component';
 import {ActivationComponent} from './components/activation/activation.component';

@@ -15,9 +15,8 @@ export type ActivationResponse =
 })
 export class AuthService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
   private userSubject = new BehaviorSubject<string | null>(null);
-  public user$ = this.userSubject.asObservable();
 
   constructor(
     private http: HttpClient,

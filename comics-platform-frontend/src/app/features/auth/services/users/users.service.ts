@@ -8,7 +8,7 @@ import { AppConfig, CONFIG_TOKEN } from '../../../../../../config';
 })
 export class UsersService {
 
-  private apiUrl: string;
+  private readonly apiUrl: string;
 
     constructor(
       private http: HttpClient,

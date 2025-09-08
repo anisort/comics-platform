@@ -22,12 +22,16 @@ export class RegisterFormComponent implements OnInit {
   isLoading: boolean = false;
 
   ngOnInit() {
+    this.initForm();
+  }
+
+  initForm() {
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.checkUniqueUsernameAndEmail(this.usersService)),
-      email: new FormControl('', [Validators.required, Validators.email], CustomValidator.checkUniqueUsernameAndEmail(this.usersService)),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), CustomValidator.passwordStrengthValidator()]),
-      repeatPassword: new FormControl('', [Validators.required])
-    },
+        username: new FormControl('', [Validators.required, Validators.minLength(3)], CustomValidator.checkUniqueUsernameAndEmail(this.usersService)),
+        email: new FormControl('', [Validators.required, Validators.email], CustomValidator.checkUniqueUsernameAndEmail(this.usersService)),
+        password: new FormControl('', [Validators.required, Validators.minLength(8), CustomValidator.passwordStrengthValidator()]),
+        repeatPassword: new FormControl('', [Validators.required])
+      },
       { validators: CustomValidator.passwordMatchValidator() }
     );
   }
@@ -45,9 +49,8 @@ export class RegisterFormComponent implements OnInit {
           this.message = 'An activation link has been sent to your email. It will expire in 5 minutes.';
           this.registerForm.reset();
         },
-        error: (err) => {
+        error: () => {
           this.isLoading = false;
-          console.log(err)
         }
       })
     } else {
