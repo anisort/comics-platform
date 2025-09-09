@@ -80,6 +80,17 @@ To stop:
 - The frontend and backend services mount local source directories as volumes for live code iteration.
 - The backend connects to the database using DATABASE_* variables from .env. In Docker, DATABASE_HOST should stay as pg (the Compose service name).
 
+## Genres seeding
+- The backend includes an automatic seeding step for default comic genres on application startup.
+- By default (in non-production), seeding runs unless explicitly disabled; in production it runs only if explicitly enabled.
+- Control via environment variables:
+  - SEED_ON_START=true: force seeding on startup in any environment.
+  - SEED_ON_START=false: disable seeding on startup.
+  - If NODE_ENV is not "production" and SEED_ON_START is not set to "false", seeding will run by default.
+- The predefined genres seeded (if missing) are: action, adventure, comedy, drama, fantasy, horror, mystery, romance, sci-fi, superhero, thriller.
+- Seeding is idempotent: it only inserts genres that do not already exist, so re-running is safe.
+- In Docker Compose, SEED_ON_START is set to true for the backend service by default. You can change this in docker-compose.yaml or override it when running containers.
+
 ## Environment variables
 See env.example. Key variables:
 - FRONTEND_URL: defaults to http://localhost:4200 for dev
@@ -87,6 +98,8 @@ See env.example. Key variables:
 - EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASSWORD: SMTP settings
 - CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET: media hosting
 - DATABASE_HOST, DATABASE_PORT, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME: Postgres connection
+- SEED_ON_START: controls genres seeding on backend startup (true to force; false to disable; in non-production, seeding runs by default unless set to false)
+- NODE_ENV: determines environment; in production, seeding runs only when SEED_ON_START=true
 
 Copy env.example to .env at the repository root; docker-compose.yaml references these values.
 
