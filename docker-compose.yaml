@@ -23,7 +23,8 @@ services:
       - ./comics-platform-backend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=
+      - SEED_ON_START=true
       - EMAIL_HOST=$EMAIL_HOST
       - EMAIL_PORT=$EMAIL_PORT
       - EMAIL_USER=$EMAIL_USER
